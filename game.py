@@ -9,6 +9,7 @@ settings = Settings()
 
 from background import Background
 from cloud import Cloud
+from player import Player
 
 class Game:
     def __init__(self) -> None:
@@ -21,6 +22,7 @@ class Game:
 
         self.background = Background()
         self.clouds = pygame.sprite.Group()
+        self.player = Player()
 
     def run(self) -> None:
         while True:
