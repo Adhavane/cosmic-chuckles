@@ -24,8 +24,13 @@ class Settings:
 
         # Background settings
         self.BG_IMG = "assets/background.png"
-        self.BG_SPEED_KEYS = 0.001
-        self.BG_SPEED_RANDOM = 30
+        
+        # x pixels per T frames
+        self.BG_SPEED_KEYS = 1
+        self.BG_SPEED_RANDOM = 1
+        self.BG_DELTA_KEYS = 10
+        self.BG_DELTA_RANDOM = 30
+
         self.BG_TIME_MIN = 5000
         self.BG_TIME_MAX = 10000
         self.BG_ANGLE_MIN = 0
