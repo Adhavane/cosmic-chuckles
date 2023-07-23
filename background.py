@@ -24,19 +24,23 @@ class Background:
 
     def update(self) -> None:
         self.move_keys()
-        # self.move_random()
-        # self.constraints()
+        self.move_random()
+        self.constraints()
 
     def constraints(self) -> None:
         # Keep background on screen
-        if self.rect.x < 0:
-            self.rect.x = 0
-        if self.rect.x > settings.WIDTH - self.rect.width:
-            self.rect.x = settings.WIDTH - self.rect.width
-        if self.rect.y < 0:
-            self.rect.y = 0
-        if self.rect.y > settings.HEIGHT - self.rect.height:
-            self.rect.y = settings.HEIGHT - self.rect.height
+        if self.rect.left > 0:
+            self.rect.left = 0
+            self.new_moving_direction()
+        if self.rect.right < settings.WIDTH:
+            self.rect.right = settings.WIDTH
+            self.new_moving_direction()
+        if self.rect.top > 0:
+            self.rect.top = 0
+            self.new_moving_direction()
+        if self.rect.bottom < settings.HEIGHT:
+            self.rect.bottom = settings.HEIGHT
+            self.new_moving_direction()
 
     def move_keys(self) -> None:
         # Move background with keys
@@ -59,10 +63,13 @@ class Background:
         # Set up cooldown
         current_time = pygame.time.get_ticks()
         if current_time - self.moving_timer > self.moving_cooldown:
-            self.moving_timer = current_time
-            self.moving_cooldown = random.randint(settings.BG_TIME_MIN, settings.BG_TIME_MAX)
-            self.moving_direction = random.randint(settings.BG_ANGLE_MIN, settings.BG_ANGLE_MAX)
+            self.new_moving_direction()
         self.moving_random = False
+    
+    def new_moving_direction(self) -> None:
+        self.moving_timer = pygame.time.get_ticks()
+        self.moving_cooldown = random.randint(settings.BG_TIME_MIN, settings.BG_TIME_MAX)
+        self.moving_direction = random.randint(settings.BG_ANGLE_MIN, settings.BG_ANGLE_MAX)
 
     def draw(self, screen) -> None:
         screen.blit(self.image, self.rect)
