@@ -42,7 +42,7 @@ class Settings:
         self.CLOUD_SPEED_MAX = 3
         self.OPACITY_MIN = 50
         self.OPACITY_MAX = 128
-        self.CLOUD_SPAWN_RATE = 1000
+        self.CLOUD_SPAWN_RATE = 60
 
         # Player settings
 
