@@ -1,20 +1,26 @@
-import pygame, sys
-from random import randint, choice
+#!/usr/bin/env python
 
+"""main.py: Main file for the game."""
+
+import pygame, sys
 import ctypes
 ctypes.windll.user32.SetProcessDPIAware()
 
-WIDTH = 1380
-HEIGHT = 1024
-FPS = 60
+from settings import *
+settings = Settings()
+
+from background import Background
 
 class Game:
     def __init__(self) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
         self.clock = pygame.time.Clock()
 
-        pygame.display.set_caption("Cosmic Chuckles Python/Pygame")
+        pygame.display.set_caption(settings.TITLE)
+        pygame.display.set_icon(pygame.image.load(settings.ICON))
+
+        self.background = Background()
 
     def run(self) -> None:
         while True:
@@ -27,14 +33,17 @@ class Game:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
+        
     def update(self) -> None:
-        pass
+        self.background.update()
 
     def draw(self) -> None:
-        self.screen.fill((0, 0, 0))
+        self.screen.fill(settings.BLACK)
+
+        self.background.draw(self.screen)
+
         pygame.display.update()
-        self.clock.tick(FPS)
+        self.clock.tick(settings.FPS)
 
 if __name__ == "__main__":
     game = Game()
