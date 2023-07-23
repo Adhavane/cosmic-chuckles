@@ -10,6 +10,7 @@ from settings import *
 settings = Settings()
 
 from background import Background
+from cloud import Cloud
 
 class Game:
     def __init__(self) -> None:
@@ -21,6 +22,7 @@ class Game:
         pygame.display.set_icon(pygame.image.load(settings.ICON))
 
         self.background = Background()
+        self.clouds = pygame.sprite.Group()
 
     def run(self) -> None:
         while True:
@@ -36,11 +38,13 @@ class Game:
         
     def update(self) -> None:
         self.background.update()
+        self.clouds.update()
 
     def draw(self) -> None:
         self.screen.fill(settings.BLACK)
 
         self.background.draw(self.screen)
+        for cloud in self.clouds: cloud.draw(self.screen)
 
         pygame.display.update()
         self.clock.tick(settings.FPS)
