@@ -7,8 +7,9 @@ import pygame
 class Settings:
     def __init__(self) -> None:
         # Screen settings
-        self.WIDTH = 1280
-        self.HEIGHT = 720
+        # format 4:3
+        self.WIDTH = 1380
+        self.HEIGHT = 1024
         self.FPS = 60
 
         self.TITLE = "Cosmic Chuckles - Python/Pygame"
@@ -23,8 +24,8 @@ class Settings:
 
         # Background settings
         self.BG_IMG = "assets/background.png"
-        self.BG_SPEED_KEY = 6
-        self.BG_SPEED_RANDOM = 1
+        self.BG_SPEED_KEYS = 0.001
+        self.BG_SPEED_RANDOM = 30
         self.BG_TIME_MIN = 5000
         self.BG_TIME_MAX = 10000
         self.BG_ANGLE_MIN = 0
@@ -46,7 +47,7 @@ class Settings:
 
         # Player settings
         self.PLAYER_IMG = "assets/player.png"
-        self.PLAYER_HEIGHT = 144
+        self.PLAYER_HEIGHT = 176
         self.PLAYER_HEALTH = 100
         self.PLAYER_REGEN = 1
         self.PLAYER_BULLET_DAMAGE = 10
@@ -58,4 +59,4 @@ class Settings:
         # Bullet settings
         self.BULLET_PLAYER_IMG = "assets/bullet_player.png"
         self.BULLET_ENEMY_IMG = "assets/bullet_enemy.png"
-        self.BULLET_HEIGHT = 32
+        self.BULLET_HEIGHT = 64
