@@ -24,11 +24,25 @@ class Settings:
         # Background settings
         self.BG_IMG = "assets/background.png"
         self.BG_SPEED_KEY = 6
-        self.BG_SPEED_RANDOM = 1.5
+        self.BG_SPEED_RANDOM = 1
         self.BG_TIME_MIN = 5000
         self.BG_TIME_MAX = 10000
         self.BG_ANGLE_MIN = 0
         self.BG_ANGLE_MAX = 360
+
+        # Cloud settings
+        self.CLOUD_IMGS = ["assets/cloud_0.png",
+                           "assets/cloud_1.png",
+                            "assets/cloud_2.png",
+                            "assets/cloud_3.png",
+                            "assets/cloud_4.png"]
+        self.CLOUD_HEIGHT_MIN = 50
+        self.CLOUD_HEIGHT_MAX = 200
+        self.CLOUD_SPEED_MIN = 1
+        self.CLOUD_SPEED_MAX = 3
+        self.OPACITY_MIN = 50
+        self.OPACITY_MAX = 128
+        self.CLOUD_SPAWN_RATE = 1000
 
         # Player settings
 

@@ -10,8 +10,10 @@ settings = Settings()
 import random
 import math
 
-class Background:
+class Background(pygame.sprite.Sprite):
     def __init__(self) -> None:
+        super().__init__()
+        
         self.image = pygame.image.load(settings.BG_IMG).convert()
         self.rect = self.image.get_rect()
         self.rect.center = (settings.WIDTH / 2, settings.HEIGHT / 2)
