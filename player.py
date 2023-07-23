@@ -8,7 +8,7 @@ import math
 from settings import *
 settings = Settings()
 
-from bullet import Bullet
+from projectile import BulletPlayer
 
 class Player(pygame.sprite.Sprite):
     def __init__(self,
@@ -85,9 +85,9 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if (pygame.mouse.get_pressed()[0] or keys[pygame.K_SPACE]) and self.can_shoot:
             # Shoot bullet
-            pos_x = self.rect.centerx - settings.rect.width / 2
-            pos_y = self.rect.centery - settings.rect.height / 2
-            self.bullets.add(Bullet(pos_x, pos_y, self.angle, self.bullet_speed, self.bullet_damage, self.bullet_lifetime))
+            pos_x = self.rect.centerx
+            pos_y = self.rect.centery
+            self.bullets.add(BulletPlayer(pos_x, pos_y, self.angle, self.bullet_speed, self.bullet_damage, self.bullet_lifetime))
 
             self.can_shoot = False
             self.shoot_timer = pygame.time.get_ticks()

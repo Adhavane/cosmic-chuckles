@@ -47,9 +47,15 @@ class Settings:
         # Player settings
         self.PLAYER_IMG = "assets/player.png"
         self.PLAYER_HEIGHT = 144
-        self.HEALTH = 100
-        self.REGEN = 1
-        self.BULLET_DAMAGE = 10
-        self.BULLET_SPEED = 10
-        self.RELOAD_TIME = 100
-        self.MOVEMENT_SPEED = 5
+        self.PLAYER_HEALTH = 100
+        self.PLAYER_REGEN = 1
+        self.PLAYER_BULLET_DAMAGE = 10
+        self.PLAYER_BULLET_SPEED = 10
+        self.PLAYER_BULLET_LIFETIME = 1000
+        self.PLAYER_RELOAD_TIME = 600
+        self.PLAYER_MOVEMENT_SPEED = 5
+
+        # Bullet settings
+        self.BULLET_PLAYER_IMG = "assets/bullet_player.png"
+        self.BULLET_ENEMY_IMG = "assets/bullet_enemy.png"
+        self.BULLET_HEIGHT = 32

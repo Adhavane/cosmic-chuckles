@@ -42,6 +42,8 @@ class Game:
         self.spawn_clouds()
         self.clouds.update()
 
+        self.player.update()
+
     def spawn_clouds(self) -> None:
         if pygame.time.get_ticks() % settings.CLOUD_SPAWN_RATE == 0:
             self.clouds.add(Cloud())
@@ -51,6 +53,7 @@ class Game:
 
         self.background.draw(self.screen)
         for cloud in self.clouds: cloud.draw(self.screen)
+        self.player.draw(self.screen)
 
         pygame.display.update()
         self.clock.tick(settings.FPS)
