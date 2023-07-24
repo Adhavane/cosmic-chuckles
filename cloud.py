@@ -22,7 +22,7 @@ class Cloud(pygame.sprite.Sprite):
         
         self.rect = self.image.get_rect()
         self.rect.x = -self.rect.width
-        self.rect.y = random.randint(0, settings.HEIGHT)
+        self.rect.y = random.randint(0, settings.HEIGHT - self.rect.height)
 
         self.moving_timer = 0
         self.speed = random.randint(settings.CLOUD_SPEED_MIN, settings.CLOUD_SPEED_MAX)

@@ -23,7 +23,7 @@ class Settings:
         self.BLUE = (0, 0, 255)
 
         # Background settings
-        self.BG_IMG = "assets/background_ter.png"
+        self.BG_IMG = "assets/background_4.png"
         self.BG_WIDTH = 1380 * 1.25
         self.BG_HEIGHT = 1024 * 1.25
 
@@ -49,7 +49,7 @@ class Settings:
         self.CLOUD_HEIGHT_MIN = 50
         self.CLOUD_HEIGHT_MAX = 400
         self.CLOUD_SPEED_MIN = 1
-        self.CLOUD_SPEED_MAX = 5
+        self.CLOUD_SPEED_MAX = 3
         self.CLOUD_DELTA = 30
         self.OPACITY_MIN = 8
         self.OPACITY_MAX = 64
@@ -57,8 +57,8 @@ class Settings:
         self.CLOUD_TIME_MAX = 2000
 
         # Player settings
-        self.PLAYER_IMG = "assets/player.png"
-        self.PLAYER_HEIGHT = 176
+        self.PLAYER_IMG = "assets/player_bis.png"
+        self.PLAYER_HEIGHT = 32 * 4
         self.PLAYER_HEALTH = 100
         self.PLAYER_REGEN = 1
         self.PLAYER_BULLET_DAMAGE = 10
