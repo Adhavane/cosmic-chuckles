@@ -7,6 +7,8 @@ import pygame, sys
 from settings import *
 settings = Settings()
 
+import random
+
 from background import Background
 from cloud import Cloud
 from player import Player
@@ -23,6 +25,9 @@ class Game:
         self.background = Background()
         self.clouds = pygame.sprite.Group()
         self.player = Player()
+
+        self.cloud_timer = 0
+        self.cloud_cooldown = random.randint(settings.CLOUD_TIME_MIN, settings.CLOUD_TIME_MAX)
 
     def run(self) -> None:
         while True:
@@ -45,8 +50,12 @@ class Game:
         self.player.update()
 
     def spawn_clouds(self) -> None:
-        if pygame.time.get_ticks() % settings.CLOUD_SPAWN_RATE == 0:
-            self.clouds.add(Cloud())
+        current_time = pygame.time.get_ticks()
+        if current_time - self.cloud_timer > self.cloud_cooldown:
+            self.cloud_timer = current_time
+            self.cloud_cooldown = random.randint(settings.CLOUD_TIME_MIN, settings.CLOUD_TIME_MAX)
+            cloud = Cloud()
+            self.clouds.add(cloud)
 
     def draw(self) -> None:
         self.screen.fill(settings.BLACK)

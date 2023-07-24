@@ -18,6 +18,12 @@ class Background(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (settings.WIDTH / 2, settings.HEIGHT / 2)
 
+        scale = max(settings.BG_WIDTH / self.rect.width, settings.BG_HEIGHT / self.rect.height)
+        self.image = pygame.transform.scale(self.image, (int(self.rect.width * scale), int(self.rect.height * scale)))
+
+        self.rect = self.image.get_rect()
+        self.rect.center = (settings.WIDTH / 2, settings.HEIGHT / 2)
+
         # Set up random movement
         self.moving_random = True
         self.moving_timer_keys = 0

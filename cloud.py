@@ -13,10 +13,7 @@ class Cloud(pygame.sprite.Sprite):
     def __init__(self) -> None:
         super().__init__()
 
-        self.images = []
-        for img in settings.CLOUD_IMGS:
-            self.images.append(pygame.image.load(img).convert_alpha())
-        self.image = random.choice(self.images)
+        self.image = pygame.image.load(random.choice(settings.CLOUD_IMGS)).convert_alpha()
 
         self.rect = self.image.get_rect()
         self.height = random.randint(settings.CLOUD_HEIGHT_MIN, settings.CLOUD_HEIGHT_MAX)
@@ -27,14 +24,18 @@ class Cloud(pygame.sprite.Sprite):
         self.rect.x = -self.rect.width
         self.rect.y = random.randint(0, settings.HEIGHT)
 
+        self.moving_timer = 0
         self.speed = random.randint(settings.CLOUD_SPEED_MIN, settings.CLOUD_SPEED_MAX)
+        
         self.opacity = random.randint(settings.OPACITY_MIN, settings.OPACITY_MAX)
         self.image.set_alpha(self.opacity)
 
     def update(self) -> None:
-        self.rect.x += self.speed
-        if self.rect.left > settings.WIDTH:
-            self.kill()
+        current_time = pygame.time.get_ticks()
+        if current_time - self.moving_timer > settings.CLOUD_DELTA:
+            self.rect.x += self.speed
+            if self.rect.left > settings.WIDTH:
+                self.kill()
 
     def draw(self, screen) -> None:
         screen.blit(self.image, self.rect)
