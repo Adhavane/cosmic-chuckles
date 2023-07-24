@@ -23,11 +23,17 @@ class Game:
         pygame.display.set_icon(pygame.image.load(settings.ICON))
 
         self.background = Background()
+        
         self.clouds = pygame.sprite.Group()
-        self.player = Player()
-
+        for _ in range(settings.CLOUD_INIT):
+            cloud = Cloud()
+            cloud.rect.x = random.randint(0, settings.WIDTH)
+            self.clouds.add(cloud)
         self.cloud_timer = 0
         self.cloud_cooldown = random.randint(settings.CLOUD_TIME_MIN, settings.CLOUD_TIME_MAX)
+
+        self.player = Player()
+
 
     def run(self) -> None:
         while True:

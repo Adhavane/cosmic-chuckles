@@ -45,11 +45,12 @@ class Settings:
                             "assets/cloud_3.png",
                             # "assets/cloud_4.png",
                             "assets/cloud_5.png"]
-        self.CLOUD_HEIGHT_MIN = 100
+        self.CLOUD_INIT = 5
+        self.CLOUD_HEIGHT_MIN = 50
         self.CLOUD_HEIGHT_MAX = 400
         self.CLOUD_SPEED_MIN = 1
-        self.CLOUD_SPEED_MAX = 4
-        self.CLOUD_DELTA = 10
+        self.CLOUD_SPEED_MAX = 5
+        self.CLOUD_DELTA = 30
         self.OPACITY_MIN = 8
         self.OPACITY_MAX = 64
         self.CLOUD_TIME_MIN = 1000
