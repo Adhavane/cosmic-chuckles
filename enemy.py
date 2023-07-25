@@ -98,7 +98,6 @@ class EnemyPurple(Enemy):
         self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
 
         self.rect = self.image.get_rect()
-
         self.rect.x = random.randint(0, settings.WIDTH - self.rect.width)
         self.rect.y = random.randint(0, settings.HEIGHT - self.rect.height)
 
