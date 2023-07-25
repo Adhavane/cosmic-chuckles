@@ -81,7 +81,16 @@ class Enemy(ABC, pygame.sprite.Sprite):
 class EnemyPurple(Enemy):
     def __init__(self) -> None:
         super().__init__(settings.ENEMY_PURPLE_HEALTH,
+                         settings.ENEMY_PURPLE_BODY_DAMAGE,
+                         settings.ENEMY_PURPLE_BULLET_DAMAGE,
+                         settings.ENEMY_PURPLE_BULLET_SPEED,
+                         settings.ENEMY_PURPLE_BULLET_LIFETIME,
+                         settings.ENEMY_PURPLE_RELOAD_TIME,
+                         settings.ENEMY_PURPLE_MOVEMENT_SPEED,
+                         settings.ENEMY_PURPLE_MOVEMENT_COOLDOWN,
+                         None)
                          
+        self.movement_pattern = self.move_random
 
         self.image = pygame.image.load(settings.ENEMY_PURPLE_IMG).convert_alpha()
         self.rect = self.image.get_rect()
