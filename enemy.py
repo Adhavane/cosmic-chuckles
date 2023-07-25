@@ -4,7 +4,7 @@
 
 import pygame
 from abc import ABC, abstractmethod
-from typing import Callable
+from typing import Optional, Callable
 import random
 import math
 
@@ -18,13 +18,14 @@ from player import Player
 class Enemy(ABC, pygame.sprite.Sprite):
     def __init__(self,
                  health: int,
-                 body_damage: int,
-                 bullet_damage: int,
-                 bullet_speed: int,
-                 bullet_lifetime: int,
-                 reload_time: int,
+                 body_damage: Optional[int],
+                 bullet_damage: Optional[int],
+                 bullet_speed: Optional[int],
+                 bullet_lifetime: Optional[int],
+                 reload_time: Optional[int],
                  movement_speed: int,
-                 movement_pattern: Callable) -> None:
+                 movement_cooldown: int,
+                 movement_pattern: Callable[[Player], None]) -> None:
         super().__init__()
 
         self.health = health
@@ -33,6 +34,9 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.bullet_speed = bullet_speed
         self.bullet_lifetime = bullet_lifetime
         self.reload_time = reload_time
+
+        self.moving_timer = 0
+        self.movement_cooldown = movement_cooldown
         self.movement_speed = movement_speed
         self.movement_pattern = movement_pattern
 
@@ -44,10 +48,13 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.bullets = pygame.sprite.Group()
 
     def update(self, player: Player) -> None:
-        self.movement_pattern(player)
+        current_time = pygame.time.get_ticks()
+        if current_time - self.moving_timer > self.movement_cooldown:
+            self.movement_pattern(player)
+            self.moving_timer = current_time
         self.constraints()
 
-    def move_random(self, player: Player) -> None:
+    def move_random(self, _: Player) -> None:
         self.rect.x += math.sin(math.radians(self.direction)) * self.movement_speed
         self.rect.y += math.cos(math.radians(self.direction)) * self.movement_speed
 
@@ -68,6 +75,20 @@ class Enemy(ABC, pygame.sprite.Sprite):
         if self.rect.y + self.rect.height < 0:
             self.kill()
 
+    def draw(self, screen) -> None:
+        screen.blit(self.image, self.rect)
+
+class EnemyPurple(Enemy):
+    def __init__(self) -> None:
+        super().__init__(settings.ENEMY_PURPLE_HEALTH,
+                         
+
+        self.image = pygame.image.load(settings.ENEMY_PURPLE_IMG).convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0, settings.WIDTH - self.rect.width)
+        self.rect.y = random.randint(0, settings.HEIGHT - self.rect.height)
+
+        self.direction = random.randint(0, 360)
         
         
                  

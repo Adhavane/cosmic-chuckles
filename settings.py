@@ -71,3 +71,22 @@ class Settings:
         self.BULLET_PLAYER_IMG = "assets/bullet_player_bis.png"
         self.BULLET_ENEMY_IMG = "assets/bullet_enemy.png"
         self.BULLET_HEIGHT = 32 * 2
+
+        # Enemy settings
+        self.ENEMY_PURPLE_IMG = "assets/enemy_purple_bis.png"
+        self.ENEMY_PURPLE_HEALTH = 100
+        self.ENEMY_PURPLE_BULLET_DAMAGE = None
+        self.ENEMY_PURPLE_BULLET_SPEED = None
+        self.ENEMY_PURPLE_BULLET_LIFETIME = None
+        self.ENEMY_PURPLE_RELOAD_TIME = None
+        self.ENEMY_PURPLE_MOVEMENT_SPEED = 1
+        self.ENEMY_PURPLE_MOVEMENT_COOLDOWN = 120
+        self.ENEMY_PURPLE_MOVEMENT_PATTERN = "move_random"
+        
+        self.ENEMY_RED_IMG = "assets/enemy_red_bis.png"
+        
+        self.ENEMY_GREEN_IMG = "assets/enemy_green_bis.png"
+
+        self.ENEMY_GREEN_BABY_IMG = "assets/enemy_green_baby_bis.png"
+
+
