@@ -8,8 +8,6 @@ from typing import Optional, Callable
 import random
 import math
 
-from pygame.sprite import _Group
-
 from settings import *
 settings = Settings()
 
