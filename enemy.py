@@ -55,8 +55,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.constraints()
 
     def move_random(self, _: Player) -> None:
-        self.rect.x += math.sin(math.radians(self.direction)) * self.movement_speed
-        self.rect.y += math.cos(math.radians(self.direction)) * self.movement_speed
+        self.rect.x += math.sin(math.radians(self.angle)) * self.movement_speed
+        self.rect.y += math.cos(math.radians(self.angle)) * self.movement_speed
 
     def move_target(self, player: Player) -> None:
         rel_x, rel_y = self.rect.centerx - player.rect.centerx, self.rect.centery - player.rect.centery
@@ -93,11 +93,14 @@ class EnemyPurple(Enemy):
         self.movement_pattern = self.move_random
 
         self.image = pygame.image.load(settings.ENEMY_PURPLE_IMG).convert_alpha()
+
+        scale = settings.ENEMY_PURPLE_HEIGHT / self.image.get_height()
+        self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
+
         self.rect = self.image.get_rect()
+
         self.rect.x = random.randint(0, settings.WIDTH - self.rect.width)
         self.rect.y = random.randint(0, settings.HEIGHT - self.rect.height)
 
-        self.direction = random.randint(0, 360)
-        
         
                  
