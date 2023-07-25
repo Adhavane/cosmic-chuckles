@@ -73,8 +73,12 @@ class Settings:
         self.BULLET_HEIGHT = 32 * 2
 
         # Enemy settings
+        self.ENEMY_TIME_MIN = 1000
+        self.ENEMY_TIME_MAX = 2000
+
         self.ENEMY_PURPLE_IMG = "assets/enemy_purple_bis.png"
         self.ENEMY_PURPLE_HEALTH = 100
+        self.ENEMY_PURPLE_BODY_DAMAGE = 10
         self.ENEMY_PURPLE_BULLET_DAMAGE = None
         self.ENEMY_PURPLE_BULLET_SPEED = None
         self.ENEMY_PURPLE_BULLET_LIFETIME = None
