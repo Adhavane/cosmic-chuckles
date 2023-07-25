@@ -53,6 +53,12 @@ class Enemy(ABC, pygame.sprite.Sprite):
             self.moving_timer = current_time
         self.constraints()
 
+        if self.health <= 0:
+            self.kill()
+        
+        if pygame.sprite.spritecollide(self, player.bullets, True):
+            self.health -= player.bullet_damage
+
     def move_random(self, _: Player) -> None:
         self.rect.x += math.sin(math.radians(self.angle)) * self.movement_speed
         self.rect.y += math.cos(math.radians(self.angle)) * self.movement_speed
@@ -97,4 +103,3 @@ class EnemyPurple(Enemy):
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, settings.WIDTH - self.rect.width)
         self.rect.y = random.randint(0, settings.HEIGHT - self.rect.height)
-        

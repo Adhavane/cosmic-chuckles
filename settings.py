@@ -78,7 +78,7 @@ class Settings:
 
         self.ENEMY_PURPLE_IMG = "assets/enemy_purple_bis.png"
         self.ENEMY_PURPLE_HEIGHT = 36 * 4
-        self.ENEMY_PURPLE_HEALTH = 100
+        self.ENEMY_PURPLE_HEALTH = 10
         self.ENEMY_PURPLE_BODY_DAMAGE = 10
         self.ENEMY_PURPLE_BULLET_DAMAGE = None
         self.ENEMY_PURPLE_BULLET_SPEED = None
