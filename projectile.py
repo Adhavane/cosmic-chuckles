@@ -39,7 +39,7 @@ class Bullet(Projectile):
         super().__init__(angle, speed, damage, lifetime)
 
         self.image = pygame.image.load(image).convert_alpha()
-        self.image = pygame.transform.rotate(self.image, self.angle)
+        # self.image = pygame.transform.rotate(self.image, self.angle)
         
         scale = settings.BULLET_HEIGHT / self.image.get_height()
         self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
