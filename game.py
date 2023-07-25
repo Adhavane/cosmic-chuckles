@@ -82,9 +82,9 @@ class Game:
             self.enemies.add(enemy)
 
     def collisions(self) -> None:
-        if pygame.sprite.spritecollide(self.player, self.enemies, True):
+        if pygame.sprite.spritecollide(self.player, self.enemies, False):
             print("Player hit!")
-            print(pygame.sprite.spritecollide(self.player, self.enemies, True))
+            print(pygame.sprite.spritecollide(self.player, self.enemies, False))
 
     def draw(self) -> None:
         self.screen.fill(settings.BLACK)
