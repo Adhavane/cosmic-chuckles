@@ -55,9 +55,6 @@ class Enemy(ABC, pygame.sprite.Sprite):
 
         if self.health <= 0:
             self.kill()
-        
-        if pygame.sprite.spritecollide(self, player.bullets, True):
-            self.health -= player.bullet_damage
 
     def move_random(self, _: Player) -> None:
         self.rect.x += math.sin(math.radians(self.angle)) * self.movement_speed

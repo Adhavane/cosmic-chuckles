@@ -63,6 +63,8 @@ class Game:
         self.spawn_enemies()
         self.enemies.update(self.player)
 
+        self.collisions()
+
     def spawn_clouds(self) -> None:
         current_time = pygame.time.get_ticks()
         if current_time - self.cloud_timer > self.cloud_cooldown:
@@ -78,6 +80,11 @@ class Game:
             self.enemy_cooldown = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
             enemy = EnemyPurple()
             self.enemies.add(enemy)
+
+    def collisions(self) -> None:
+        if pygame.sprite.spritecollide(self.player, self.enemies, True):
+            print("Player hit!")
+            print(pygame.sprite.spritecollide(self.player, self.enemies, True))
 
     def draw(self) -> None:
         self.screen.fill(settings.BLACK)
