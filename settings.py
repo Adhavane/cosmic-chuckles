@@ -85,8 +85,8 @@ class Settings:
         self.ENEMY_PURPLE_BULLET_LIFETIME = None
         self.ENEMY_PURPLE_RELOAD_TIME = None
         self.ENEMY_PURPLE_MOVEMENT_SPEED = 1
-        self.ENEMY_PURPLE_MOVEMENT_COOLDOWN = 90
-        self.ENEMY_PURPLE_MOVEMENT_PATTERN = "move_random"
+        self.ENEMY_PURPLE_MOVEMENT_COOLDOWN = 30
+        self.ENEMY_PURPLE_MOVEMENT_PATTERN = "move_target"
         
         self.ENEMY_RED_IMG = "assets/enemy_red_bis.png"
         
