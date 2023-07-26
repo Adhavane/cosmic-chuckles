@@ -61,11 +61,11 @@ class Button(ABC, pygame.sprite.Sprite):
     def draw(self, screen) -> None:
         screen.blit(self.image, self.rect)
 class ButtonPlay(Button):
-    def __init__(self, event: Callable, *event_args, **event_kwargs) -> None:
-        super().__init__(settings.PLAY_IMGS, settings.PLAY_HEIGHT, event, *event_args, **event_kwargs)
+    def __init__(self, game) -> None:
+        super().__init__(settings.PLAY_IMGS, settings.PLAY_HEIGHT, PlayState(game))
 
 class ButtonQuit(Button):
-    def __init__(self, event: Callable) -> None:
+    def __init__(self, event: Callable[[], None]) -> None:
         super().__init__(settings.QUIT_IMGS, settings.QUIT_HEIGHT, event)
 
 class MenuState(State):
@@ -80,7 +80,7 @@ class MenuState(State):
         self.title_rect = self.title.get_rect()
         self.title_rect.center = (settings.WIDTH / 2, 300)
 
-        self.button_play = ButtonPlay(self.game.change_state, PlayState(self.game))
+        self.button_play = ButtonPlay(self.game.change_state, self.game)
         self.button_play.rect.y = 500
         self.button_quit = ButtonQuit(self.game.quit)
         self.button_quit.rect.y = 600
