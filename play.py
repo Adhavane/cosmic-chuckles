@@ -47,9 +47,7 @@ class PlayState(State):
             print(pygame.sprite.spritecollide(self.player, self.enemies, False))
 
     def draw(self) -> None:
-        self.game.screen.fill(settings.BLACK)
-
-        self.background.draw(self.game.screen)
-        for cloud in self.clouds: cloud.draw(self.game.screen)
+        super().draw()
+        
         self.player.draw(self.game.screen)
         for enemy in self.enemies: enemy.draw(self.game.screen)

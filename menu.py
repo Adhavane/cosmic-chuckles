@@ -27,6 +27,6 @@ class MenuState(State):
         super().update()
 
     def draw(self) -> None:
-        self.game.screen.fill(settings.BLACK)
+        super().draw()
 
         self.game.screen.blit(self.title, self.title_rect)

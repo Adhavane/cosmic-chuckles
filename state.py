@@ -39,3 +39,10 @@ class State(ABC):
         
         self.spawn_clouds()
         self.clouds.update()
+
+    def draw(self) -> None:
+        self.game.screen.fill(settings.BLACK)
+
+        self.background.draw(self.game.screen)
+        for cloud in self.clouds: cloud.draw(self.game.screen)
+        
