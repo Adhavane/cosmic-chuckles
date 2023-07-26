@@ -37,27 +37,26 @@ class Button(ABC, pygame.sprite.Sprite):
             return True
         return False
     
+    def change_state(self, state: str) -> None:
+        self.image = pygame.image.load(self.images[state]).convert_alpha()
+    
     def update(self) -> None:
+        if self.mouse_over():
+            self.change_state("selected")
+        else:
+            self.change_state("unselected")
         if self.mouse_click():
             self.event()
-        if self.mouse_over():
-            self.image = pygame.image.load(self.images["selected"]).convert_alpha()
 
     def draw(self, screen) -> None:
         screen.blit(self.image, self.rect)
-
 class ButtonPlay(Button):
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, event: Callable) -> None:
+        super().__init__(settings.PLAY_IMGS, settings.PLAY_HEIGHT, event)
 
-        self.image = pygame.image.load(settings.BUTTON_PLAY_IMG).convert_alpha()
-        
-        scale = settings.BUTTON_PLAY_HEIGHT / self.image.get_height()
-        self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
-
-        self.rect = self.image.get_rect()
-        self.rect.center = (settings.WIDTH / 2, settings.HEIGHT / 2)
-
+class ButtonQuit(Button):
+    def __init__(self, event: Callable) -> None:
+        super().__init__(settings.QUIT_IMGS, settings.QUIT_HEIGHT, event)
 
 class MenuState(State):
     def __init__(self, game) -> None:
