@@ -92,7 +92,7 @@ class MenuState(State):
 
         self.buttons = pygame.sprite.Group()
         self.buttons.add(self.button_play)
-        # self.buttons.add(self.button_quit)
+        self.buttons.add(self.button_quit)
 
     def update(self) -> None:
         super().update()
