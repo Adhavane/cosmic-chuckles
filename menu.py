@@ -13,7 +13,7 @@ from state import State
 from play import PlayState
 
 class Button(ABC, pygame.sprite.Sprite):
-    def __init__(self, images: Dict[str, str], height: int, event: Callable) -> None:
+    def __init__(self, images: Dict[str, str], height: int, event: Callable, *event_args, **event_kwargs) -> None:
         super().__init__()
 
         self.images = images
@@ -25,6 +25,8 @@ class Button(ABC, pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         self.event = event
+        self.event_args = event_args
+        self.event_kwargs = event_kwargs
 
     def mouse_over(self) -> bool:
         mouse_pos = pygame.mouse.get_pos()
@@ -45,6 +47,8 @@ class Button(ABC, pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
 
         self.rect = self.image.get_rect()
+
+        self.rect.center = (settings.WIDTH / 2, self.rect.y)
     
     def update(self) -> None:
         if self.mouse_over():
@@ -52,13 +56,13 @@ class Button(ABC, pygame.sprite.Sprite):
         else:
             self.change_state("unselected")
         if self.mouse_click():
-            self.event()
+            self.event(*self.event_args, **self.event_kwargs)
 
     def draw(self, screen) -> None:
         screen.blit(self.image, self.rect)
 class ButtonPlay(Button):
-    def __init__(self, event: Callable) -> None:
-        super().__init__(settings.PLAY_IMGS, settings.PLAY_HEIGHT, event)
+    def __init__(self, event: Callable, *event_args, **event_kwargs) -> None:
+        super().__init__(settings.PLAY_IMGS, settings.PLAY_HEIGHT, event, *event_args, **event_kwargs)
 
 class ButtonQuit(Button):
     def __init__(self, event: Callable) -> None:
@@ -76,14 +80,14 @@ class MenuState(State):
         self.title_rect = self.title.get_rect()
         self.title_rect.center = (settings.WIDTH / 2, 300)
 
-        self.button_play = ButtonPlay(self.game.change_state(PlayState(self.game)))
-        self.button_play.rect.center = (settings.WIDTH / 2, settings.HEIGHT / 2 + settings.PLAY_HEIGHT / 2)
+        self.button_play = ButtonPlay(self.game.change_state, PlayState(self.game))
+        self.button_play.rect.y = 500
         self.button_quit = ButtonQuit(self.game.quit)
-        self.button_quit.rect.center = (settings.WIDTH / 2, settings.HEIGHT / 2 + settings.PLAY_HEIGHT / 2 + settings.QUIT_HEIGHT)
+        self.button_quit.rect.y = 600
 
         self.buttons = pygame.sprite.Group()
         self.buttons.add(self.button_play)
-        self.buttons.add(self.button_quit)
+        # self.buttons.add(self.button_quit)
 
     def update(self) -> None:
         super().update()
