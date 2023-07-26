@@ -48,6 +48,7 @@ class PlayState(State):
 
     def draw(self) -> None:
         super().draw()
-        
+
         self.player.draw(self.game.screen)
-        for enemy in self.enemies: enemy.draw(self.game.screen)
+        for enemy in self.enemies:
+            enemy.draw(self.game.screen)

@@ -62,7 +62,7 @@ class Settings:
 
         # Start button settings
         self.PLAY_IMGS = {"selected": "assets/play_selected.png",
-                           "unselected": "assets/play_unselected.png"}
+                          "unselected": "assets/play_unselected.png"}
         self.PLAY_HEIGHT = 9 * 8
         self.PLAY_OPACITY_SELECTED = 255
         self.PLAY_OPACITY_UNSELECTED = 128
