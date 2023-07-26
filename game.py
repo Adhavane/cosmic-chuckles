@@ -82,9 +82,6 @@ class PlayState(State):
         self.player.draw(self.game.screen)
         for enemy in self.enemies: enemy.draw(self.game.screen)
 
-        pygame.display.update()
-        self.clock.tick(settings.FPS)
-
 class Game:
     def __init__(self) -> None:
         pygame.init()
@@ -116,3 +113,6 @@ class Game:
 
     def draw(self) -> None:
         self.state.draw()
+
+        pygame.display.update()
+        self.clock.tick(settings.FPS)
