@@ -96,6 +96,9 @@ class Game:
 
         self.state = PlayState(self)
 
+    def change_state(self, state: State) -> None:
+        self.state = state
+
     def run(self) -> None:
         while True:
             self.events()
