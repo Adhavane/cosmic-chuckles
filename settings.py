@@ -64,15 +64,15 @@ class Settings:
         self.PLAY_IMGS = {"selected": "assets/play_selected.png",
                           "unselected": "assets/play_unselected.png"}
         self.PLAY_HEIGHT = 9 * 8
-        self.PLAY_OPACITY_SELECTED = 255
-        self.PLAY_OPACITY_UNSELECTED = 128
+        self.PLAY_OPACITY = {"selected": 255,
+                             "unselected": 128}
 
         # Quit button settings
         self.QUIT_IMGS = {"selected": "assets/quit_selected.png",
                           "unselected": "assets/quit_unselected.png"}
         self.QUIT_HEIGHT = 10 * 8
-        self.QUIT_OPACITY_SELECTED = 255
-        self.QUIT_OPACITY_UNSELECTED = 128
+        self.QUIT_OPACITY = {"selected": 255,
+                             "unselected": 128}
 
         # Player settings
         self.PLAYER_IMG = "assets/player_bis.png"
