@@ -5,7 +5,7 @@
 import pygame
 import sys
 import random
-from ABC import ABC, abstractmethod
+from abc import ABC, abstractmethod
 
 from settings import *
 settings = Settings()
