@@ -2,26 +2,26 @@
 
 """game.py: Game class."""
 
-import pygame, sys
+import pygame
+import sys
+import random
+from ABC import ABC, abstractmethod
 
 from settings import *
 settings = Settings()
-
-import random
 
 from background import Background
 from cloud import Cloud
 from player import Player
 from enemy import EnemyPurple
 
-class Game:
-    def __init__(self) -> None:
-        pygame.init()
-        self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
-        self.clock = pygame.time.Clock()
+class State(ABC):
+    def __init__(self, game) -> None:
+        self.game = game
 
-        pygame.display.set_caption(settings.TITLE)
-        pygame.display.set_icon(pygame.image.load(settings.ICON))
+class PlayState(State):
+    def __init__(self, game) -> None:
+        super().__init__(game)
 
         self.background = Background()
         
@@ -40,18 +40,6 @@ class Game:
         self.enemy_cooldown = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
         self.enemies = pygame.sprite.Group()
 
-    def run(self) -> None:
-        while True:
-            self.events()
-            self.update()
-            self.draw()
-    
-    def events(self) -> None:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-        
     def update(self) -> None:
         self.background.update()
 
@@ -96,3 +84,32 @@ class Game:
 
         pygame.display.update()
         self.clock.tick(settings.FPS)
+
+class Game:
+    def __init__(self) -> None:
+        pygame.init()
+        self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
+        self.clock = pygame.time.Clock()
+
+        pygame.display.set_caption(settings.TITLE)
+        pygame.display.set_icon(pygame.image.load(settings.ICON))
+
+        self.state = PlayState(self)
+
+    def run(self) -> None:
+        while True:
+            self.events()
+            self.update()
+            self.draw()
+    
+    def events(self) -> None:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        
+    def update(self) -> None:
+        self.state.update()
+
+    def draw(self) -> None:
+        self.state.draw()
