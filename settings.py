@@ -58,19 +58,19 @@ class Settings:
 
         # Title settings
         self.TITLE_IMG = "assets/title.png"
-        self.TITLE_HEIGHT = 42 * 5
+        self.TITLE_HEIGHT = 42 * 10
 
         # Start button settings
         self.PLAY_IMGS = {"selected": "assets/play_selected.png",
                            "unselected": "assets/play_unselected.png"}
-        self.PLAY_HEIGHT = 9 * 4
+        self.PLAY_HEIGHT = 9 * 8
         self.PLAY_OPACITY_SELECTED = 255
         self.PLAY_OPACITY_UNSELECTED = 128
 
         # Quit button settings
         self.QUIT_IMGS = {"selected": "assets/quit_selected.png",
                           "unselected": "assets/quit_unselected.png"}
-        self.QUIT_HEIGHT = 10 * 4
+        self.QUIT_HEIGHT = 10 * 8
         self.QUIT_OPACITY_SELECTED = 255
         self.QUIT_OPACITY_UNSELECTED = 128
 

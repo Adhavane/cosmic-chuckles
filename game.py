@@ -32,11 +32,14 @@ class Game:
             self.update()
             self.draw()
     
+    def quit(self) -> None:
+        pygame.quit()
+        sys.exit()
+    
     def events(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+                self.quit()
         
     def update(self) -> None:
         self.state.update()
