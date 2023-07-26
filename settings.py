@@ -56,6 +56,9 @@ class Settings:
         self.CLOUD_TIME_MIN = 1000
         self.CLOUD_TIME_MAX = 2000
 
+        # Title settings
+        self.TITLE_IMG = "assets/title.png"
+
         # Player settings
         self.PLAYER_IMG = "assets/player_bis.png"
         self.PLAYER_HEIGHT = 32 * 4

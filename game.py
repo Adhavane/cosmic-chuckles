@@ -8,7 +8,8 @@ import sys
 from settings import *
 settings = Settings()
 
-from game import State
+from state import State
+from menu import MenuState
 from play import PlayState
 
 class Game:
@@ -20,7 +21,7 @@ class Game:
         pygame.display.set_caption(settings.TITLE)
         pygame.display.set_icon(pygame.image.load(settings.ICON))
 
-        self.state = PlayState(self)
+        self.state = MenuState(self)
 
     def change_state(self, state: State) -> None:
         self.state = state
