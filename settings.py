@@ -58,21 +58,29 @@ class Settings:
 
         # Title settings
         self.TITLE_IMG = "assets/title.png"
+        self.TITLE_Y = 74 * 2
         self.TITLE_HEIGHT = 42 * 10
+
+        # Credit settings
+        self.CREDIT_IMG = "assets/credit.png"
+        self.CREDIT_Y = 288 * 2
+        self.CREDIT_HEIGHT = 8 * 2
 
         # Start button settings
         self.PLAY_IMGS = {"selected": "assets/play_selected.png",
                           "unselected": "assets/play_unselected.png"}
+        self.PLAY_Y = 326 * 2
         self.PLAY_HEIGHT = 9 * 8
         self.PLAY_OPACITY = {"selected": 255,
-                             "unselected": 128}
+                             "unselected": 64}
 
         # Quit button settings
         self.QUIT_IMGS = {"selected": "assets/quit_selected.png",
                           "unselected": "assets/quit_unselected.png"}
+        self.QUIT_Y = 383 * 2
         self.QUIT_HEIGHT = 10 * 8
         self.QUIT_OPACITY = {"selected": 255,
-                             "unselected": 128}
+                             "unselected": 64}
 
         # Player settings
         self.PLAYER_IMG = "assets/player_bis.png"

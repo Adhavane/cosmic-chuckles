@@ -10,7 +10,6 @@ settings = Settings()
 
 from state import State
 from menu import MenuState
-from play import PlayState
 
 class Game:
     def __init__(self) -> None:
