@@ -88,6 +88,11 @@ class Settings:
         self.SCORE_FONT = "assets/SUPERNAT1001.TTF"
         self.SCORE_SIZE = 24 * 2
 
+        # Particle settings
+        self.PARTICLE_IMG = "assets/particle.png"
+        self.PARTICLE_HEIGHT = 2 * 2
+
+
         # Player settings
         self.PLAYER_IMG = "assets/player_bis.png"
         self.PLAYER_HEIGHT = 32 * 4
@@ -101,8 +106,9 @@ class Settings:
 
         # Bullet settings
         self.BULLET_PLAYER_IMG = "assets/bullet_player_bis.png"
+        self.BULLET_PLAYER_HEIGHT = 32 * 2
         self.BULLET_ENEMY_IMG = "assets/bullet_enemy.png"
-        self.BULLET_HEIGHT = 32 * 2
+        self.BULLET_ENEMY_HEIGHT = 32 * 2
 
         # Enemy settings
         self.ENEMY_TIME_MIN = 1000

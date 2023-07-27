@@ -10,13 +10,13 @@ from settings import *
 settings = Settings()
 
 class Projectile(ABC, pygame.sprite.Sprite):
-    def __init__(self, image: str, x: int, y: int, angle: int, speed: int, damage: int, lifetime: int) -> None:
+    def __init__(self, image: str, x: int, y: int, height: int, angle: int, speed: int, damage: int, lifetime: int) -> None:
         super().__init__()
 
         self.image = pygame.image.load(image).convert_alpha()
         # self.image = pygame.transform.rotate(self.image, self.angle)
         
-        scale = settings.BULLET_HEIGHT / self.image.get_height()
+        scale = height / self.image.get_height()
         self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
 
         self.rect = self.image.get_rect()
@@ -46,8 +46,12 @@ class Projectile(ABC, pygame.sprite.Sprite):
 
 class BulletPlayer(Projectile):
     def __init__(self, x: int, y: int, angle: int, speed: int, damage: int, lifetime: int) -> None:
-        super().__init__(settings.BULLET_PLAYER_IMG, x, y, angle, speed, damage, lifetime)
+        super().__init__(settings.BULLET_PLAYER_IMG,
+                         x, y, settings.BULLET_PLAYER_HEIGHT, 
+                         angle, speed, damage, lifetime)
 
 class BulletEnemy(Projectile):
     def __init__(self, x: int, y: int, angle: int, speed: int, damage: int, lifetime: int) -> None:
-        super().__init__(settings.BULLET_ENEMY_IMG, x, y, angle, speed, damage, lifetime)
+        super().__init__(settings.BULLET_ENEMY_IMG,
+                         x, y, settings.BULLET_ENEMY_HEIGHT,
+                         angle, speed, damage, lifetime)
