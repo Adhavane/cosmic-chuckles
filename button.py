@@ -69,14 +69,6 @@ class Button(ABC, pygame.sprite.Sprite):
         self.image.set_alpha(self.opacity[self.state])
     
     def update(self) -> None:
-        if self.mouse_over():
-            self.change_state("selected")
-        else:
-            self.change_state("unselected")
-
-        if self.mouse_click():
-            self.event(*self.event_args, **self.event_kwargs)
-
         if self.state == "selected" and pygame.key.get_pressed()[pygame.K_RETURN]:
             self.event(*self.event_args, **self.event_kwargs)
 

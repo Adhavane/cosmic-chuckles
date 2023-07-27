@@ -39,17 +39,35 @@ class MenuState(State):
         self.buttons.add(self.button_play)
         self.buttons.add(self.button_quit)
 
-        self.button_play.change_state("selected")
+        self.selected_button_index = 0
+        self.selected_button = self.buttons.sprites()[self.selected_button_index]
 
     def update(self) -> None:
         super().update()
         
-        self.buttons.update()
+        keys = pygame.key.get_pressed()
+        
+        if keys[pygame.K_UP]:
+            self.selected_button_index -= 1
+        if keys[pygame.K_DOWN]:
+            self.selected_button_index += 1
+        if self.selected_button_index < 0:
+            self.selected_button_index = len(self.buttons) - 1
+        if self.selected_button_index > len(self.buttons) - 1:
+            self.selected_button_index = 0
+        
+        self.selected_button = self.buttons.sprites()[self.selected_button_index]
+        for button in self.buttons:
+            button.change_state("unselected")
+        self.selected_button.change_state("selected")
+
+        for button in self.buttons:
+            button.update()
 
     def draw(self) -> None:
         super().draw()
 
         self.game.screen.blit(self.title, self.title_rect)
+        self.game.screen.blit(self.credit, self.credit_rect)
         for button in self.buttons:
             button.draw(self.game.screen)
-        self.game.screen.blit(self.credit, self.credit_rect)
