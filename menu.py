@@ -42,19 +42,24 @@ class MenuState(State):
         self.selected_button_index = 0
         self.selected_button = self.buttons.sprites()[self.selected_button_index]
 
+    def events(self, event: pygame.event.Event) -> None:
+        super().events(event)
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                self.selected_button_index -= 1
+            if event.key == pygame.K_DOWN:
+                self.selected_button_index += 1
+
     def update(self) -> None:
         super().update()
         
-        keys = pygame.key.get_pressed()
-        
-        if keys[pygame.K_UP]:
-            self.selected_button_index -= 1
-        if keys[pygame.K_DOWN]:
-            self.selected_button_index += 1
         if self.selected_button_index < 0:
             self.selected_button_index = len(self.buttons) - 1
         if self.selected_button_index > len(self.buttons) - 1:
             self.selected_button_index = 0
+
+        # self.selected_button_index = max(0, min(self.selected_button_index, len(self.buttons) - 1))
         
         self.selected_button = self.buttons.sprites()[self.selected_button_index]
         for button in self.buttons:

@@ -6,8 +6,6 @@ import pygame
 from abc import ABC, abstractmethod
 from typing import Callable, Dict
 
-import sys
-
 from settings import *
 settings = Settings()
 

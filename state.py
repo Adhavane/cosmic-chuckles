@@ -34,6 +34,9 @@ class State(ABC):
             cloud = Cloud()
             self.clouds.add(cloud)
 
+    def events(self, _: pygame.event.Event) -> None:
+        pass
+
     def update(self) -> None:
         self.background.update()
         

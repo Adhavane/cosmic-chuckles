@@ -39,6 +39,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.quit()
+            self.state.events(event)
         
     def update(self) -> None:
         self.state.update()
