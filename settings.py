@@ -119,6 +119,7 @@ class Settings:
         self.ENEMY_PURPLE_MOVEMENT_SPEED = 1
         self.ENEMY_PURPLE_MOVEMENT_COOLDOWN = 30
         self.ENEMY_PURPLE_MOVEMENT_PATTERN = "move_target"
+        self.ENEMY_PURPLE_SCORE = 10
         
         self.ENEMY_RED_IMG = "assets/enemy_red_bis.png"
         

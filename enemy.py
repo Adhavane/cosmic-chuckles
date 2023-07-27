@@ -23,7 +23,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
                  reload_time: Optional[int],
                  movement_speed: int,
                  movement_cooldown: int,
-                 movement_pattern: str) -> None:
+                 movement_pattern: str,
+                 score: int) -> None:
         super().__init__()
 
         self.health = health
@@ -40,6 +41,7 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.movement_pattern = getattr(self, movement_pattern)
 
         self.angle = random.randint(0, 360)
+        self.score = score
 
         self.can_shoot = True
         self.shoot_timer = 0
@@ -90,7 +92,8 @@ class EnemyPurple(Enemy):
                          settings.ENEMY_PURPLE_RELOAD_TIME,
                          settings.ENEMY_PURPLE_MOVEMENT_SPEED,
                          settings.ENEMY_PURPLE_MOVEMENT_COOLDOWN,
-                         settings.ENEMY_PURPLE_MOVEMENT_PATTERN)
+                         settings.ENEMY_PURPLE_MOVEMENT_PATTERN,
+                         settings.ENEMY_PURPLE_SCORE)
                          
         self.image = pygame.image.load(settings.ENEMY_PURPLE_IMG).convert_alpha()
 

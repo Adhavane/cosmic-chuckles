@@ -10,6 +10,7 @@ settings = Settings()
 
 from game import State
 from score import Score
+from particle import Particle
 from player import Player
 from enemy import EnemyPurple
 
@@ -17,8 +18,8 @@ class PlayState(State):
     def __init__(self, game) -> None:
         super().__init__(game)
 
+        self.score_counter = 0
         self.score = Score()
-        self.sc = 0
 
         self.player = Player()
 
@@ -27,14 +28,19 @@ class PlayState(State):
         self.enemy_cooldown = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
         self.enemies = pygame.sprite.Group()
 
+        self.particles = pygame.sprite.Group()
+
     def update(self) -> None:
         super().update()
 
-        self.score.update(self.sc)
+        self.score.update(self.score_counter)
+
         self.player.update()
 
         self.spawn_enemies()
         self.enemies.update(self.player)
+
+        self.particles.update()
 
         self.collisions()
     
@@ -47,7 +53,16 @@ class PlayState(State):
             self.enemies.add(enemy)
 
     def collisions(self) -> None:
-        pass
+        collisions_bullets_enemies = pygame.sprite.groupcollide(self.player.bullets, self.enemies, False, False, pygame.sprite.collide_mask)
+        # For each bullet, damage the first enemy it collides with
+        for bullet, enemies in collisions_bullets_enemies.items():
+            for enemy in enemies:
+                enemy.health -= bullet.damage
+                # Destroy bullet and add particle effect
+                for _ in range(10):
+                    self.particles.add(Particle((255, 255, 255), bullet.rect.x, bullet.rect.y))
+                bullet.kill()
+                self.score_counter += enemy.score
 
     def draw(self) -> None:
         super().draw()
@@ -57,3 +72,6 @@ class PlayState(State):
         self.player.draw(self.game.screen)
         for enemy in self.enemies:
             enemy.draw(self.game.screen)
+
+        for particle in self.particles:
+            particle.draw(self.game.screen)
