@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """play.py: PlayState class."""
 
@@ -10,18 +10,21 @@ settings = Settings()
 
 from game import State
 from score import Score
-from particle import Particle
+from health import Health
 from player import Player
 from enemy import EnemyPurple
+from particle import Particle
 
 class PlayState(State):
     def __init__(self, game) -> None:
         super().__init__(game)
 
+        self.player = Player()
+
         self.score_counter = 0
         self.score = Score()
 
-        self.player = Player()
+        self.health = Health(self.player.health)
 
         self.can_spawn = True
         self.enemy_timer = 0
@@ -34,6 +37,7 @@ class PlayState(State):
         super().update()
 
         self.score.update(self.score_counter)
+        self.health.update(self.player.health)
 
         self.player.update()
 
@@ -68,6 +72,7 @@ class PlayState(State):
         super().draw()
 
         self.score.draw(self.game.screen)
+        self.health.draw(self.game.screen)
 
         self.player.draw(self.game.screen)
         for enemy in self.enemies:

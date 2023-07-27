@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """settings.py: Settings for the game."""
 
@@ -87,6 +87,16 @@ class Settings:
         self.SCORE_Y = 12 * 2
         self.SCORE_FONT = "assets/SUPERNAT1001.TTF"
         self.SCORE_SIZE = 24 * 2
+
+        # Health settings
+        self.HEART_IMG = "assets/heart.png"
+        self.HEART_X = 512
+        self.HEART_Y = 18 * 2
+        self.HEART_HEIGHT = 10 * 4
+
+        self.HEALTH_Y = 12 * 2
+        self.HEALTH_FONT = "assets/SUPERNAT1001.TTF"
+        self.HEALTH_SIZE = 24 * 2
 
         # Particle settings
         self.PARTICLE_IMG = "assets/particle.png"

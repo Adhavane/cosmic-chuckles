@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """score.py: Score class."""
 
@@ -11,20 +11,20 @@ from caption import Caption, CaptionList
 
 class Score(CaptionList):
     def __init__(self) -> None:
-        score_label = Caption("SCORE<", settings.SCORE_FONT, settings.SCORE_SIZE,
+        score_left = Caption("SCORE<", settings.SCORE_FONT, settings.SCORE_SIZE,
                              True, settings.WHITE,
                              settings.SCORE_X, settings.SCORE_Y)
-        score = Caption("0", settings.SCORE_FONT, settings.SCORE_SIZE,
-                        True, settings.GREEN,
-                        settings.SCORE_X + score_label.rect.width,
-                        settings.SCORE_Y)
-        score_arrow = Caption(">", settings.SCORE_FONT, settings.SCORE_SIZE,
+        score_counter = Caption("0", settings.SCORE_FONT, settings.SCORE_SIZE,
+                                True, settings.GREEN,
+                                settings.SCORE_X + score_left.rect.width,
+                                settings.SCORE_Y)
+        score_right = Caption(">", settings.SCORE_FONT, settings.SCORE_SIZE,
                               True, settings.WHITE,
-                              settings.SCORE_X + score_label.rect.width + score.rect.width,
+                              settings.SCORE_X + score_left.rect.width + score_counter.rect.width,
                               settings.SCORE_Y)
-        self.append(score_label)
-        self.append(score)
-        self.append(score_arrow)
+        self.append(score_left)
+        self.append(score_counter)
+        self.append(score_right)
 
     def update(self, score: int) -> None:
         self[1].text = str(score)
