@@ -9,6 +9,7 @@ from settings import *
 settings = Settings()
 
 from game import State
+from game_over import GameOverState
 from score import Score
 from health import Health
 from player import Player
@@ -47,6 +48,9 @@ class PlayState(State):
         self.particles.update()
 
         self.collisions()
+
+        if self.player.health <= 0:
+            self.game.change_state(GameOverState(self.game, self.score_counter))
     
     def spawn_enemies(self) -> None:
         current_time = pygame.time.get_ticks()
@@ -67,6 +71,11 @@ class PlayState(State):
                     self.particles.add(Particle((255, 255, 255), bullet.rect.x, bullet.rect.y))
                 bullet.kill()
                 self.score_counter += enemy.score
+
+        collisions_player_enemies = pygame.sprite.spritecollide(self.player, self.enemies, False, pygame.sprite.collide_mask)
+        for enemy in collisions_player_enemies:
+            self.player.health -= enemy.body_damage
+            enemy.health = 0
 
     def draw(self) -> None:
         super().draw()
