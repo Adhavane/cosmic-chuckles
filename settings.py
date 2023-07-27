@@ -92,7 +92,6 @@ class Settings:
         self.PARTICLE_IMG = "assets/particle.png"
         self.PARTICLE_HEIGHT = 2 * 2
 
-
         # Player settings
         self.PLAYER_IMG = "assets/player_bis.png"
         self.PLAYER_HEIGHT = 32 * 4
