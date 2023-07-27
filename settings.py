@@ -81,6 +81,12 @@ class Settings:
         self.QUIT_HEIGHT = 10 * 8
         self.QUIT_OPACITY = {"selected": 255,
                              "unselected": 64}
+        
+        # Score settings
+        self.SCORE_X = 12 * 2
+        self.SCORE_Y = 12 * 2
+        self.SCORE_FONT = "assets/SUPERNAT1001.TTF"
+        self.SCORE_SIZE = 24 * 2
 
         # Player settings
         self.PLAYER_IMG = "assets/player_bis.png"
