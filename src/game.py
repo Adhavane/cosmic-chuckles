@@ -2,10 +2,12 @@
 
 """game.py: Game class."""
 
-import pygame
 import sys
+sys.path.append("src")
 
-from settings import *
+import pygame
+
+from settings import Settings
 settings = Settings()
 
 from state import State

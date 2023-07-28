@@ -8,7 +8,7 @@ from typing import Optional, Callable
 import random
 import math
 
-from settings import *
+from settings import Settings
 settings = Settings()
 
 from player import Player

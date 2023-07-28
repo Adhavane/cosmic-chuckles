@@ -4,10 +4,10 @@
 
 import pygame
 
-from settings import *
+from settings import Settings
 settings = Settings()
 
-from game import State
+from state import State
 from caption import Caption
 
 class GameOverState(State):

@@ -5,7 +5,7 @@
 import pygame
 import math
 
-from settings import *
+from settings import Settings
 settings = Settings()
 
 from projectile import BulletPlayer

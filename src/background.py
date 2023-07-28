@@ -3,12 +3,11 @@
 """background.py: Background class."""
 
 import pygame
-
-from settings import *
-settings = Settings()
-
 import random
 import math
+
+from settings import Settings
+settings = Settings()
 
 class Background(pygame.sprite.Sprite):
     def __init__(self) -> None:

@@ -3,11 +3,10 @@
 """cloud.py: Cloud class."""
 
 import pygame
-
-from settings import *
-settings = Settings()
-
 import random
+
+from settings import Settings
+settings = Settings()
 
 class Cloud(pygame.sprite.Sprite):
     def __init__(self) -> None:

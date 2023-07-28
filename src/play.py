@@ -5,13 +5,15 @@
 import pygame
 import random
 
-from settings import *
+from settings import Settings
 settings = Settings()
 
-from game import State
-from game_over import GameOverState
+from state import State
+from gameover import GameOverState
+
 from score import Score
 from health import Health
+
 from player import Player
 from enemy import EnemyPurple
 from particle import Particle

@@ -4,7 +4,7 @@
 
 import pygame
 
-from settings import *
+from settings import Settings
 settings = Settings()
 
 from state import State

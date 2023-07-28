@@ -6,7 +6,7 @@ import pygame
 from abc import ABC, abstractmethod
 from typing import Callable, Dict
 
-from settings import *
+from settings import Settings
 settings = Settings()
 
 from play import PlayState

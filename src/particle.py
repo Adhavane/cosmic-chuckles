@@ -5,7 +5,7 @@
 import random
 from typing import Tuple
 
-from settings import *
+from settings import Settings
 settings = Settings()
 
 from projectile import Projectile

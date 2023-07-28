@@ -2,8 +2,6 @@
 
 """settings.py: Settings for the game."""
 
-import pygame
-
 class Settings:
     def __init__(self) -> None:
         # Screen settings
@@ -13,7 +11,7 @@ class Settings:
         self.FPS = 60
 
         self.TITLE = "Cosmic Chuckles - Python/Pygame"
-        self.ICON = "assets/icon.png"
+        self.ICON = "assets/images/icon.png"
 
         # Colors
         self.WHITE = (255, 255, 255)
@@ -23,7 +21,7 @@ class Settings:
         self.BLUE = (0, 0, 255)
 
         # Background settings
-        self.BG_IMG = "assets/background_4.png"
+        self.BG_IMG = "assets/sprites/pixel_art/background.png"
         self.BG_WIDTH = 1380 * 1.25
         self.BG_HEIGHT = 1024 * 1.25
 
@@ -39,12 +37,12 @@ class Settings:
         self.BG_ANGLE_MAX = 360
 
         # Cloud settings
-        self.CLOUD_IMGS = ["assets/cloud_0.png",
-                           "assets/cloud_1.png",
-                            # "assets/cloud_2.png",
-                            "assets/cloud_3.png",
-                            # "assets/cloud_4.png",
-                            "assets/cloud_5.png"]
+        self.CLOUD_IMGS = ["assets/sprites/pixel_art/cloud_0.png",
+                           "assets/sprites/pixel_art/cloud_1.png",
+                            # "assets/sprites/pixel_art/cloud_2.png",
+                            "assets/sprites/pixel_art/cloud_3.png",
+                            # "assets/sprites/pixel_art/cloud_4.png",
+                            "assets/sprites/pixel_art/cloud_5.png"]
         self.CLOUD_INIT = 5
         self.CLOUD_HEIGHT_MIN = 50
         self.CLOUD_HEIGHT_MAX = 400
@@ -57,26 +55,26 @@ class Settings:
         self.CLOUD_TIME_MAX = 2000
 
         # Title settings
-        self.TITLE_IMG = "assets/title.png"
+        self.TITLE_IMG = "assets/sprites/pixel_art/title.png"
         self.TITLE_Y = 74 * 2
         self.TITLE_HEIGHT = 42 * 10
 
         # Credit settings
-        self.CREDIT_IMG = "assets/credit.png"
+        self.CREDIT_IMG = "assets/sprites/pixel_art/credit.png"
         self.CREDIT_Y = 288 * 2
         self.CREDIT_HEIGHT = 8 * 2
 
         # Start button settings
-        self.PLAY_IMGS = {"selected": "assets/play_selected.png",
-                          "unselected": "assets/play_unselected.png"}
+        self.PLAY_IMGS = {"selected": "assets/sprites/pixel_art/play_selected.png",
+                          "unselected": "assets/sprites/pixel_art/play_unselected.png"}
         self.PLAY_Y = 326 * 2
         self.PLAY_HEIGHT = 9 * 8
         self.PLAY_OPACITY = {"selected": 255,
                              "unselected": 64}
 
         # Quit button settings
-        self.QUIT_IMGS = {"selected": "assets/quit_selected.png",
-                          "unselected": "assets/quit_unselected.png"}
+        self.QUIT_IMGS = {"selected": "assets/sprites/pixel_art/quit_selected.png",
+                          "unselected": "assets/sprites/pixel_art/quit_unselected.png"}
         self.QUIT_Y = 383 * 2
         self.QUIT_HEIGHT = 10 * 8
         self.QUIT_OPACITY = {"selected": 255,
@@ -85,25 +83,25 @@ class Settings:
         # Score settings
         self.SCORE_X = 12 * 2
         self.SCORE_Y = 12 * 2
-        self.SCORE_FONT = "assets/SUPERNAT1001.TTF"
+        self.SCORE_FONT = "assets/fonts/SUPERNAT1001.TTF"
         self.SCORE_SIZE = 24 * 2
 
         # Health settings
-        self.HEART_IMG = "assets/heart.png"
+        self.HEART_IMG = "assets/sprites/pixel_art/heart.png"
         self.HEART_X = 512
         self.HEART_Y = 18 * 2
         self.HEART_HEIGHT = 10 * 4
 
         self.HEALTH_Y = 12 * 2
-        self.HEALTH_FONT = "assets/SUPERNAT1001.TTF"
+        self.HEALTH_FONT = "assets/fonts/SUPERNAT1001.TTF"
         self.HEALTH_SIZE = 24 * 2
 
         # Particle settings
-        self.PARTICLE_IMG = "assets/particle.png"
+        self.PARTICLE_IMG = "assets/sprites/pixel_art/particle.png"
         self.PARTICLE_HEIGHT = 2 * 2
 
         # Player settings
-        self.PLAYER_IMG = "assets/player_bis.png"
+        self.PLAYER_IMG = "assets/sprites/pixel_art/player.png"
         self.PLAYER_HEIGHT = 32 * 4
         self.PLAYER_HEALTH = 100
         self.PLAYER_REGEN = 1
@@ -114,16 +112,16 @@ class Settings:
         self.PLAYER_MOVEMENT_SPEED = 5
 
         # Bullet settings
-        self.BULLET_PLAYER_IMG = "assets/bullet_player_bis.png"
+        self.BULLET_PLAYER_IMG = "assets/sprites/pixel_art/bullet_player.png"
         self.BULLET_PLAYER_HEIGHT = 32 * 2
-        self.BULLET_ENEMY_IMG = "assets/bullet_enemy.png"
+        self.BULLET_ENEMY_IMG = "assets/sprites/pixel_art/bullet_enemy.png"
         self.BULLET_ENEMY_HEIGHT = 32 * 2
 
         # Enemy settings
         self.ENEMY_TIME_MIN = 1000
         self.ENEMY_TIME_MAX = 2000
 
-        self.ENEMY_PURPLE_IMG = "assets/enemy_purple_bis.png"
+        self.ENEMY_PURPLE_IMG = "assets/sprites/pixel_art/enemy_purple.png"
         self.ENEMY_PURPLE_HEIGHT = 36 * 4
         self.ENEMY_PURPLE_HEALTH = 20
         self.ENEMY_PURPLE_BODY_DAMAGE = 10
@@ -136,10 +134,10 @@ class Settings:
         self.ENEMY_PURPLE_MOVEMENT_PATTERN = "move_target"
         self.ENEMY_PURPLE_SCORE = 10
         
-        self.ENEMY_RED_IMG = "assets/enemy_red_bis.png"
+        self.ENEMY_RED_IMG = "assets/sprites/pixel_art/enemy_red.png"
         
-        self.ENEMY_GREEN_IMG = "assets/enemy_green_bis.png"
+        self.ENEMY_GREEN_IMG = "assets/sprites/pixel_art/enemy_green.png"
 
-        self.ENEMY_GREEN_BABY_IMG = "assets/enemy_green_baby_bis.png"
+        self.ENEMY_GREEN_BABY_IMG = "assets/sprites/pixel_art/enemy_green_baby.png"
 
 

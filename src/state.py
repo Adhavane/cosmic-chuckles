@@ -2,11 +2,14 @@
 
 """state.py: State class."""
 
+import sys
+sys.path.append("src")
+
 import pygame
 import random
 from abc import ABC, abstractmethod
 
-from settings import *
+from settings import Settings
 settings = Settings()
 
 from background import Background

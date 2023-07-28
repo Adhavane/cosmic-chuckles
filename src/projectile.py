@@ -6,7 +6,7 @@ import pygame
 from abc import ABC, abstractmethod
 import math
 
-from settings import *
+from settings import Settings
 settings = Settings()
 
 class Projectile(ABC, pygame.sprite.Sprite):
