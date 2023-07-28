@@ -139,5 +139,3 @@ class Settings:
         self.ENEMY_GREEN_IMG = "assets/sprites/pixel_art/enemy_green.png"
 
         self.ENEMY_GREEN_BABY_IMG = "assets/sprites/pixel_art/enemy_green_baby.png"
-
-

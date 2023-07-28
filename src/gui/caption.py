@@ -6,7 +6,7 @@ import pygame
 from typing import List, Tuple
 from abc import ABC, abstractmethod
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
 class Caption(pygame.sprite.Sprite):

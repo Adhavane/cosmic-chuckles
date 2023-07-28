@@ -4,11 +4,11 @@
 
 import pygame
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from state import State
-from button import ButtonPlay, ButtonQuit
+from src.scenes.state import State
+from src.gui.button import ButtonPlay, ButtonQuit
 
 class MenuState(State):
     def __init__(self, game) -> None:

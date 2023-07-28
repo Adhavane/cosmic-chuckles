@@ -4,10 +4,10 @@
 
 import pygame
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from caption import Caption, CaptionList
+from src.gui.caption import Caption, CaptionList
 
 class Score(CaptionList):
     def __init__(self) -> None:

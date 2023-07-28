@@ -2,16 +2,14 @@
 
 """game.py: Game class."""
 
-import sys
-sys.path.append("src")
-
 import pygame
+import sys
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from state import State
-from menu import MenuState
+from src.scenes.state import State
+from src.scenes.menu import MenuState
 
 class Game:
     def __init__(self) -> None:

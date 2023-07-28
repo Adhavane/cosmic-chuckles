@@ -5,10 +5,10 @@
 import random
 from typing import Tuple
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from projectile import Projectile
+from src.prefabs.projectile import Projectile
 
 class Particle(Projectile):
     def __init__(self, color: Tuple[int, int, int], x: int, y: int) -> None:

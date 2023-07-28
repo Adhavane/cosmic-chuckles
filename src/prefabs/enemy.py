@@ -8,10 +8,10 @@ from typing import Optional, Callable
 import random
 import math
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from player import Player
+from src.prefabs.player import Player
 
 class Enemy(ABC, pygame.sprite.Sprite):
     def __init__(self,

@@ -4,11 +4,11 @@
 
 import pygame
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from state import State
-from caption import Caption
+from src.scenes.state import State
+from src.gui.caption import Caption
 
 class GameOverState(State):
     def __init__(self, game, score: int) -> None:

@@ -6,10 +6,10 @@ import pygame
 from abc import ABC, abstractmethod
 from typing import Callable, Dict
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from play import PlayState
+from src.scenes.play import PlayState
 
 class Game:
     pass

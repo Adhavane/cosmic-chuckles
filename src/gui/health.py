@@ -4,10 +4,10 @@
 
 import pygame
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from caption import Caption, CaptionList
+from src.gui.caption import Caption, CaptionList
 
 class Health:
     def __init__(self, health: int) -> None:
@@ -17,7 +17,7 @@ class Health:
         self.heart = pygame.transform.scale(self.heart, (int(self.heart.get_width() * scale), int(self.heart.get_height() * scale)))
 
         self.heart_rect = self.heart.get_rect()
-        self.heart_rect.x = settings.HEART_X
+        self.heart_rect.x = settings.WIDTH / 2 - self.heart_rect.width / 2
         self.heart_rect.y = settings.HEART_Y
 
         health_left = Caption(" <", settings.HEALTH_FONT, settings.HEALTH_SIZE,

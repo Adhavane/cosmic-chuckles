@@ -5,18 +5,18 @@
 import pygame
 import random
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from state import State
-from gameover import GameOverState
+from src.scenes.state import State
+from src.scenes.gameover import GameOverState
 
-from score import Score
-from health import Health
+from src.gui.score import Score
+from src.gui.health import Health
 
-from player import Player
-from enemy import EnemyPurple
-from particle import Particle
+from src.prefabs.player import Player
+from src.prefabs.enemy import EnemyPurple
+from src.prefabs.particle import Particle
 
 class PlayState(State):
     def __init__(self, game) -> None:

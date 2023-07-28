@@ -9,11 +9,11 @@ import pygame
 import random
 from abc import ABC, abstractmethod
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from background import Background
-from cloud import Cloud
+from src.prefabs.background import Background
+from src.prefabs.cloud import Cloud
 
 class State(ABC):
     def __init__(self, game) -> None:

@@ -7,14 +7,14 @@ __contact__ = "adhavane.moudougannane@etu.utc.fr"
 __copyright__ = "Copyright 2023, Amoudou"
 __credits__ = ["Adhavane Moudougannane"]
 __date__ = "2023/07/23"
-__email__ =  "adhavane.moudougannane@etu.utc.fr"
+__email__ = "adhavane.moudougannane@etu.utc.fr"
 __maintainer__ = "Adhavane Moudougannane"
 __status__ = "Prototype"
 
 import ctypes
 ctypes.windll.user32.SetProcessDPIAware()
 
-from game import Game
+from src.game import Game
 
 def main() -> None:
     game = Game()

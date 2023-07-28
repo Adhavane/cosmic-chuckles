@@ -6,7 +6,7 @@ import pygame
 import random
 import math
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
 class Background(pygame.sprite.Sprite):

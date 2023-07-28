@@ -5,10 +5,10 @@
 import pygame
 import math
 
-from settings import Settings
+from src.settings import Settings
 settings = Settings()
 
-from projectile import BulletPlayer
+from src.prefabs.projectile import BulletPlayer
 
 class Player(pygame.sprite.Sprite):
     def __init__(self,
