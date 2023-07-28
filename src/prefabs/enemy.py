@@ -63,14 +63,14 @@ class Enemy(ABC, pygame.sprite.Sprite):
             self.kill()
 
     def move_random(self, _: Player) -> None:
-        self.rect.x += int(math.sin(math.radians(self.angle)) * self.movement_speed)
-        self.rect.y += int(math.cos(math.radians(self.angle)) * self.movement_speed)
+        self.rect.x += math.sin(math.radians(self.angle)) * self.movement_speed
+        self.rect.y += math.cos(math.radians(self.angle)) * self.movement_speed
 
     def move_target(self, player: Player) -> None:
         rel_x, rel_y = self.rect.centerx - player.rect.centerx, self.rect.centery - player.rect.centery
         self.angle = (180 / math.pi) * math.atan2(rel_x, rel_y)
-        self.rect.x -= int(math.sin(math.radians(self.angle)) * self.movement_speed)
-        self.rect.y -= int(math.cos(math.radians(self.angle)) * self.movement_speed)
+        self.rect.x -= math.sin(math.radians(self.angle)) * self.movement_speed
+        self.rect.y -= math.cos(math.radians(self.angle)) * self.movement_speed
 
     def constraints(self) -> None:
         # Kill enemy if goes off screen
