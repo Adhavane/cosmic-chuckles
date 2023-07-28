@@ -2,25 +2,26 @@
 
 """game.py: Game class."""
 
+from __future__ import annotations
+
 import pygame
 import sys
 
 from src.settings import Settings
 settings = Settings()
 
-from src.scenes.state import State
-from src.scenes.menu import MenuState
-
 class Game:
     def __init__(self) -> None:
+        from src.scenes.menu import MenuState
+
         pygame.init()
-        self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
-        self.clock = pygame.time.Clock()
+        self.screen: pygame.Surface = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
+        self.clock: pygame.time.Clock = pygame.time.Clock()
 
         pygame.display.set_caption(settings.TITLE)
         pygame.display.set_icon(pygame.image.load(settings.ICON))
 
-        self.state = MenuState(self)
+        self.state: State = MenuState(self)
 
     def change_state(self, state: State) -> None:
         self.state = state
@@ -44,8 +45,10 @@ class Game:
     def update(self) -> None:
         self.state.update()
 
+        pygame.display.update()
+        self.clock.tick(settings.FPS)
+
     def draw(self) -> None:
         self.state.draw()
 
-        pygame.display.update()
-        self.clock.tick(settings.FPS)
+from src.scenes.state import State

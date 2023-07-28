@@ -12,28 +12,36 @@ settings = Settings()
 class Background(pygame.sprite.Sprite):
     def __init__(self) -> None:
         super().__init__()
+
+        width: int
+        height: int
         
-        self.image = pygame.image.load(settings.BG_IMG).convert()
-        self.rect = self.image.get_rect()
+        self.image: pygame.Surface = pygame.image.load(settings.BG_IMG).convert_alpha()
+        self.rect: pygame.Rect = self.image.get_rect()
         self.rect.center = (int(settings.SCREEN_WIDTH / 2), int(settings.SCREEN_HEIGHT / 2))
 
-        scale = max(settings.BG_WIDTH / self.rect.width, settings.BG_HEIGHT / self.rect.height)
-        self.image = pygame.transform.scale(self.image, (int(self.rect.width * scale), int(self.rect.height * scale)))
+        scale: float = max(settings.BG_WIDTH / self.rect.width, settings.BG_HEIGHT / self.rect.height)
+        width = int(self.rect.width * scale)
+        height = int(self.rect.height * scale)
+        self.image = pygame.transform.scale(self.image, (width, height))
 
         self.rect = self.image.get_rect()
-        self.rect.center = (int(settings.SCREEN_WIDTH / 2), int(settings.SCREEN_HEIGHT / 2))
+        width = int(settings.SCREEN_WIDTH / 2)
+        height = int(settings.SCREEN_HEIGHT / 2)
+        self.rect.center = (width, height)
 
         # Set up random movement
-        self.moving_random = True
-        self.moving_timer_keys = 0
-        self.moving_timer_random = 0
-        self.moving_timer_direction = 0
-        self.moving_cooldown = random.randint(settings.BG_TIME_MIN, settings.BG_TIME_MAX)
-        self.moving_direction = random.randint(settings.BG_ANGLE_MIN, settings.BG_ANGLE_MAX)
+        self.moving_random: bool = True
+        self.moving_timer_keys: int = 0
+        self.moving_timer_random: int = 0
+        self.moving_timer_direction: int = 0
+        self.moving_cooldown: int = random.randint(settings.BG_TIME_MIN, settings.BG_TIME_MAX)
+        self.moving_direction: int = random.randint(settings.BG_ANGLE_MIN, settings.BG_ANGLE_MAX)
 
     def update(self) -> None:
         self.move_keys()
-        self.move_random()
+        if self.moving_random:
+            self.move_random()
         self.constraints()
 
     def constraints(self) -> None:
@@ -53,7 +61,7 @@ class Background(pygame.sprite.Sprite):
 
     def move_keys(self) -> None:
         # Move background with keys
-        current_time = pygame.time.get_ticks()
+        current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer_keys > settings.BG_DELTA_KEYS:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
@@ -65,20 +73,18 @@ class Background(pygame.sprite.Sprite):
             if keys[pygame.K_RIGHT]:
                 self.rect.x -= settings.BG_SPEED_KEYS
             self.moving_timer_keys = pygame.time.get_ticks()
-            self.moving_random = True
 
     def move_random(self) -> None:
         # Move background randomly
-        current_time = pygame.time.get_ticks()
+        current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer_random > settings.BG_DELTA_RANDOM:
-            self.rect.x += int(settings.BG_SPEED_RANDOM * math.cos(math.radians(self.moving_direction)))
-            self.rect.y += int(settings.BG_SPEED_RANDOM * math.sin(math.radians(self.moving_direction)))
+            self.rect.x += math.ceil(settings.BG_SPEED_RANDOM * math.cos(math.radians(self.moving_direction)))
+            self.rect.y += math.ceil(settings.BG_SPEED_RANDOM * math.sin(math.radians(self.moving_direction)))
             self.moving_timer_random = pygame.time.get_ticks()
 
         # Set up cooldown
         if current_time - self.moving_timer_direction > self.moving_cooldown:
             self.new_moving_direction()
-        self.moving_random = False
 
     def new_moving_direction(self) -> None:
         self.moving_timer_direction = pygame.time.get_ticks()

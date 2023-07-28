@@ -17,7 +17,7 @@ ctypes.windll.user32.SetProcessDPIAware()
 from src.game import Game
 
 def main() -> None:
-    game = Game()
+    game: Game = Game()
     game.run()
 
 if __name__ == "__main__":

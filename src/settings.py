@@ -4,8 +4,7 @@
 
 class Settings:
     def __init__(self) -> None:
-        # Screen settings
-        # format 4:3
+        # Screen settings for format 4:3
         self.SCREEN_WIDTH = 1380
         self.SCREEN_HEIGHT = 1024
         self.FPS = 60
@@ -49,8 +48,8 @@ class Settings:
         self.CLOUD_SPEED_MIN = 1
         self.CLOUD_SPEED_MAX = 3
         self.CLOUD_DELTA = 30
-        self.OPACITY_MIN = 8
-        self.OPACITY_MAX = 64
+        self.CLOUD_OPACITY_MIN = 8
+        self.CLOUD_OPACITY_MAX = 64
         self.CLOUD_TIME_MIN = 1000
         self.CLOUD_TIME_MAX = 2000
 
@@ -131,7 +130,7 @@ class Settings:
         self.ENEMY_PURPLE_RELOAD_TIME = None
         self.ENEMY_PURPLE_MOVEMENT_SPEED = 1
         self.ENEMY_PURPLE_MOVEMENT_COOLDOWN = 30
-        self.ENEMY_PURPLE_MOVEMENT_PATTERN = "move_target"
+        self.ENEMY_PURPLE_MOVEMENT_PATTERN = "move_random"
         self.ENEMY_PURPLE_SCORE = 10
         
         self.ENEMY_RED_IMG = "assets/sprites/pixel_art/enemy_red.png"

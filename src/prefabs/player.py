@@ -21,29 +21,32 @@ class Player(pygame.sprite.Sprite):
                  movement_speed: int = settings.PLAYER_MOVEMENT_SPEED) -> None:
         super().__init__()
 
-        self.original_image = pygame.image.load(settings.PLAYER_IMG).convert_alpha()
+        self.original_image: pygame.Surface = pygame.image.load(settings.PLAYER_IMG).convert_alpha()
         
-        scale = settings.PLAYER_HEIGHT / self.original_image.get_height()
-        self.original_image = pygame.transform.scale(self.original_image, (int(self.original_image.get_width() * scale), int(self.original_image.get_height() * scale)))
-        self.image = self.original_image.copy()
+        scale: float = settings.PLAYER_HEIGHT / self.original_image.get_height()
+        width: int = int(self.original_image.get_width() * scale)
+        height: int = int(self.original_image.get_height() * scale)
+        self.original_image = pygame.transform.scale(self.original_image, (width, height))
+        self.image: pygame.Surface = self.original_image.copy()
 
-        self.rect = self.image.get_rect()
+        self.rect: pygame.Rect = self.image.get_rect()
         self.rect.center = (int(settings.SCREEN_WIDTH / 2), int(settings.SCREEN_HEIGHT / 2))
 
-        self.health = health
-        self.regen = regen
-        self.bullet_damage = bullet_damage
-        self.bullet_speed = bullet_speed
-        self.bullet_lifetime = bullet_lifetime
-        self.reload_time = reload_time
-        self.movement_speed = movement_speed
+        self.health: int = health
+        self.regen: int = regen
+        self.bullet_damage: int = bullet_damage
+        self.bullet_speed: int = bullet_speed
+        self.bullet_lifetime: int = bullet_lifetime
+        self.reload_time: int = reload_time
+        self.movement_speed: int = movement_speed
 
-        self.angle = 0
+        self.angle: float
+        self.rotate()
 
         # Set up shooting
-        self.can_shoot = True
-        self.shoot_timer = 0
-        self.shoot_cooldown = self.reload_time
+        self.can_shoot: bool = True
+        self.shoot_timer: int = 0
+        self.shoot_cooldown: int = self.reload_time
         self.bullets: pygame.sprite.Group[BulletPlayer] = pygame.sprite.Group()
 
     def update(self) -> None:
@@ -64,10 +67,12 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += self.movement_speed
 
     def rotate(self) -> None:
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        rel_x, rel_y = self.rect.centerx - mouse_x, self.rect.centery - mouse_y
-        self.angle = int((180 / math.pi) * math.atan2(rel_x, rel_y))
-        self.image = pygame.transform.rotate(self.original_image, int(self.angle))
+        mouse_x: int = pygame.mouse.get_pos()[0]
+        mouse_y: int = pygame.mouse.get_pos()[1]
+        rel_x: int = self.rect.centerx - mouse_x
+        rel_y: int = self.rect.centery - mouse_y
+        self.angle = (180 / math.pi) * math.atan2(rel_x, rel_y)
+        self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)
 
     def constraints(self) -> None:
@@ -82,11 +87,11 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = settings.SCREEN_HEIGHT
 
     def shoot(self) -> None:
-        keys = pygame.key.get_pressed()
+        keys: pygame.key.ScancodeWrapper = pygame.key.get_pressed()
         if (pygame.mouse.get_pressed()[0] or keys[pygame.K_SPACE]) and self.can_shoot:
             # Shoot bullet
-            pos_x = self.rect.centerx
-            pos_y = self.rect.centery
+            pos_x: int = self.rect.centerx
+            pos_y: int = self.rect.centery
             self.bullets.add(BulletPlayer(pos_x, pos_y, self.angle, self.bullet_speed, self.bullet_damage, self.bullet_lifetime))
 
             self.can_shoot = False
@@ -97,7 +102,7 @@ class Player(pygame.sprite.Sprite):
     def reload(self) -> None:
         # Reload weapon
         if not self.can_shoot:
-            current_time = pygame.time.get_ticks()
+            current_time: int = pygame.time.get_ticks()
             if current_time - self.shoot_timer >= self.shoot_cooldown:
                 self.can_shoot = True
 

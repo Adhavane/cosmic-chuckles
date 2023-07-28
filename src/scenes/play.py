@@ -5,6 +5,8 @@
 import pygame
 import random
 
+from typing import Dict, List, Sequence
+
 from src.settings import Settings
 settings = Settings()
 
@@ -15,26 +17,27 @@ from src.gui.score import Score
 from src.gui.health import Health
 
 from src.prefabs.player import Player
-from src.prefabs.enemy import EnemyPurple
+from src.prefabs.enemy import Enemy, EnemyPurple
+from src.prefabs.projectile import Projectile
 from src.prefabs.particle import Particle
 
 class PlayState(State):
     def __init__(self, game) -> None:
         super().__init__(game)
 
-        self.player = Player()
+        self.player: Player = Player()
 
-        self.score_counter = 0
+        self.score_counter: int = 0
         self.score = Score()
 
-        self.health = Health(self.player.health)
+        self.health: Health = Health(self.player.health)
 
-        self.can_spawn = True
-        self.enemy_timer = 0
-        self.enemy_cooldown = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
-        self.enemies: pygame.sprite.Group = pygame.sprite.Group()
+        self.can_spawn: bool = True
+        self.enemy_timer: int = 0
+        self.enemy_cooldown: int = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
+        self.enemies: pygame.sprite.Group[Enemy] = pygame.sprite.Group()
 
-        self.particles: pygame.sprite.Group = pygame.sprite.Group()
+        self.particles: pygame.sprite.Group[Particle] = pygame.sprite.Group()
 
     def update(self) -> None:
         super().update()
@@ -55,7 +58,7 @@ class PlayState(State):
             self.game.change_state(GameOverState(self.game, self.score_counter))
     
     def spawn_enemies(self) -> None:
-        current_time = pygame.time.get_ticks()
+        current_time: int = pygame.time.get_ticks()
         if current_time - self.enemy_timer > self.enemy_cooldown:
             self.enemy_timer = current_time
             self.enemy_cooldown = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
@@ -63,7 +66,10 @@ class PlayState(State):
             self.enemies.add(enemy)
 
     def collisions(self) -> None:
-        collisions_bullets_enemies = pygame.sprite.groupcollide(self.player.bullets, self.enemies, False, False, pygame.sprite.collide_mask)
+        collisions_bullets_enemies: Dict[Projectile, List[Enemy]] = \
+            pygame.sprite.groupcollide(self.player.bullets,
+                                       self.enemies, False, False,
+                                       pygame.sprite.collide_mask)
         # For each bullet, damage the first enemy it collides with
         for bullet, enemies in collisions_bullets_enemies.items():
             for enemy in enemies:
@@ -74,7 +80,9 @@ class PlayState(State):
                 bullet.kill()
                 self.score_counter += enemy.score
 
-        collisions_player_enemies = pygame.sprite.spritecollide(self.player, self.enemies, False, pygame.sprite.collide_mask)
+        collisions_player_enemies: Sequence[Enemy] = \
+            pygame.sprite.spritecollide(self.player, self.enemies, False,
+                                        pygame.sprite.collide_mask)
         for enemy in collisions_player_enemies:
             self.player.health -= enemy.body_damage
             enemy.health = 0

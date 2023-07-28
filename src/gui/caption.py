@@ -3,7 +3,7 @@
 """caption.py: Caption class and subclasses."""
 
 import pygame
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 from abc import ABC, abstractmethod
 
 from src.settings import Settings
@@ -19,18 +19,18 @@ class Caption(pygame.sprite.Sprite):
                  x: int, y: int) -> None:
         super().__init__()
 
-        self.text = text
-        self.size = size
-        self.font = pygame.font.Font(font, size)
+        self.text: str = text
+        self.size: int = size
+        self.font: pygame.font.Font = pygame.font.Font(font, self.size)
         
-        self.antialias = antialias
-        self.color = color
+        self.antialias: bool = antialias
+        self.color: Tuple[int, int, int] = color
 
-        self.text_render = self.font.render(self.text, self.antialias, self.color)
-        self.rect = self.text_render.get_rect()
+        self.text_render: pygame.Surface = self.font.render(self.text, self.antialias, self.color)
+        self.rect: pygame.Rect = self.text_render.get_rect()
         
-        self.x = x
-        self.y = y
+        self.x: int = x
+        self.y: int = y
 
     def update(self) -> None:
         self.text_render = self.font.render(self.text, self.antialias, self.color)
@@ -56,7 +56,7 @@ class CaptionList(ABC, List[Caption]):
     def append(self, caption: Caption) -> None:
         super().append(caption)
 
-    def update(self) -> None:
+    def update(self, *_: Tuple, **__: Dict) -> None:
         self[0].update()
         for i in range(1, len(self)):
             self[i].x = self[i - 1].x + self[i - 1].rect.width

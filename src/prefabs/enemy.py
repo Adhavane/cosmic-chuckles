@@ -12,12 +12,11 @@ from src.settings import Settings
 settings = Settings()
 
 from src.prefabs.player import Player
-from src.prefabs.projectile import BulletEnemy
 
 class Enemy(ABC, pygame.sprite.Sprite):
     def __init__(self,
                  health: int,
-                 body_damage: Optional[int],
+                 body_damage: int,
                  bullet_damage: Optional[int],
                  bullet_speed: Optional[int],
                  bullet_lifetime: Optional[int],
@@ -26,34 +25,36 @@ class Enemy(ABC, pygame.sprite.Sprite):
                  movement_cooldown: int,
                  movement_pattern: str,
                  score: int) -> None:
+        from src.prefabs.projectile import BulletEnemy
+
         ABC.__init__(self)
         pygame.sprite.Sprite.__init__(self)
 
-        self.health = health
-        self.body_damage = body_damage
-        self.bullet_damage = bullet_damage
-        self.bullet_speed = bullet_speed
-        self.bullet_lifetime = bullet_lifetime
-        self.reload_time = reload_time
+        self.health: int = health
+        self.body_damage: int = body_damage
+        self.bullet_damage: Optional[int] = bullet_damage
+        self.bullet_speed: Optional[int] = bullet_speed
+        self.bullet_lifetime: Optional[int] = bullet_lifetime
+        self.reload_time: Optional[int] = reload_time
 
-        self.moving_timer = 0
-        self.movement_cooldown = movement_cooldown
-        self.movement_speed = movement_speed
-        self.movement_pattern = getattr(self, movement_pattern)
+        self.moving_timer: int = 0
+        self.movement_cooldown: int = movement_cooldown
+        self.movement_speed: int = movement_speed
+        self.movement_pattern: Callable[[Player], None] = getattr(self, movement_pattern)
 
-        self.angle = random.randint(0, 360)
-        self.score = score
+        self.angle: float = random.uniform(0, 360)
+        self.score: int = score
 
-        self.can_shoot = True
-        self.shoot_timer = 0
+        self.can_shoot: bool = True
+        self.shoot_timer: int = 0
         self.shoot_cooldown = self.reload_time
         self.bullets: pygame.sprite.Group[BulletEnemy] = pygame.sprite.Group()
 
-        self.image: pygame.Surface = None
-        self.rect: pygame.Rect = None
+        self.image: pygame.Surface
+        self.rect: pygame.Rect
 
     def update(self, player: Player) -> None:
-        current_time = pygame.time.get_ticks()
+        current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer > self.movement_cooldown:
             self.movement_pattern(player)
             self.moving_timer = current_time
@@ -63,14 +64,15 @@ class Enemy(ABC, pygame.sprite.Sprite):
             self.kill()
 
     def move_random(self, _: Player) -> None:
-        self.rect.x += math.sin(math.radians(self.angle)) * self.movement_speed
-        self.rect.y += math.cos(math.radians(self.angle)) * self.movement_speed
+        self.rect.x += math.ceil(math.sin(math.radians(self.angle)) * self.movement_speed)
+        self.rect.y += math.ceil(math.cos(math.radians(self.angle)) * self.movement_speed)
 
     def move_target(self, player: Player) -> None:
-        rel_x, rel_y = self.rect.centerx - player.rect.centerx, self.rect.centery - player.rect.centery
+        rel_x: int = self.rect.centerx - player.rect.centerx
+        rel_y: int = self.rect.centery - player.rect.centery
         self.angle = (180 / math.pi) * math.atan2(rel_x, rel_y)
-        self.rect.x -= math.sin(math.radians(self.angle)) * self.movement_speed
-        self.rect.y -= math.cos(math.radians(self.angle)) * self.movement_speed
+        self.rect.x -= math.ceil(math.sin(math.radians(self.angle)) * self.movement_speed)
+        self.rect.y -= math.ceil(math.cos(math.radians(self.angle)) * self.movement_speed)
 
     def constraints(self) -> None:
         # Kill enemy if goes off screen
@@ -101,9 +103,11 @@ class EnemyPurple(Enemy):
                          
         self.image = pygame.image.load(settings.ENEMY_PURPLE_IMG).convert_alpha()
 
-        scale = settings.ENEMY_PURPLE_HEIGHT / self.image.get_height()
-        self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
-
+        scale: float = settings.ENEMY_PURPLE_HEIGHT / self.image.get_height()
+        width: int = int(self.image.get_width() * scale)
+        height: int = int(self.image.get_height() * scale)
+        self.image = pygame.transform.scale(self.image, (width, height))
+                                            
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, settings.SCREEN_WIDTH - self.rect.width)
         self.rect.y = random.randint(0, settings.SCREEN_HEIGHT - self.rect.height)
