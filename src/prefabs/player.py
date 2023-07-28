@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.original_image.copy()
 
         self.rect = self.image.get_rect()
-        self.rect.center = (settings.SCREEN_WIDTH / 2, settings.SCREEN_HEIGHT / 2)
+        self.rect.center = (int(settings.SCREEN_WIDTH / 2), int(settings.SCREEN_HEIGHT / 2))
 
         self.health = health
         self.regen = regen
@@ -44,7 +44,7 @@ class Player(pygame.sprite.Sprite):
         self.can_shoot = True
         self.shoot_timer = 0
         self.shoot_cooldown = self.reload_time
-        self.bullets = pygame.sprite.Group()
+        self.bullets: pygame.sprite.Group[BulletPlayer] = pygame.sprite.Group()
 
     def update(self) -> None:
         self.move()
@@ -66,7 +66,7 @@ class Player(pygame.sprite.Sprite):
     def rotate(self) -> None:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         rel_x, rel_y = self.rect.centerx - mouse_x, self.rect.centery - mouse_y
-        self.angle = (180 / math.pi) * math.atan2(rel_x, rel_y)
+        self.angle = int((180 / math.pi) * math.atan2(rel_x, rel_y))
         self.image = pygame.transform.rotate(self.original_image, int(self.angle))
         self.rect = self.image.get_rect(center=self.rect.center)
 

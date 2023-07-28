@@ -12,6 +12,7 @@ from src.settings import Settings
 settings = Settings()
 
 from src.prefabs.player import Player
+from src.prefabs.projectile import BulletEnemy
 
 class Enemy(ABC, pygame.sprite.Sprite):
     def __init__(self,
@@ -25,7 +26,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
                  movement_cooldown: int,
                  movement_pattern: str,
                  score: int) -> None:
-        super().__init__()
+        ABC.__init__(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.health = health
         self.body_damage = body_damage
@@ -37,7 +39,6 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.moving_timer = 0
         self.movement_cooldown = movement_cooldown
         self.movement_speed = movement_speed
-        # Call movement pattern function
         self.movement_pattern = getattr(self, movement_pattern)
 
         self.angle = random.randint(0, 360)
@@ -46,7 +47,10 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.can_shoot = True
         self.shoot_timer = 0
         self.shoot_cooldown = self.reload_time
-        self.bullets = pygame.sprite.Group()
+        self.bullets: pygame.sprite.Group[BulletEnemy] = pygame.sprite.Group()
+
+        self.image: pygame.Surface = None
+        self.rect: pygame.Rect = None
 
     def update(self, player: Player) -> None:
         current_time = pygame.time.get_ticks()
@@ -59,14 +63,14 @@ class Enemy(ABC, pygame.sprite.Sprite):
             self.kill()
 
     def move_random(self, _: Player) -> None:
-        self.rect.x += math.sin(math.radians(self.angle)) * self.movement_speed
-        self.rect.y += math.cos(math.radians(self.angle)) * self.movement_speed
+        self.rect.x += int(math.sin(math.radians(self.angle)) * self.movement_speed)
+        self.rect.y += int(math.cos(math.radians(self.angle)) * self.movement_speed)
 
     def move_target(self, player: Player) -> None:
         rel_x, rel_y = self.rect.centerx - player.rect.centerx, self.rect.centery - player.rect.centery
         self.angle = (180 / math.pi) * math.atan2(rel_x, rel_y)
-        self.rect.x -= math.sin(math.radians(self.angle)) * self.movement_speed
-        self.rect.y -= math.cos(math.radians(self.angle)) * self.movement_speed
+        self.rect.x -= int(math.sin(math.radians(self.angle)) * self.movement_speed)
+        self.rect.y -= int(math.cos(math.radians(self.angle)) * self.movement_speed)
 
     def constraints(self) -> None:
         # Kill enemy if goes off screen

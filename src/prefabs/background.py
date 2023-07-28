@@ -15,13 +15,13 @@ class Background(pygame.sprite.Sprite):
         
         self.image = pygame.image.load(settings.BG_IMG).convert()
         self.rect = self.image.get_rect()
-        self.rect.center = (settings.SCREEN_WIDTH / 2, settings.SCREEN_HEIGHT / 2)
+        self.rect.center = (int(settings.SCREEN_WIDTH / 2), int(settings.SCREEN_HEIGHT / 2))
 
         scale = max(settings.BG_WIDTH / self.rect.width, settings.BG_HEIGHT / self.rect.height)
         self.image = pygame.transform.scale(self.image, (int(self.rect.width * scale), int(self.rect.height * scale)))
 
         self.rect = self.image.get_rect()
-        self.rect.center = (settings.SCREEN_WIDTH / 2, settings.SCREEN_HEIGHT / 2)
+        self.rect.center = (int(settings.SCREEN_WIDTH / 2), int(settings.SCREEN_HEIGHT / 2))
 
         # Set up random movement
         self.moving_random = True
@@ -71,8 +71,8 @@ class Background(pygame.sprite.Sprite):
         # Move background randomly
         current_time = pygame.time.get_ticks()
         if current_time - self.moving_timer_random > settings.BG_DELTA_RANDOM:
-            self.rect.x += settings.BG_SPEED_RANDOM * math.cos(math.radians(self.moving_direction))
-            self.rect.y += settings.BG_SPEED_RANDOM * math.sin(math.radians(self.moving_direction))
+            self.rect.x += int(settings.BG_SPEED_RANDOM * math.cos(math.radians(self.moving_direction)))
+            self.rect.y += int(settings.BG_SPEED_RANDOM * math.sin(math.radians(self.moving_direction)))
             self.moving_timer_random = pygame.time.get_ticks()
 
         # Set up cooldown

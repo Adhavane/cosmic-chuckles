@@ -18,12 +18,12 @@ class GameOverState(State):
 
         self.score_caption = Caption("SCORE", settings.SCORE_FONT, settings.SCORE_SIZE,
                                      True, settings.WHITE,
-                                     settings.SCREEN_WIDTH / 2,
-                                     settings.SCREEN_HEIGHT / 2 + settings.SCORE_SIZE)
+                                     int(settings.SCREEN_WIDTH / 2),
+                                     int(settings.SCREEN_HEIGHT / 2 + settings.SCORE_SIZE))
         self.score_counter = Caption(str(score), settings.SCORE_FONT, settings.SCORE_SIZE,
                                      True, settings.GREEN,
-                                     settings.SCREEN_WIDTH / 2,
-                                     settings.SCREEN_HEIGHT / 2 + settings.SCORE_SIZE * 2)
+                                     int(settings.SCREEN_WIDTH / 2),
+                                     int(settings.SCREEN_HEIGHT / 2 + settings.SCORE_SIZE * 2))
 
     def update(self) -> None:
         pass

@@ -20,8 +20,8 @@ class Projectile(ABC, pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
 
         self.rect = self.image.get_rect()
-        self.rect.x = x - self.rect.width / 2
-        self.rect.y = y - self.rect.height / 2
+        self.rect.x = int(x - self.rect.width / 2)
+        self.rect.y = int(y - self.rect.height / 2)
 
         self.angle = angle
         self.speed = speed
@@ -29,8 +29,8 @@ class Projectile(ABC, pygame.sprite.Sprite):
         self.lifetime = lifetime
 
     def update(self) -> None:
-        self.rect.x -= math.sin(math.radians(self.angle)) * self.speed
-        self.rect.y -= math.cos(math.radians(self.angle)) * self.speed
+        self.rect.x -= int(math.sin(math.radians(self.angle)) * self.speed)
+        self.rect.y -= int(math.cos(math.radians(self.angle)) * self.speed)
 
         self.lifetime -= 1
         if self.lifetime <= 0:

@@ -20,7 +20,7 @@ class MenuState(State):
         self.title = pygame.transform.scale(self.title, (int(self.title.get_width() * scale), int(self.title.get_height() * scale)))
 
         self.title_rect = self.title.get_rect()
-        self.title_rect.x = settings.SCREEN_WIDTH / 2 - self.title_rect.width / 2
+        self.title_rect.x = int(settings.SCREEN_WIDTH / 2 - self.title_rect.width / 2)
         self.title_rect.y = settings.TITLE_Y
 
         self.credit = pygame.image.load(settings.CREDIT_IMG).convert_alpha()
@@ -35,7 +35,7 @@ class MenuState(State):
         self.button_play = ButtonPlay(self.game)
         self.button_quit = ButtonQuit(self.game)
 
-        self.buttons = pygame.sprite.Group()
+        self.buttons: pygame.sprite.Group = pygame.sprite.Group()
         self.buttons.add(self.button_play)
         self.buttons.add(self.button_quit)
 

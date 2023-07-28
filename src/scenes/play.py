@@ -32,9 +32,9 @@ class PlayState(State):
         self.can_spawn = True
         self.enemy_timer = 0
         self.enemy_cooldown = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
-        self.enemies = pygame.sprite.Group()
+        self.enemies: pygame.sprite.Group = pygame.sprite.Group()
 
-        self.particles = pygame.sprite.Group()
+        self.particles: pygame.sprite.Group = pygame.sprite.Group()
 
     def update(self) -> None:
         super().update()

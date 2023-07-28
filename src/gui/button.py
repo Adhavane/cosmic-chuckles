@@ -11,9 +11,6 @@ settings = Settings()
 
 from src.scenes.play import PlayState
 
-class Game:
-    pass
-
 class Button(ABC, pygame.sprite.Sprite):
     def __init__(self,
                  images: Dict[str, str],
@@ -61,7 +58,7 @@ class Button(ABC, pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (int(self.rect.width * scale), int(self.rect.height * scale)))
 
         self.rect = self.image.get_rect()
-        self.rect.x = self.x - self.rect.width / 2
+        self.rect.x = int(self.x - self.rect.width / 2)
         self.rect.y = self.y
 
         self.image.set_alpha(self.opacity[self.state])
@@ -74,17 +71,19 @@ class Button(ABC, pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
 
 class ButtonPlay(Button):
-    def __init__(self, game: Game) -> None:
+    def __init__(self, game) -> None:
         super().__init__(settings.PLAY_IMGS,
-                         settings.SCREEN_WIDTH / 2, settings.PLAY_Y,
+                         int(settings.SCREEN_WIDTH / 2),
+                         settings.PLAY_Y,
                          settings.PLAY_HEIGHT,
                          settings.PLAY_OPACITY,
                          game.change_state, PlayState(game))
 
 class ButtonQuit(Button):
-    def __init__(self, game: Game) -> None:
+    def __init__(self, game) -> None:
         super().__init__(settings.QUIT_IMGS,
-                         settings.SCREEN_WIDTH / 2, settings.QUIT_Y,
+                         int(settings.SCREEN_WIDTH / 2),
+                         settings.QUIT_Y,
                          settings.QUIT_HEIGHT,
                          settings.QUIT_OPACITY,
                          game.quit)

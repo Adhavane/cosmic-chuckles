@@ -21,7 +21,7 @@ class State(ABC):
 
         self.background = Background()
 
-        self.clouds = pygame.sprite.Group()
+        self.clouds: pygame.sprite.Group = pygame.sprite.Group()
         for _ in range(settings.CLOUD_INIT):
             cloud = Cloud()
             cloud.rect.x = random.randint(0, settings.SCREEN_WIDTH)
