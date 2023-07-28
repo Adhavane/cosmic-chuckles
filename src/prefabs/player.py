@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.original_image.copy()
 
         self.rect = self.image.get_rect()
-        self.rect.center = (settings.WIDTH / 2, settings.HEIGHT / 2)
+        self.rect.center = (settings.SCREEN_WIDTH / 2, settings.SCREEN_HEIGHT / 2)
 
         self.health = health
         self.regen = regen
@@ -74,12 +74,12 @@ class Player(pygame.sprite.Sprite):
         # Keep player on screen
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.right > settings.WIDTH:
-            self.rect.right = settings.WIDTH
+        if self.rect.right > settings.SCREEN_WIDTH:
+            self.rect.right = settings.SCREEN_WIDTH
         if self.rect.top < 0:
             self.rect.top = 0
-        if self.rect.bottom > settings.HEIGHT:
-            self.rect.bottom = settings.HEIGHT
+        if self.rect.bottom > settings.SCREEN_HEIGHT:
+            self.rect.bottom = settings.SCREEN_HEIGHT
 
     def shoot(self) -> None:
         keys = pygame.key.get_pressed()

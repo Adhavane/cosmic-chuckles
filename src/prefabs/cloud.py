@@ -21,7 +21,7 @@ class Cloud(pygame.sprite.Sprite):
         
         self.rect = self.image.get_rect()
         self.rect.x = -self.rect.width
-        self.rect.y = random.randint(0, settings.HEIGHT - self.rect.height)
+        self.rect.y = random.randint(0, settings.SCREEN_HEIGHT - self.rect.height)
 
         self.moving_timer = 0
         self.speed = random.randint(settings.CLOUD_SPEED_MIN, settings.CLOUD_SPEED_MAX)
@@ -33,7 +33,7 @@ class Cloud(pygame.sprite.Sprite):
         current_time = pygame.time.get_ticks()
         if current_time - self.moving_timer > settings.CLOUD_DELTA:
             self.rect.x += self.speed
-            if self.rect.left > settings.WIDTH:
+            if self.rect.left > settings.SCREEN_WIDTH:
                 self.kill()
 
     def draw(self, screen) -> None:

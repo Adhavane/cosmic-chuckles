@@ -17,7 +17,7 @@ class Health:
         self.heart = pygame.transform.scale(self.heart, (int(self.heart.get_width() * scale), int(self.heart.get_height() * scale)))
 
         self.heart_rect = self.heart.get_rect()
-        self.heart_rect.x = settings.WIDTH / 2 - self.heart_rect.width / 2
+        self.heart_rect.x = settings.SCREEN_WIDTH / 2 - self.heart_rect.width / 2
         self.heart_rect.y = settings.HEART_Y
 
         health_left = Caption(" <", settings.HEALTH_FONT, settings.HEALTH_SIZE,

@@ -6,8 +6,8 @@ class Settings:
     def __init__(self) -> None:
         # Screen settings
         # format 4:3
-        self.WIDTH = 1380
-        self.HEIGHT = 1024
+        self.SCREEN_WIDTH = 1380
+        self.SCREEN_HEIGHT = 1024
         self.FPS = 60
 
         self.TITLE = "Cosmic Chuckles - Python/Pygame"

@@ -15,13 +15,13 @@ class Background(pygame.sprite.Sprite):
         
         self.image = pygame.image.load(settings.BG_IMG).convert()
         self.rect = self.image.get_rect()
-        self.rect.center = (settings.WIDTH / 2, settings.HEIGHT / 2)
+        self.rect.center = (settings.SCREEN_WIDTH / 2, settings.SCREEN_HEIGHT / 2)
 
         scale = max(settings.BG_WIDTH / self.rect.width, settings.BG_HEIGHT / self.rect.height)
         self.image = pygame.transform.scale(self.image, (int(self.rect.width * scale), int(self.rect.height * scale)))
 
         self.rect = self.image.get_rect()
-        self.rect.center = (settings.WIDTH / 2, settings.HEIGHT / 2)
+        self.rect.center = (settings.SCREEN_WIDTH / 2, settings.SCREEN_HEIGHT / 2)
 
         # Set up random movement
         self.moving_random = True
@@ -41,14 +41,14 @@ class Background(pygame.sprite.Sprite):
         if self.rect.left > 0:
             self.rect.left = 0
             self.new_moving_direction()
-        if self.rect.right < settings.WIDTH:
-            self.rect.right = settings.WIDTH
+        if self.rect.right < settings.SCREEN_WIDTH:
+            self.rect.right = settings.SCREEN_WIDTH
             self.new_moving_direction()
         if self.rect.top > 0:
             self.rect.top = 0
             self.new_moving_direction()
-        if self.rect.bottom < settings.HEIGHT:
-            self.rect.bottom = settings.HEIGHT
+        if self.rect.bottom < settings.SCREEN_HEIGHT:
+            self.rect.bottom = settings.SCREEN_HEIGHT
             self.new_moving_direction()
 
     def move_keys(self) -> None:

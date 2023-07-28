@@ -38,7 +38,7 @@ class Projectile(ABC, pygame.sprite.Sprite):
         
         if self.rect.x < 0:
             self.kill()
-        if self.rect.x > settings.WIDTH:
+        if self.rect.x > settings.SCREEN_WIDTH:
             self.kill()
 
     def draw(self, screen) -> None:

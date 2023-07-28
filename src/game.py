@@ -14,7 +14,7 @@ from src.scenes.menu import MenuState
 class Game:
     def __init__(self) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
+        self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
 
         pygame.display.set_caption(settings.TITLE)

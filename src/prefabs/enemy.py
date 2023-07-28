@@ -70,11 +70,11 @@ class Enemy(ABC, pygame.sprite.Sprite):
 
     def constraints(self) -> None:
         # Kill enemy if goes off screen
-        if self.rect.x - self.rect.width > settings.WIDTH:
+        if self.rect.x - self.rect.width > settings.SCREEN_WIDTH:
             self.kill()
         if self.rect.x + self.rect.width < 0:
             self.kill()
-        if self.rect.y - self.rect.height > settings.HEIGHT:
+        if self.rect.y - self.rect.height > settings.SCREEN_HEIGHT:
             self.kill()
         if self.rect.y + self.rect.height < 0:
             self.kill()
@@ -101,5 +101,5 @@ class EnemyPurple(Enemy):
         self.image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
 
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(0, settings.WIDTH - self.rect.width)
-        self.rect.y = random.randint(0, settings.HEIGHT - self.rect.height)
+        self.rect.x = random.randint(0, settings.SCREEN_WIDTH - self.rect.width)
+        self.rect.y = random.randint(0, settings.SCREEN_HEIGHT - self.rect.height)

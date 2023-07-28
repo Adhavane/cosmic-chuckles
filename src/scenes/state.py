@@ -24,7 +24,7 @@ class State(ABC):
         self.clouds = pygame.sprite.Group()
         for _ in range(settings.CLOUD_INIT):
             cloud = Cloud()
-            cloud.rect.x = random.randint(0, settings.WIDTH)
+            cloud.rect.x = random.randint(0, settings.SCREEN_WIDTH)
             self.clouds.add(cloud)
         self.cloud_timer = 0
         self.cloud_cooldown = random.randint(settings.CLOUD_TIME_MIN, settings.CLOUD_TIME_MAX)
