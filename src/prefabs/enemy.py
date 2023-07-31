@@ -12,6 +12,7 @@ from src.settings import Settings
 settings = Settings()
 
 from src.prefabs.player import Player
+from src.prefabs.projectile import BulletEnemy
 
 class Enemy(ABC, pygame.sprite.Sprite):
     def __init__(self,
@@ -39,10 +40,24 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (width, height))
 
         self.rect: pygame.Rect = self.image.get_rect()
-        self.rect_x_float: float = random.uniform(0, settings.SCREEN_WIDTH - self.rect.width)
-        self.rect_y_float: float = random.uniform(0, settings.SCREEN_HEIGHT - self.rect.height)
-        self.rect.x = int(self.rect_x_float)
-        self.rect.y = int(self.rect_y_float)
+        # Spawn enemy off screen
+        area: str = random.choice(["top", "bottom", "left", "right"])
+        if area == "top":
+            self.rect.x = random.randint(0, settings.SCREEN_WIDTH)
+            self.rect.y = -self.rect.height + 1
+        elif area == "bottom":
+            self.rect.x = random.randint(0, settings.SCREEN_WIDTH)
+            self.rect.y = settings.SCREEN_HEIGHT - 1
+        elif area == "left":
+            self.rect.x = -self.rect.width + 1
+            self.rect.y = random.randint(0, settings.SCREEN_HEIGHT)
+        elif area == "right":
+            self.rect.x = settings.SCREEN_WIDTH - 1
+            self.rect.y = random.randint(0, settings.SCREEN_HEIGHT)
+        self.rect_x_float: float = float(self.rect.x)
+        self.rect_y_float: float = float(self.rect.y)
+
+        self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
 
         self.health: int = health
         self.body_damage: int = body_damage
@@ -66,7 +81,6 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.shoot_cooldown = self.reload_time
         self.bullets: pygame.sprite.Group[BulletEnemy] = pygame.sprite.Group()
 
-
     def update(self, player: Player) -> None:
         current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer > self.movement_cooldown:
@@ -74,8 +88,30 @@ class Enemy(ABC, pygame.sprite.Sprite):
             self.moving_timer = current_time
         self.constraints()
 
+        if self.bullet_damage is not None:
+            self.shoot()
+
         if self.health <= 0:
             self.kill()
+
+    def shoot(self) -> None:
+        if self.can_shoot:
+            self.bullets.add(BulletEnemy(self.rect.centerx,
+                                         self.rect.centery,
+                                         self.angle,
+                                         self.bullet_damage,
+                                         self.bullet_speed,
+                                         self.bullet_lifetime))
+            self.can_shoot = False
+            self.shoot_timer = pygame.time.get_ticks()
+        self.reload()
+        self.bullets.update()
+
+    def reload(self) -> None:
+        if not self.can_shoot:
+            current_time: int = pygame.time.get_ticks()
+            if current_time - self.shoot_timer > self.shoot_cooldown:
+                self.can_shoot = True
 
     def move_random(self, _: Player) -> None:
         self.rect_x_float += math.sin(math.radians(self.angle)) * self.movement_speed
@@ -87,8 +123,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
         rel_x: int = self.rect.centerx - player.rect.centerx
         rel_y: int = self.rect.centery - player.rect.centery
         self.angle = (180 / math.pi) * math.atan2(rel_x, rel_y)
-        self.rect_x_float += math.sin(math.radians(self.angle)) * self.movement_speed
-        self.rect_y_float += math.cos(math.radians(self.angle)) * self.movement_speed
+        self.rect_x_float -= math.sin(math.radians(self.angle)) * self.movement_speed
+        self.rect_y_float -= math.cos(math.radians(self.angle)) * self.movement_speed
         self.rect.x = int(self.rect_x_float)
         self.rect.y = int(self.rect_y_float)
 
@@ -104,6 +140,7 @@ class Enemy(ABC, pygame.sprite.Sprite):
             self.kill()
 
     def draw(self, screen) -> None:
+        self.bullets.draw(screen)
         screen.blit(self.image, self.rect)
 
 class EnemyPurple(Enemy):
@@ -120,3 +157,48 @@ class EnemyPurple(Enemy):
                          settings.ENEMY_PURPLE_MOVEMENT_COOLDOWN,
                          settings.ENEMY_PURPLE_MOVEMENT_PATTERN,
                          settings.ENEMY_PURPLE_SCORE)
+
+class EnemyRed(Enemy):
+    def __init__(self) -> None:
+        super().__init__(settings.ENEMY_RED_IMG,
+                         settings.ENEMY_RED_HEIGHT,
+                         settings.ENEMY_RED_HEALTH,
+                         settings.ENEMY_RED_BODY_DAMAGE,
+                         settings.ENEMY_RED_BULLET_DAMAGE,
+                         settings.ENEMY_RED_BULLET_SPEED,
+                         settings.ENEMY_RED_BULLET_LIFETIME,
+                         settings.ENEMY_RED_RELOAD_TIME,
+                         settings.ENEMY_RED_MOVEMENT_SPEED,
+                         settings.ENEMY_RED_MOVEMENT_COOLDOWN,
+                         settings.ENEMY_RED_MOVEMENT_PATTERN,
+                         settings.ENEMY_RED_SCORE)
+        
+class EnemyGreen(Enemy):
+    def __init__(self) -> None:
+        super().__init__(settings.ENEMY_GREEN_IMG,
+                         settings.ENEMY_GREEN_HEIGHT,
+                         settings.ENEMY_GREEN_HEALTH,
+                         settings.ENEMY_GREEN_BODY_DAMAGE,
+                         settings.ENEMY_GREEN_BULLET_DAMAGE,
+                         settings.ENEMY_GREEN_BULLET_SPEED,
+                         settings.ENEMY_GREEN_BULLET_LIFETIME,
+                         settings.ENEMY_GREEN_RELOAD_TIME,
+                         settings.ENEMY_GREEN_MOVEMENT_SPEED,
+                         settings.ENEMY_GREEN_MOVEMENT_COOLDOWN,
+                         settings.ENEMY_GREEN_MOVEMENT_PATTERN,
+                         settings.ENEMY_GREEN_SCORE)
+        
+class EnemyYellow(Enemy):
+    def __init__(self) -> None:
+        super().__init__(settings.ENEMY_YELLOW_IMG,
+                         settings.ENEMY_YELLOW_HEIGHT,
+                         settings.ENEMY_YELLOW_HEALTH,
+                         settings.ENEMY_YELLOW_BODY_DAMAGE,
+                         settings.ENEMY_YELLOW_BULLET_DAMAGE,
+                         settings.ENEMY_YELLOW_BULLET_SPEED,
+                         settings.ENEMY_YELLOW_BULLET_LIFETIME,
+                         settings.ENEMY_YELLOW_RELOAD_TIME,
+                         settings.ENEMY_YELLOW_MOVEMENT_SPEED,
+                         settings.ENEMY_YELLOW_MOVEMENT_COOLDOWN,
+                         settings.ENEMY_YELLOW_MOVEMENT_PATTERN,
+                         settings.ENEMY_YELLOW_SCORE)

@@ -13,6 +13,7 @@ settings = Settings()
 
 from src.prefabs.background import Background
 from src.prefabs.cloud import Cloud
+from src.gui.fps import FPS
 
 class State(ABC):
     def __init__(self, game: Game) -> None:
@@ -27,6 +28,8 @@ class State(ABC):
             self.clouds.add(cloud)
         self.cloud_timer: int = 0
         self.cloud_cooldown: int = random.randint(settings.CLOUD_TIME_MIN, settings.CLOUD_TIME_MAX)
+
+        self.fps: FPS = FPS()
 
     def spawn_clouds(self) -> None:
         current_time: int = pygame.time.get_ticks()
@@ -44,11 +47,15 @@ class State(ABC):
         self.spawn_clouds()
         self.clouds.update()
 
+        self.fps.update(self.game.clock.get_fps())
+
     def draw(self) -> None:
         self.game.screen.fill(settings.BLACK)
 
         self.background.draw(self.game.screen)
         for cloud in self.clouds:
             cloud.draw(self.game.screen)
+
+        self.fps.draw(self.game.screen)
 
 from src.game import Game

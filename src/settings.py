@@ -63,6 +63,11 @@ class Settings:
         self.CREDIT_Y = 288 * 2
         self.CREDIT_HEIGHT = 8 * 2
 
+        self.FPS_X = 10
+        self.FPS_Y = 10
+        self.FPS_FONT = "assets/fonts/SUPERNAT1001.TTF"
+        self.FPS_SIZE = 12 * 2
+
         # Start button settings
         self.PLAY_IMGS = {"selected": "assets/sprites/pixel_art/play_selected.png",
                           "unselected": "assets/sprites/pixel_art/play_unselected.png"}
@@ -105,7 +110,7 @@ class Settings:
         self.PLAYER_HEALTH = 100
         self.PLAYER_REGEN = 1
         self.PLAYER_BULLET_DAMAGE = 10
-        self.PLAYER_BULLET_SPEED = 2
+        self.PLAYER_BULLET_SPEED = 3
         self.PLAYER_BULLET_LIFETIME = 1000
         self.PLAYER_RELOAD_TIME = 600
         self.PLAYER_MOVEMENT_SPEED = 5
@@ -122,7 +127,7 @@ class Settings:
 
         self.ENEMY_PURPLE_IMG = "assets/sprites/pixel_art/enemy_purple.png"
         self.ENEMY_PURPLE_HEIGHT = 36 * 4
-        self.ENEMY_PURPLE_HEALTH = 20
+        self.ENEMY_PURPLE_HEALTH = 10
         self.ENEMY_PURPLE_BODY_DAMAGE = 10
         self.ENEMY_PURPLE_BULLET_DAMAGE = None
         self.ENEMY_PURPLE_BULLET_SPEED = None
@@ -134,7 +139,59 @@ class Settings:
         self.ENEMY_PURPLE_SCORE = 10
         
         self.ENEMY_RED_IMG = "assets/sprites/pixel_art/enemy_red.png"
+        self.ENEMY_RED_HEIGHT = 48 * 4
+        self.ENEMY_RED_HEALTH = 20
+        self.ENEMY_RED_BODY_DAMAGE = 10
+        self.ENEMY_RED_BULLET_DAMAGE = 5
+        self.ENEMY_RED_BULLET_SPEED = 1
+        self.ENEMY_RED_BULLET_LIFETIME = 600
+        self.ENEMY_RED_RELOAD_TIME = 3000
+        self.ENEMY_RED_MOVEMENT_SPEED = 1
+        self.ENEMY_RED_MOVEMENT_COOLDOWN = 30
+        self.ENEMY_RED_MOVEMENT_PATTERN = "move_target"
+        self.ENEMY_RED_SCORE = 10
         
         self.ENEMY_GREEN_IMG = "assets/sprites/pixel_art/enemy_green.png"
+        self.ENEMY_GREEN_HEIGHT = 52 * 4
+        self.ENEMY_GREEN_HEALTH = 50
+        self.ENEMY_GREEN_BODY_DAMAGE = 50
+        self.ENEMY_GREEN_BULLET_DAMAGE = None
+        self.ENEMY_GREEN_BULLET_SPEED = None
+        self.ENEMY_GREEN_BULLET_LIFETIME = None
+        self.ENEMY_GREEN_RELOAD_TIME = None
+        self.ENEMY_GREEN_MOVEMENT_SPEED = 1
+        self.ENEMY_GREEN_MOVEMENT_COOLDOWN = 120
+        self.ENEMY_GREEN_MOVEMENT_PATTERN = "move_target"
+        self.ENEMY_GREEN_SCORE = 10
 
         self.ENEMY_GREEN_BABY_IMG = "assets/sprites/pixel_art/enemy_green_baby.png"
+        self.ENEMY_GREEN_BABY_HEIGHT = 18 * 4
+        self.ENEMY_GREEN_BABY_HEALTH = 5
+        self.ENEMY_GREEN_BABY_BODY_DAMAGE = 5
+        self.ENEMY_GREEN_BABY_BULLET_DAMAGE = None
+        self.ENEMY_GREEN_BABY_BULLET_SPEED = None
+        self.ENEMY_GREEN_BABY_BULLET_LIFETIME = None
+        self.ENEMY_GREEN_BABY_RELOAD_TIME = None
+        self.ENEMY_GREEN_BABY_MOVEMENT_SPEED = 1
+        self.ENEMY_GREEN_BABY_MOVEMENT_COOLDOWN = 120
+        self.ENEMY_GREEN_BABY_MOVEMENT_PATTERN = "move_random"
+        self.ENEMY_GREEN_BABY_SCORE = 5
+
+        self.ENEMY_YELLOW_IMG = "assets/sprites/pixel_art/enemy_yellow.png"
+        self.ENEMY_YELLOW_HEIGHT = 38 * 4
+        self.ENEMY_YELLOW_HEALTH = 10
+        self.ENEMY_YELLOW_BODY_DAMAGE = 10
+        self.ENEMY_YELLOW_BULLET_DAMAGE = None
+        self.ENEMY_YELLOW_BULLET_SPEED = None
+        self.ENEMY_YELLOW_BULLET_LIFETIME = None
+        self.ENEMY_YELLOW_RELOAD_TIME = None
+        self.ENEMY_YELLOW_MOVEMENT_SPEED = 5
+        self.ENEMY_YELLOW_MOVEMENT_COOLDOWN = 30
+        self.ENEMY_YELLOW_MOVEMENT_PATTERN = "move_target"
+        self.ENEMY_YELLOW_SCORE = 20
+
+        self.GAMEOVER_IMG = "assets/sprites/pixel_art/gameover.png"
+        self.GAMEOVER_HEIGHT = 19 * 4 * 2
+        self.GAMEOVER_Y = 74 * 2
+        self.GAMEOVER_CAPTION_Y = 500
+        self.GAMEOVER_PRESS_Y = 600

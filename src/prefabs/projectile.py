@@ -13,7 +13,7 @@ class Projectile(ABC, pygame.sprite.Sprite):
     def __init__(self, image: str,
                  x: int, y: int,
                  height: int, angle: float,
-                 speed: int, damage: int, lifetime: int) -> None:
+                 damage: int, speed: int, lifetime: int) -> None:
         super().__init__()
 
         self.image: pygame.Surface = pygame.image.load(image).convert_alpha()
@@ -50,16 +50,16 @@ class Projectile(ABC, pygame.sprite.Sprite):
 
 class BulletPlayer(Projectile):
     def __init__(self, x: int, y: int,
-                 angle: float, speed: int,
-                 damage: int, lifetime: int) -> None:
+                 angle: float, damage: int,
+                 speed: int, lifetime: int) -> None:
         super().__init__(settings.BULLET_PLAYER_IMG,
-                         x, y, settings.BULLET_PLAYER_HEIGHT, 
-                         angle, speed, damage, lifetime)
+                         x, y, settings.BULLET_PLAYER_HEIGHT,
+                         angle, damage, speed, lifetime)
 
 class BulletEnemy(Projectile):
     def __init__(self, x: int, y: int,
-                 angle: float, speed: int,
-                 damage: int, lifetime: int) -> None:
+                 angle: float, damage: int,
+                 speed: int, lifetime: int) -> None:
         super().__init__(settings.BULLET_ENEMY_IMG,
                          x, y, settings.BULLET_ENEMY_HEIGHT,
-                         angle, speed, damage, lifetime)
+                         angle, damage, speed, lifetime)

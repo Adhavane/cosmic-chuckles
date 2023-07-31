@@ -14,21 +14,44 @@ class GameOverState(State):
     def __init__(self, game, score: int) -> None:
         super().__init__(game)
 
-        self.score = score
+        self.gameover: pygame.Surface = pygame.image.load(settings.GAMEOVER_IMG).convert_alpha()
 
-        self.score_caption = Caption("SCORE", settings.SCORE_FONT, settings.SCORE_SIZE,
-                                     True, settings.WHITE,
-                                     int(settings.SCREEN_WIDTH / 2),
-                                     int(settings.SCREEN_HEIGHT / 2 + settings.SCORE_SIZE))
-        self.score_counter = Caption(str(score), settings.SCORE_FONT, settings.SCORE_SIZE,
-                                     True, settings.GREEN,
-                                     int(settings.SCREEN_WIDTH / 2),
-                                     int(settings.SCREEN_HEIGHT / 2 + settings.SCORE_SIZE * 2))
+        scale: float = settings.GAMEOVER_HEIGHT / self.gameover.get_height()
+        width: int = int(self.gameover.get_width() * scale)
+        height: int = int(self.gameover.get_height() * scale)
+        self.gameover = pygame.transform.scale(self.gameover, (width, height))
+
+        self.gameover_rect: pygame.Rect = self.gameover.get_rect()
+        self.gameover_rect.x = int(settings.SCREEN_WIDTH / 2 - self.gameover_rect.width / 2)
+        self.gameover_rect.y = settings.GAMEOVER_Y
+
+        self.score: Caption = Caption(str(score), settings.SCORE_FONT, settings.SCORE_SIZE,
+                                      True, settings.WHITE,
+                                      0, 0)
+        self.score.rect.x = int(settings.SCREEN_WIDTH / 2 - self.score.rect.width / 2)
+        self.score.rect.y = settings.GAMEOVER_CAPTION_Y
+
+        self.press: Caption = Caption("PRESS ENTER TO PLAY AGAIN", settings.SCORE_FONT, settings.SCORE_SIZE,
+                                        True, settings.WHITE,
+                                        0, 0)
+        self.press.rect.x = int(settings.SCREEN_WIDTH / 2 - self.press.rect.width / 2)
+        self.press.rect.y = settings.GAMEOVER_PRESS_Y
+
+    def events(self, event: pygame.event.Event) -> None:
+        from src.scenes.play import PlayState
+
+        super().events(event)
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                self.game.change_state(PlayState(self.game))
 
     def update(self) -> None:
-        pass
+        super().update()
 
     def draw(self) -> None:
-        self.score_caption.draw(self.game.screen)
-        self.score_counter.draw(self.game.screen)
-    
+        super().draw()
+
+        self.game.screen.blit(self.gameover, self.gameover_rect)
+        self.score.draw(self.game.screen)
+        self.press.draw(self.game.screen)

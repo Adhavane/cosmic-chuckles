@@ -32,6 +32,8 @@ class Player(pygame.sprite.Sprite):
         self.rect: pygame.Rect = self.image.get_rect()
         self.rect.center = (int(settings.SCREEN_WIDTH / 2), int(settings.SCREEN_HEIGHT / 2))
 
+        self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
+
         self.health: int = health
         self.regen: int = regen
         self.bullet_damage: int = bullet_damage
@@ -87,15 +89,19 @@ class Player(pygame.sprite.Sprite):
             self.rect.bottom = settings.SCREEN_HEIGHT
 
     def shoot(self) -> None:
-        keys: pygame.key.ScancodeWrapper = pygame.key.get_pressed()
-        if (pygame.mouse.get_pressed()[0] or keys[pygame.K_SPACE]) and self.can_shoot:
-            # Shoot bullet
-            pos_x: int = self.rect.centerx
-            pos_y: int = self.rect.centery
-            self.bullets.add(BulletPlayer(pos_x, pos_y, self.angle, self.bullet_speed, self.bullet_damage, self.bullet_lifetime))
+        if self.can_shoot:
+            keys: pygame.key.ScancodeWrapper = pygame.key.get_pressed()
+            if (pygame.mouse.get_pressed()[0] or keys[pygame.K_SPACE]) and self.can_shoot:
+                # Shoot bullet
+                self.bullets.add(BulletPlayer(self.rect.centerx,
+                                              self.rect.centery,
+                                              self.angle,
+                                              self.bullet_damage,
+                                              self.bullet_speed,
+                                              self.bullet_lifetime))
+                self.can_shoot = False
+                self.shoot_timer = pygame.time.get_ticks()
 
-            self.can_shoot = False
-            self.shoot_timer = pygame.time.get_ticks()
         self.reload()
         self.bullets.update()
 

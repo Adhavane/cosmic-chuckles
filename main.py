@@ -21,4 +21,5 @@ def main() -> None:
     game.run()
 
 if __name__ == "__main__":
-    main()
+    import cProfile
+    cProfile.run("print(main())", sort="cumtime")

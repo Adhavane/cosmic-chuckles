@@ -17,7 +17,7 @@ from src.gui.score import Score
 from src.gui.health import Health
 
 from src.prefabs.player import Player
-from src.prefabs.enemy import Enemy, EnemyPurple
+from src.prefabs.enemy import Enemy, EnemyPurple, EnemyRed, EnemyGreen, EnemyYellow
 from src.prefabs.projectile import Projectile
 from src.prefabs.particle import Particle
 
@@ -51,7 +51,7 @@ class PlayState(State):
         self.enemies.update(self.player)
 
         self.particles.update()
-
+    
         self.collisions()
 
         if self.player.health <= 0:
@@ -62,30 +62,35 @@ class PlayState(State):
         if current_time - self.enemy_timer > self.enemy_cooldown:
             self.enemy_timer = current_time
             self.enemy_cooldown = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
-            enemy = EnemyPurple()
+            enemy = random.choice([EnemyPurple(), EnemyRed(), EnemyGreen(), EnemyYellow()])
             self.enemies.add(enemy)
 
     def collisions(self) -> None:
-        collisions_bullets_enemies: Dict[Projectile, List[Enemy]] = \
-            pygame.sprite.groupcollide(self.player.bullets,
-                                       self.enemies, False, False,
-                                       pygame.sprite.collide_mask)
-        # For each bullet, damage the first enemy it collides with
-        for bullet, enemies in collisions_bullets_enemies.items():
-            for enemy in enemies:
-                enemy.health -= bullet.damage
-                # Destroy bullet and add particle effect
-                for _ in range(10):
-                    self.particles.add(Particle((255, 255, 255), bullet.rect.x, bullet.rect.y))
-                bullet.kill()
-                self.score_counter += enemy.score
+        if pygame.sprite.groupcollide(self.player.bullets, self.enemies, False, False):
+            collisions_bullets_enemies: Dict[Projectile, List[Enemy]] = \
+                pygame.sprite.groupcollide(self.player.bullets,
+                                           self.enemies, False, False,
+                                           pygame.sprite.collide_mask)
+            
+            # For each bullet, damage the first enemy it collides with
+            for bullet, enemies in collisions_bullets_enemies.items():
+                for enemy in enemies:
+                    enemy.health -= bullet.damage
 
-        collisions_player_enemies: Sequence[Enemy] = \
-            pygame.sprite.spritecollide(self.player, self.enemies, False,
-                                        pygame.sprite.collide_mask)
-        for enemy in collisions_player_enemies:
-            self.player.health -= enemy.body_damage
-            enemy.health = 0
+                    # Destroy bullet and add particle effect
+                    for _ in range(10):
+                        self.particles.add(Particle((255, 255, 255), bullet.rect.x, bullet.rect.y))
+                    bullet.kill()
+                    self.score_counter += enemy.score
+
+        if pygame.sprite.spritecollide(self.player, self.enemies, False):
+            collisions_player_enemies: Sequence[Enemy] = \
+                pygame.sprite.spritecollide(self.player, self.enemies, True,
+                                            pygame.sprite.collide_mask)
+            
+            for enemy in collisions_player_enemies:
+                self.player.health -= enemy.body_damage
+                enemy.health = 0
 
     def draw(self) -> None:
         super().draw()

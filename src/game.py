@@ -44,7 +44,7 @@ class Game:
         
     def update(self) -> None:
         self.state.update()
-
+        
         pygame.display.update()
         self.clock.tick(settings.FPS)
 
