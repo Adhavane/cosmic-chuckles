@@ -92,6 +92,25 @@ class PlayState(State):
                 self.player.health -= enemy.body_damage
                 enemy.health = 0
 
+        for enemy in self.enemies:
+            if pygame.sprite.groupcollide(enemy.bullets, self.player.bullets, False, False):
+                collisions_bullets_bullets: Dict[Projectile, List[Projectile]] = \
+                    pygame.sprite.groupcollide(enemy.bullets,
+                                               self.player.bullets, True, True,
+                                               pygame.sprite.collide_mask)
+            
+            if pygame.sprite.spritecollide(self.player, enemy.bullets, False):
+                collisions_player_bullets: Sequence[Projectile] = \
+                    pygame.sprite.spritecollide(self.player, enemy.bullets, False,
+                                                pygame.sprite.collide_mask)
+                
+                for bullet in collisions_player_bullets:
+                    self.player.health -= bullet.damage
+
+                    for _ in range(10):
+                        self.particles.add(Particle(settings.RED, bullet.rect.x, bullet.rect.y))
+                        bullet.kill()
+
     def draw(self) -> None:
         super().draw()
 
