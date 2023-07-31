@@ -33,8 +33,8 @@ class Projectile(ABC, pygame.sprite.Sprite):
         self.lifetime: int = lifetime
 
     def update(self) -> None:
-        self.rect.x -= math.ceil(math.sin(math.radians(self.angle)) * self.speed)
-        self.rect.y -= math.ceil(math.cos(math.radians(self.angle)) * self.speed)
+        self.rect.x -= math.sin(math.radians(self.angle)) * self.speed
+        self.rect.y -= math.cos(math.radians(self.angle)) * self.speed
 
         self.lifetime -= 1
         if self.lifetime <= 0:

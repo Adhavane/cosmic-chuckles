@@ -36,8 +36,8 @@ class Background(pygame.sprite.Sprite):
         self.moving_timer_random: int = 0
         self.moving_timer_direction: int = 0
         self.moving_cooldown: int = random.randint(settings.BG_TIME_MIN, settings.BG_TIME_MAX)
-        self.moving_direction: int = random.randint(settings.BG_ANGLE_MIN, settings.BG_ANGLE_MAX)
-
+        self.moving_direction: float = random.uniform(settings.BG_ANGLE_MIN, settings.BG_ANGLE_MAX)
+        
     def update(self) -> None:
         self.move_keys()
         if self.moving_random:
@@ -78,8 +78,8 @@ class Background(pygame.sprite.Sprite):
         # Move background randomly
         current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer_random > settings.BG_DELTA_RANDOM:
-            self.rect.x += math.ceil(settings.BG_SPEED_RANDOM * math.cos(math.radians(self.moving_direction)))
-            self.rect.y += math.ceil(settings.BG_SPEED_RANDOM * math.sin(math.radians(self.moving_direction)))
+            self.rect.x += round(settings.BG_SPEED_RANDOM * math.cos(math.radians(self.moving_direction)))
+            self.rect.y += round(settings.BG_SPEED_RANDOM * math.sin(math.radians(self.moving_direction)))
             self.moving_timer_random = pygame.time.get_ticks()
 
         # Set up cooldown
@@ -89,7 +89,7 @@ class Background(pygame.sprite.Sprite):
     def new_moving_direction(self) -> None:
         self.moving_timer_direction = pygame.time.get_ticks()
         self.moving_cooldown = random.randint(settings.BG_TIME_MIN, settings.BG_TIME_MAX)
-        self.moving_direction = random.randint(settings.BG_ANGLE_MIN, settings.BG_ANGLE_MAX)
+        self.moving_direction = random.uniform(settings.BG_ANGLE_MIN, settings.BG_ANGLE_MAX)
 
     def draw(self, screen) -> None:
         screen.blit(self.image, self.rect)

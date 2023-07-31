@@ -42,17 +42,7 @@ class Caption(pygame.sprite.Sprite):
 class CaptionList(ABC, List[Caption]):
     def __init__(self, captions: List[Caption]) -> None:
         super().__init__(captions)
-
-    # def __add__(self, captions: List[Caption]) -> List[Caption]:
-    #     for caption in captions:
-    #         super().append(caption)
-    #     return self
-    
-    # def __sub__(self, captions: List[Caption]) -> List[Caption]:
-    #     for caption in captions:
-    #         super().remove(caption)
-    #     return self
-
+        
     def append(self, caption: Caption) -> None:
         super().append(caption)
 
