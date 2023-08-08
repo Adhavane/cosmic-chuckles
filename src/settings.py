@@ -3,6 +3,16 @@
 """settings.py: Settings for the game."""
 
 import time
+from typing import List, Tuple
+from PIL import Image, ImageDraw
+
+def extract_color_palette(image: str) -> Tuple[List[Tuple[int, int, int]], List[int]]:
+    """Extracts color palettes from an image."""
+    img = Image.open(image)
+    colors = img.getcolors(maxcolors=256)
+    palette = [color for (_, color) in colors]
+    weights = [count for (count, _) in colors]
+    return palette, weights
 
 class Settings:
     LAST_TIME = time.time()
@@ -54,10 +64,10 @@ class Settings:
 
         # Cloud settings
         self.CLOUD_IMGS = ["assets/sprites/pixel_art/cloud_0.png",
-                        #    "assets/sprites/pixel_art/cloud_1.png",
-                        #    "assets/sprites/pixel_art/cloud_2.png",
-                        #    "assets/sprites/pixel_art/cloud_3.png",
-                        #    "assets/sprites/pixel_art/cloud_4.png",
+                           "assets/sprites/pixel_art/cloud_1.png",
+                           "assets/sprites/pixel_art/cloud_2.png",
+                           "assets/sprites/pixel_art/cloud_3.png",
+                           "assets/sprites/pixel_art/cloud_4.png",
                            "assets/sprites/pixel_art/cloud_5.png"]
         self.CLOUD_INIT = 5
         self.CLOUD_HEIGHT_MIN = 50
@@ -129,27 +139,45 @@ class Settings:
         self.HEALTH_X = 24 * self.SCALE_FACTOR
         self.HEALTH_Y = 71 * self.SCALE_FACTOR
 
-
-
-
-
-
-
-
-
         # Particle settings
         self.PARTICLE_IMG = "assets/sprites/pixel_art/particle.png"
-        self.PARTICLE_HEIGHT = 2 * 2
+        self.PARTICLE_AMOUNT = 20
+        self.PARTICLE_HEIGHT_MIN = 1 * self.SCALE_FACTOR
+        self.PARTICLE_HEIGHT_MAX = 6 * self.SCALE_FACTOR
+        self.PARTICLE_ANGLE_MIN = 0
+        self.PARTICLE_ANGLE_MAX = 360
+        self.PARTICLE_DAMAGE_MIN = 0
+        self.PARTICLE_DAMAGE_MAX = 0
+        self.PARTICLE_SPEED_MIN = 1
+        self.PARTICLE_SPEED_MAX = 10
+        self.PARTICLE_LIFETIME_MIN = 1
+        self.PARTICLE_LIFETIME_MAX = 30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         # Player settings
         self.PLAYER_IMG = "assets/sprites/pixel_art/player.png"
         self.PLAYER_HEIGHT = 32 * 4
-        self.PLAYER_HEALTH = 10
+        self.PLAYER_HEALTH = 100
         self.PLAYER_REGEN = 1
         self.PLAYER_BULLET_DAMAGE = 10
-        self.PLAYER_BULLET_SPEED = 1
-        self.PLAYER_BULLET_LIFETIME = 1000
-        self.PLAYER_RELOAD_TIME = 60
+        self.PLAYER_BULLET_SPEED = 4
+        self.PLAYER_BULLET_LIFETIME = 100
+        self.PLAYER_RELOAD_TIME = 400
         self.PLAYER_MOVEMENT_SPEED = 5
 
         # Bullet settings
