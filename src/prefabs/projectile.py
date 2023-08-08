@@ -5,8 +5,10 @@
 import pygame
 from abc import ABC, abstractmethod
 import math
+from PIL import Image, ImageDraw
+from typing import List, Tuple
 
-from src.settings import Settings
+from src.settings import Settings, extract_color_palette
 settings = Settings()
 
 class Projectile(ABC, pygame.sprite.Sprite):
@@ -27,10 +29,14 @@ class Projectile(ABC, pygame.sprite.Sprite):
         self.rect.x = round(x - self.rect.width / 2)
         self.rect.y = round(y - self.rect.height / 2)
 
+        self.colors: Tuple[List[Tuple[int, int, int]], List[int]] = extract_color_palette(image)
+
         self.angle: float = angle
         self.speed: int = speed
         self.damage: int = damage
         self.lifetime: int = lifetime
+
+        self.destroyed: bool = False
 
     def update(self) -> None:
         self.rect.x -= round(math.sin(math.radians(self.angle)) * self.speed * Settings.DELTA_TIME)
@@ -38,19 +44,22 @@ class Projectile(ABC, pygame.sprite.Sprite):
 
         self.lifetime -= 1
         if self.lifetime <= 0:
-            self.kill()
+            self.destroy()
 
         self.constraints()
 
     def constraints(self) -> None:
-        if self.rect.x < 0:
+        if self.rect.x + self.rect.width < 0:
             self.kill()
-        if self.rect.x > settings.SCREEN_WIDTH - self.rect.width:
+        if self.rect.x > settings.SCREEN_WIDTH:
             self.kill()
-        if self.rect.y < 0:
+        if self.rect.y + self.rect.height < 0:
             self.kill()
-        if self.rect.y > settings.SCREEN_HEIGHT - self.rect.height:
+        if self.rect.y > settings.SCREEN_HEIGHT:
             self.kill()
+
+    def destroy(self) -> None:
+        self.destroyed = True
 
     def draw(self, display) -> None:
         display.blit(self.image, self.rect)       

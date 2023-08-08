@@ -3,7 +3,7 @@
 """particle.py: Particle class and subclasses."""
 
 import random
-from typing import Tuple
+from typing import List, Tuple
 
 from src.settings import Settings
 settings = Settings()
@@ -11,23 +11,20 @@ settings = Settings()
 from src.prefabs.projectile import Projectile
 
 class Particle(Projectile):
-    def __init__(self, color: Tuple[int, int, int], x: int, y: int) -> None:
-        angle_min = 0
-        angle_max = 360
-        damage_min = 0
-        damage_max = 0
-        speed_min = 1
-        speed_max = 5
-        lifetime_min = 10
-        lifetime_max = 60
-
-        angle = random.randint(angle_min, angle_max)
-        damage = random.randint(damage_min, damage_max)
-        speed = random.randint(speed_min, speed_max)
-        lifetime = random.randint(lifetime_min, lifetime_max)
+    def __init__(self, colors: Tuple[List[Tuple[int, int, int]], List[int]], x: int, y: int) -> None:
+        color = random.choices(colors[0], weights=colors[1], k=1)[0]
+        height = random.randint(settings.PARTICLE_HEIGHT_MIN, settings.PARTICLE_HEIGHT_MAX)
+        angle = random.randint(settings.PARTICLE_ANGLE_MIN, settings.PARTICLE_ANGLE_MAX)
+        damage = random.randint(settings.PARTICLE_DAMAGE_MIN, settings.PARTICLE_DAMAGE_MAX)
+        speed = random.randint(settings.PARTICLE_SPEED_MIN, settings.PARTICLE_SPEED_MAX)
+        lifetime = random.randint(settings.PARTICLE_LIFETIME_MIN, settings.PARTICLE_LIFETIME_MAX)
 
         super().__init__(settings.PARTICLE_IMG,
-                         x, y, settings.PARTICLE_HEIGHT,
+                         x, y, height,
                          angle, damage, speed, lifetime)
 
         self.image.fill(color)
+
+    def destroy(self) -> None:
+        super().destroy()
+        self.kill()
