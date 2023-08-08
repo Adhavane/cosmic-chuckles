@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""state.py: State class."""
+"""state.py: State class and subclasses."""
 
 from __future__ import annotations
 
@@ -17,7 +17,25 @@ from src.ui.fps import FPS
 
 class State(ABC):
     def __init__(self, game: Game) -> None:
+        super().__init__()
         self.game: Game = game
+        self.game.display.fill(settings.BLACK)
+
+    @abstractmethod
+    def events(self, _: pygame.event.Event) -> None:
+        pass
+
+    @abstractmethod
+    def update(self) -> None:
+        pass
+
+    @abstractmethod
+    def draw(self) -> None:
+        pass
+
+class Scene(State):
+    def __init__(self, game: Game) -> None:
+        super().__init__(game)
 
         self.background: Background = Background()
 
@@ -38,10 +56,9 @@ class State(ABC):
             self.cloud_cooldown = random.randint(settings.CLOUD_TIME_MIN, settings.CLOUD_TIME_MAX)
             self.clouds.add(Cloud())
 
-    def events(self, _: pygame.event.Event) -> None:
-        pass
-
     def update(self) -> None:
+        super().update()
+
         self.background.update()
         
         self.spawn_clouds()
@@ -50,7 +67,7 @@ class State(ABC):
         self.fps.update(self.game.clock.get_fps())
 
     def draw(self) -> None:
-        self.game.display.fill(settings.BLACK)
+        super().draw()
 
         self.background.draw(self.game.display)
         for cloud in self.clouds:

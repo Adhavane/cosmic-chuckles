@@ -7,10 +7,10 @@ import pygame
 from src.settings import Settings
 settings = Settings()
 
-from src.scenes.state import State
+from src.scenes.state import Scene
 from src.ui.label import Label
 
-class GameOverState(State):
+class GameOverState(Scene):
     def __init__(self, game, score: int) -> None:
         super().__init__(game)
 

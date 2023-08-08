@@ -9,10 +9,10 @@ import pygame
 from src.settings import Settings
 settings = Settings()
 
-from src.scenes.state import State
+from src.scenes.state import Scene
 from src.ui.button import Button, ButtonPlay, ButtonQuit
 
-class MenuState(State):
+class MenuState(Scene):
     def __init__(self, game: Game) -> None:
         super().__init__(game)
 

@@ -10,7 +10,7 @@ from typing import Dict, List, Sequence
 from src.settings import Settings
 settings = Settings()
 
-from src.scenes.state import State
+from src.scenes.state import Scene
 from src.scenes.game_over import GameOverState
 
 from src.ui.statistics import Score
@@ -21,7 +21,7 @@ from src.prefabs.enemy import Enemy, EnemyPurple, EnemyRed, EnemyGreen, EnemyYel
 from src.prefabs.projectile import Projectile
 from src.prefabs.particle import Particle
 
-class PlayState(State):
+class PlayState(Scene):
     def __init__(self, game) -> None:
         super().__init__(game)
 
@@ -38,6 +38,9 @@ class PlayState(State):
         self.enemies: pygame.sprite.Group[Enemy] = pygame.sprite.Group()
 
         self.particles: pygame.sprite.Group[Particle] = pygame.sprite.Group()
+
+    def events(self, _: pygame.event.Event) -> None:
+        return super().events(_)
 
     def update(self) -> None:
         super().update()
@@ -56,7 +59,7 @@ class PlayState(State):
 
         if self.player.health <= 0:
             self.game.change_state(GameOverState(self.game, self.score_counter))
-    
+
     def spawn_enemies(self) -> None:
         current_time: int = pygame.time.get_ticks()
         if current_time - self.enemy_timer > self.enemy_cooldown:
