@@ -5,8 +5,10 @@
 import pygame
 from abc import ABC, abstractmethod
 import math
+from PIL import Image, ImageDraw
+from typing import List, Tuple
 
-from src.settings import Settings
+from src.settings import Settings, extract_color_palette
 settings = Settings()
 
 class Projectile(ABC, pygame.sprite.Sprite):
@@ -26,6 +28,8 @@ class Projectile(ABC, pygame.sprite.Sprite):
         self.rect: pygame.Rect = self.image.get_rect()
         self.rect.x = round(x - self.rect.width / 2)
         self.rect.y = round(y - self.rect.height / 2)
+
+        self.colors: Tuple[List[Tuple[int, int, int]], List[int]] = extract_color_palette(image)
 
         self.angle: float = angle
         self.speed: int = speed

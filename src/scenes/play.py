@@ -78,8 +78,8 @@ class PlayState(State):
                     enemy.health -= bullet.damage
 
                     # Destroy bullet and add particle effect
-                    for _ in range(10):
-                        self.particles.add(Particle((255, 255, 255), bullet.rect.x, bullet.rect.y))
+                    for _ in range(settings.PARTICLE_COUNT):
+                        self.particles.add(Particle(bullet.colors, bullet.rect.x, bullet.rect.y))
                     bullet.kill()
                     self.score_counter += enemy.score
 

@@ -3,6 +3,16 @@
 """settings.py: Settings for the game."""
 
 import time
+from typing import List, Tuple
+from PIL import Image, ImageDraw
+
+def extract_color_palette(image: str) -> Tuple[List[Tuple[int, int, int]], List[int]]:
+    """Extracts color palettes from an image."""
+    img = Image.open(image)
+    colors = img.getcolors(maxcolors=256)
+    palette = [color for (_, color) in colors]
+    weights = [count for (count, _) in colors]
+    return palette, weights
 
 class Settings:
     LAST_TIME = time.time()
@@ -135,6 +145,7 @@ class Settings:
 
         # Particle settings
         self.PARTICLE_IMG = "assets/sprites/pixel_art/particle.png"
+        self.PARTICLE_COUNT = 20
         self.PARTICLE_HEIGHT_MIN = 1 * self.SCALE_FACTOR
         self.PARTICLE_HEIGHT_MAX = 6 * self.SCALE_FACTOR
         self.PARTICLE_ANGLE_MIN = 0

@@ -11,8 +11,8 @@ settings = Settings()
 from src.prefabs.projectile import Projectile
 
 class Particle(Projectile):
-    def __init__(self, colors: List[Tuple[int, int, int]], x: int, y: int) -> None:
-        color = random.choice(colors) if len(colors) > 1 else settings.WHITE
+    def __init__(self, colors: Tuple[List[Tuple[int, int, int]], List[int]], x: int, y: int) -> None:
+        color = random.choices(colors[0], weights=colors[1], k=1)[0]
         height = random.randint(settings.PARTICLE_HEIGHT_MIN, settings.PARTICLE_HEIGHT_MAX)
         angle = random.randint(settings.PARTICLE_ANGLE_MIN, settings.PARTICLE_ANGLE_MAX)
         damage = random.randint(settings.PARTICLE_DAMAGE_MIN, settings.PARTICLE_DAMAGE_MAX)
