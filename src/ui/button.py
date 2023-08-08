@@ -55,8 +55,8 @@ class Button(ABC, pygame.sprite.Sprite):
 
         self.rect: pygame.Rect = self.image.get_rect()
         scale: float = self.height / self.rect.height
-        height: int = round(self.rect.height * scale)
         width: int = round(self.rect.width * scale)
+        height: int = round(self.rect.height * scale)
         self.image = pygame.transform.scale(self.image, (width, height))
 
         self.rect = self.image.get_rect()

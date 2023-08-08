@@ -19,7 +19,6 @@ class State(ABC):
     def __init__(self, game: Game) -> None:
         super().__init__()
         self.game: Game = game
-        self.game.display.fill(settings.BLACK)
 
     @abstractmethod
     def events(self, _: pygame.event.Event) -> None:
@@ -31,7 +30,7 @@ class State(ABC):
 
     @abstractmethod
     def draw(self) -> None:
-        pass
+        self.game.display.fill(settings.BLACK)
 
 class Scene(State):
     def __init__(self, game: Game) -> None:
