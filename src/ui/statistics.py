@@ -16,7 +16,7 @@ class Statistics(ABC):
         self.icon: pygame.Surface = pygame.image.load(icon).convert_alpha()
 
         scale: float = icon_height / self.icon.get_height()
-        width: int = int(self.icon.get_width() * scale)
+        width: int = round(self.icon.get_width() * scale)
         self.icon = pygame.transform.scale(self.icon, (width, icon_height))
 
         self.icon_rect: pygame.Rect = self.icon.get_rect()

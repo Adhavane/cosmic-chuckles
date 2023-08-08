@@ -14,12 +14,12 @@ class Health:
         self.heart: pygame.Surface = pygame.image.load(settings.HEART_IMG).convert_alpha()
         
         scale: float = settings.HEART_HEIGHT / self.heart.get_height()
-        width: int = int(self.heart.get_width() * scale)
-        height: int = int(self.heart.get_height() * scale)
+        width: int = round(self.heart.get_width() * scale)
+        height: int = round(self.heart.get_height() * scale)
         self.heart = pygame.transform.scale(self.heart, (width, height))
 
         self.heart_rect: pygame.Rect = self.heart.get_rect()
-        self.heart_rect.x = int(settings.SCREEN_WIDTH / 2 - self.heart_rect.width / 2)
+        self.heart_rect.x = round(settings.SCREEN_WIDTH / 2 - self.heart_rect.width / 2)
         self.heart_rect.y = settings.HEART_Y
 
         health_left: Label = Label(" <", settings.HEALTH_FONT, settings.HEALTH_SIZE,

@@ -20,12 +20,12 @@ class Projectile(ABC, pygame.sprite.Sprite):
         # self.image = pygame.transform.rotate(self.image, self.angle)
         
         scale: float = height / self.image.get_height()
-        width: int = int(self.image.get_width() * scale)
+        width: int = round(self.image.get_width() * scale)
         self.image = pygame.transform.scale(self.image, (width, height))
 
         self.rect: pygame.Rect = self.image.get_rect()
-        self.rect.x = int(x - self.rect.width / 2)
-        self.rect.y = int(y - self.rect.height / 2)
+        self.rect.x = round(x - self.rect.width / 2)
+        self.rect.y = round(y - self.rect.height / 2)
 
         self.angle: float = angle
         self.speed: int = speed
@@ -33,16 +33,23 @@ class Projectile(ABC, pygame.sprite.Sprite):
         self.lifetime: int = lifetime
 
     def update(self) -> None:
-        self.rect.x -= math.sin(math.radians(self.angle)) * self.speed
-        self.rect.y -= math.cos(math.radians(self.angle)) * self.speed
+        self.rect.x -= round(math.sin(math.radians(self.angle)) * self.speed * Settings.DELTA_TIME)
+        self.rect.y -= round(math.cos(math.radians(self.angle)) * self.speed * Settings.DELTA_TIME)
 
         self.lifetime -= 1
         if self.lifetime <= 0:
             self.kill()
-        
+
+        self.constraints()
+
+    def constraints(self) -> None:
         if self.rect.x < 0:
             self.kill()
-        if self.rect.x > settings.SCREEN_WIDTH:
+        if self.rect.x > settings.SCREEN_WIDTH - self.rect.width:
+            self.kill()
+        if self.rect.y < 0:
+            self.kill()
+        if self.rect.y > settings.SCREEN_HEIGHT - self.rect.height:
             self.kill()
 
     def draw(self, display) -> None:

@@ -55,12 +55,12 @@ class Button(ABC, pygame.sprite.Sprite):
 
         self.rect: pygame.Rect = self.image.get_rect()
         scale: float = self.height / self.rect.height
-        height: int = int(self.rect.height * scale)
-        width: int = int(self.rect.width * scale)
+        height: int = round(self.rect.height * scale)
+        width: int = round(self.rect.width * scale)
         self.image = pygame.transform.scale(self.image, (width, height))
 
         self.rect = self.image.get_rect()
-        self.rect.x = int(self.x - self.rect.width / 2)
+        self.rect.x = round(self.x - self.rect.width / 2)
         self.rect.y = self.y
 
         self.image.set_alpha(self.opacity[self.state])
@@ -77,7 +77,7 @@ class ButtonPlay(Button):
         from src.scenes.play import PlayState        
 
         super().__init__(settings.PLAY_IMGS,
-                         int(settings.SCREEN_WIDTH / 2),
+                         round(settings.SCREEN_WIDTH / 2),
                          settings.PLAY_Y,
                          settings.PLAY_HEIGHT,
                          settings.PLAY_OPACITY,
@@ -86,7 +86,7 @@ class ButtonPlay(Button):
 class ButtonQuit(Button):
     def __init__(self, game: Game) -> None:
         super().__init__(settings.QUIT_IMGS,
-                         int(settings.SCREEN_WIDTH / 2),
+                         round(settings.SCREEN_WIDTH / 2),
                          settings.QUIT_Y,
                          settings.QUIT_HEIGHT,
                          settings.QUIT_OPACITY,

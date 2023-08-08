@@ -23,19 +23,19 @@ class MenuState(State):
         self.title: pygame.Surface = pygame.image.load(settings.TITLE_IMG).convert_alpha()
         
         scale = settings.TITLE_HEIGHT / self.title.get_height()
-        width = int(self.title.get_width() * scale)
-        height = int(self.title.get_height() * scale)
+        width = round(self.title.get_width() * scale)
+        height = round(self.title.get_height() * scale)
         self.title = pygame.transform.scale(self.title, (width, height))
 
         self.title_rect: pygame.Rect = self.title.get_rect()
-        self.title_rect.x = int(settings.SCREEN_WIDTH / 2 - self.title_rect.width / 2)
+        self.title_rect.x = round(settings.SCREEN_WIDTH / 2 - self.title_rect.width / 2)
         self.title_rect.y = settings.TITLE_Y
 
         self.credit: pygame.Surface = pygame.image.load(settings.CREDIT_IMG).convert_alpha()
 
         scale = settings.CREDIT_HEIGHT / self.credit.get_height()
-        width = int(self.credit.get_width() * scale)
-        height = int(self.credit.get_height() * scale)
+        width = round(self.credit.get_width() * scale)
+        height = round(self.credit.get_height() * scale)
         self.credit = pygame.transform.scale(self.credit, (width, height))
 
         self.credit_rect: pygame.Rect = self.credit.get_rect()

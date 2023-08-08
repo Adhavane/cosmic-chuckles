@@ -18,8 +18,8 @@ class Cloud(pygame.sprite.Sprite):
         self.rect: pygame.Rect = self.image.get_rect()
         self.height: int = random.randint(settings.CLOUD_HEIGHT_MIN, settings.CLOUD_HEIGHT_MAX)
         scale: float = self.height / self.rect.height
-        width: int = int(self.rect.width * scale)
-        height: int = int(self.rect.height * scale)
+        width: int = round(self.rect.width * scale)
+        height: int = round(self.rect.height * scale)
         self.image = pygame.transform.scale(self.image, (width, height))
         
         self.rect = self.image.get_rect()
@@ -35,7 +35,7 @@ class Cloud(pygame.sprite.Sprite):
     def update(self) -> None:
         current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer > settings.CLOUD_DELTA:
-            self.rect.x += self.speed
+            self.rect.x += round(self.speed * Settings.DELTA_TIME)
             if self.rect.left > settings.SCREEN_WIDTH:
                 self.kill()
 

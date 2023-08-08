@@ -61,9 +61,9 @@ class Game:
 
     def run(self) -> None:
         while True:
-            settings.DELTA_TIME = (time.time() - settings.LAST_TIME) * settings.FPS
-            settings.LAST_TIME = time.time()
-
+            Settings.DELTA_TIME = (time.time() - Settings.LAST_TIME) * settings.FPS
+            Settings.LAST_TIME = time.time()
+            
             self.events()
             self.update()
             self.draw()

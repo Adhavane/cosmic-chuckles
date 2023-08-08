@@ -36,7 +36,7 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.image: pygame.Surface = pygame.image.load(image).convert_alpha()
 
         scale: float = height / self.image.get_height()
-        width: int = int(self.image.get_width() * scale)
+        width: int = round(self.image.get_width() * scale)
         self.image = pygame.transform.scale(self.image, (width, height))
 
         self.rect: pygame.Rect = self.image.get_rect()
@@ -114,19 +114,19 @@ class Enemy(ABC, pygame.sprite.Sprite):
                 self.can_shoot = True
 
     def move_random(self, _: Player) -> None:
-        self.rect_x_float += math.sin(math.radians(self.angle)) * self.movement_speed
-        self.rect_y_float += math.cos(math.radians(self.angle)) * self.movement_speed
-        self.rect.x = int(self.rect_x_float)
-        self.rect.y = int(self.rect_y_float)
+        self.rect_x_float += math.sin(math.radians(self.angle)) * self.movement_speed * Settings.DELTA_TIME
+        self.rect_y_float += math.cos(math.radians(self.angle)) * self.movement_speed * Settings.DELTA_TIME
+        self.rect.x = round(self.rect_x_float)
+        self.rect.y = round(self.rect_y_float)
 
     def move_target(self, player: Player) -> None:
         rel_x: int = self.rect.centerx - player.rect.centerx
         rel_y: int = self.rect.centery - player.rect.centery
         self.angle = (180 / math.pi) * math.atan2(rel_x, rel_y)
-        self.rect_x_float -= math.sin(math.radians(self.angle)) * self.movement_speed
-        self.rect_y_float -= math.cos(math.radians(self.angle)) * self.movement_speed
-        self.rect.x = int(self.rect_x_float)
-        self.rect.y = int(self.rect_y_float)
+        self.rect_x_float -= math.sin(math.radians(self.angle)) * self.movement_speed * Settings.DELTA_TIME
+        self.rect_y_float -= math.cos(math.radians(self.angle)) * self.movement_speed * Settings.DELTA_TIME
+        self.rect.x = round(self.rect_x_float)
+        self.rect.y = round(self.rect_y_float)
 
     def constraints(self) -> None:
         # Kill enemy if goes off screen

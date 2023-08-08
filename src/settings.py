@@ -2,7 +2,12 @@
 
 """settings.py: Settings for the game."""
 
+import time
+
 class Settings:
+    LAST_TIME = time.time()
+    DELTA_TIME = 0
+    
     def __init__(self) -> None:
         # Screen settings for format 4:3
         self.SCALE_FACTOR = 2
@@ -11,9 +16,6 @@ class Settings:
         self.SCREEN_HEIGHT = 512 * self.SCALE_FACTOR
 
         self.FPS = 60
-
-        self.LAST_TIME = 0
-        self.DELTA_TIME = 0
 
         self.TITLE = "Cosmic Chuckles - Python/Pygame"
         self.ICON = "assets/images/icon.png"
@@ -48,11 +50,11 @@ class Settings:
 
         # Cloud settings
         self.CLOUD_IMGS = ["assets/sprites/pixel_art/cloud_0.png",
-                           "assets/sprites/pixel_art/cloud_1.png",
-                            "assets/sprites/pixel_art/cloud_2.png",
-                            "assets/sprites/pixel_art/cloud_3.png",
-                            "assets/sprites/pixel_art/cloud_4.png",
-                            "assets/sprites/pixel_art/cloud_5.png"]
+                        #    "assets/sprites/pixel_art/cloud_1.png",
+                        #    "assets/sprites/pixel_art/cloud_2.png",
+                        #    "assets/sprites/pixel_art/cloud_3.png",
+                        #    "assets/sprites/pixel_art/cloud_4.png",
+                           "assets/sprites/pixel_art/cloud_5.png"]
         self.CLOUD_INIT = 5
         self.CLOUD_HEIGHT_MIN = 50
         self.CLOUD_HEIGHT_MAX = 400
@@ -138,12 +140,12 @@ class Settings:
         # Player settings
         self.PLAYER_IMG = "assets/sprites/pixel_art/player.png"
         self.PLAYER_HEIGHT = 32 * 4
-        self.PLAYER_HEALTH = 100
+        self.PLAYER_HEALTH = 10
         self.PLAYER_REGEN = 1
         self.PLAYER_BULLET_DAMAGE = 10
-        self.PLAYER_BULLET_SPEED = 3
+        self.PLAYER_BULLET_SPEED = 1
         self.PLAYER_BULLET_LIFETIME = 1000
-        self.PLAYER_RELOAD_TIME = 10
+        self.PLAYER_RELOAD_TIME = 60
         self.PLAYER_MOVEMENT_SPEED = 5
 
         # Bullet settings
@@ -222,8 +224,19 @@ class Settings:
         self.ENEMY_YELLOW_MOVEMENT_PATTERN = "move_target"
         self.ENEMY_YELLOW_SCORE = 20
 
-        self.GAMEOVER_IMG = "assets/sprites/pixel_art/gameover.png"
-        self.GAMEOVER_HEIGHT = 19 * 4 * 2
-        self.GAMEOVER_Y = 74 * 2
-        self.GAMEOVER_LABEL_Y = 500
-        self.GAMEOVER_PRESS_Y = 600
+
+
+
+
+        self.GAMEOVER_IMG = "assets/sprites/pixel_art/game_over.png"
+        self.GAMEOVER_IMG_HEIGHT = 220 * self.SCALE_FACTOR
+        self.GAMEOVER_IMG_Y = 71 * self.SCALE_FACTOR
+
+        self.GAMEOVER_SCORE_FONT = "assets/fonts/Pixel Gosub.otf"
+        self.GAMEOVER_SCORE_SIZE = round(43.21 * self.SCALE_FACTOR)
+        self.GAMEOVER_SCORE_Y_PADDING = -18 * self.SCALE_FACTOR
+        self.GAMEOVER_SCORE_Y = 339 * self.SCALE_FACTOR
+
+        self.GAMEOVER_PRESS_FONT = "assets/fonts/Pixel Gosub.otf"
+        self.GAMEOVER_PRESS_SIZE = round(14.40 * self.SCALE_FACTOR)
+        self.GAMEOVER_PRESS_Y = 466 * self.SCALE_FACTOR

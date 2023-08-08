@@ -16,26 +16,24 @@ class GameOverState(State):
 
         self.gameover: pygame.Surface = pygame.image.load(settings.GAMEOVER_IMG).convert_alpha()
 
-        scale: float = settings.GAMEOVER_HEIGHT / self.gameover.get_height()
-        width: int = int(self.gameover.get_width() * scale)
-        height: int = int(self.gameover.get_height() * scale)
+        scale: float = settings.GAMEOVER_IMG_HEIGHT / self.gameover.get_height()
+        width: int = round(self.gameover.get_width() * scale)
+        height: int = round(self.gameover.get_height() * scale)
         self.gameover = pygame.transform.scale(self.gameover, (width, height))
 
         self.gameover_rect: pygame.Rect = self.gameover.get_rect()
-        self.gameover_rect.x = int(settings.SCREEN_WIDTH / 2 - self.gameover_rect.width / 2)
-        self.gameover_rect.y = settings.GAMEOVER_Y
+        self.gameover_rect.x = round(settings.SCREEN_WIDTH / 2 - self.gameover_rect.width / 2)
+        self.gameover_rect.y = settings.GAMEOVER_IMG_Y
 
-        self.score: Label = Label(str(score), settings.SCORE_FONT, settings.SCORE_SIZE,
-                                      True, settings.WHITE,
-                                      0, 0)
-        self.score.rect.x = int(settings.SCREEN_WIDTH / 2 - self.score.rect.width / 2)
-        self.score.rect.y = settings.GAMEOVER_CAPTION_Y
+        self.score: Label = Label(str(score), settings.GAMEOVER_SCORE_FONT, settings.GAMEOVER_SCORE_SIZE,
+                                  True, settings.GREEN, settings.OPAQUE, 0, 0)
+        self.score.x = round(settings.SCREEN_WIDTH / 2 - self.score.rect.width / 2)
+        self.score.y = settings.GAMEOVER_SCORE_Y + settings.GAMEOVER_SCORE_Y_PADDING
 
-        self.press: Label = Label("PRESS ENTER TO PLAY AGAIN", settings.SCORE_FONT, settings.SCORE_SIZE,
-                                        True, settings.WHITE,
-                                        0, 0)
-        self.press.rect.x = int(settings.SCREEN_WIDTH / 2 - self.press.rect.width / 2)
-        self.press.rect.y = settings.GAMEOVER_PRESS_Y
+        self.press: Label = Label("PRESS ENTER TO PLAY AGAIN", settings.GAMEOVER_PRESS_FONT, settings.GAMEOVER_PRESS_SIZE,
+                                  True, settings.WHITE, settings.OPAQUE, 0, 0)
+        self.press.x = round(settings.SCREEN_WIDTH / 2 - self.press.rect.width / 2)
+        self.press.y = settings.GAMEOVER_PRESS_Y
 
     def events(self, event: pygame.event.Event) -> None:
         from src.scenes.play import PlayState

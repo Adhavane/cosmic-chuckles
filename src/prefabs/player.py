@@ -24,13 +24,13 @@ class Player(pygame.sprite.Sprite):
         self.original_image: pygame.Surface = pygame.image.load(settings.PLAYER_IMG).convert_alpha()
         
         scale: float = settings.PLAYER_HEIGHT / self.original_image.get_height()
-        width: int = int(self.original_image.get_width() * scale)
-        height: int = int(self.original_image.get_height() * scale)
+        width: int = round(self.original_image.get_width() * scale)
+        height: int = round(self.original_image.get_height() * scale)
         self.original_image = pygame.transform.scale(self.original_image, (width, height))
         self.image: pygame.Surface = self.original_image.copy()
 
         self.rect: pygame.Rect = self.image.get_rect()
-        self.rect.center = (int(settings.SCREEN_WIDTH / 2), int(settings.SCREEN_HEIGHT / 2))
+        self.rect.center = (round(settings.SCREEN_WIDTH / 2), round(settings.SCREEN_HEIGHT / 2))
 
         self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
 
@@ -60,13 +60,13 @@ class Player(pygame.sprite.Sprite):
     def move(self) -> None:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            self.rect.y -= self.movement_speed
+            self.rect.y -= round(self.movement_speed * Settings.DELTA_TIME)
         if keys[pygame.K_DOWN]:
-            self.rect.y += self.movement_speed
+            self.rect.y += round(self.movement_speed * Settings.DELTA_TIME)
         if keys[pygame.K_LEFT]:
-            self.rect.x -= self.movement_speed
+            self.rect.x -= round(self.movement_speed * Settings.DELTA_TIME)
         if keys[pygame.K_RIGHT]:
-            self.rect.x += self.movement_speed
+            self.rect.x += round(self.movement_speed * Settings.DELTA_TIME)
 
     def rotate(self) -> None:
         mouse_x: int = pygame.mouse.get_pos()[0]
