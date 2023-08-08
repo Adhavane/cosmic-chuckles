@@ -53,8 +53,7 @@ class PlayState(State):
         self.particles.update()
     
         self.collisions()
-
-        self.spawn_particles()
+        self.destroyer()
 
         if self.player.health <= 0:
             self.game.change_state(GameOverState(self.game, self.score_counter))
@@ -112,36 +111,36 @@ class PlayState(State):
         for enemy in self.enemies:
             if pygame.sprite.groupcollide(enemy.bullets, self.player.bullets, False, False):
                 collisions_bullets_bullets: Dict[Projectile, List[Projectile]] = \
-                    pygame.sprite.groupcollide(enemy.bullets,
-                                               self.player.bullets, False, False,
+                    pygame.sprite.groupcollide(self.player.bullets,enemy.bullets,
+                                               False, False,
                                                pygame.sprite.collide_mask)
                 
                 for bullet, bullets in collisions_bullets_bullets.items():
-                    for bullet in bullets:
+                    for bullet_ in bullets:
                         bullet.destroy()
+                        bullet_.destroy()
 
-    def spawn_particles(self) -> None:
+    def explosions(self, sprite: pygame.sprite.Sprite) -> None:
+        for _ in range(settings.PARTICLE_AMOUNT):
+            self.particles.add(Particle(sprite.colors,
+                                        sprite.rect.centerx,
+                                        sprite.rect.centery))
+
+    def destroyer(self) -> None:
         for enemy in self.enemies:
             if enemy.destroyed:
-                for _ in range(settings.PARTICLE_AMOUNT):
-                    self.particles.add(Particle(enemy.colors,
-                                                enemy.rect.centerx,
-                                                enemy.rect.centery))
-        
-        for projectile in self.player.bullets:
-            if projectile.destroyed:
-                for _ in range(settings.PARTICLE_AMOUNT):
-                    self.particles.add(Particle(projectile.colors,
-                                                projectile.rect.centerx,
-                                                projectile.rect.centery))
-        
-        for enemy in self.enemies:
+                self.explosions(enemy)
+                enemy.kill()
+
             for projectile in enemy.bullets:
                 if projectile.destroyed:
-                    for _ in range(settings.PARTICLE_AMOUNT):
-                        self.particles.add(Particle(projectile.colors,
-                                                    projectile.rect.centerx,
-                                                    projectile.rect.centery))
+                    self.explosions(projectile)
+                    projectile.kill()
+
+        for projectile in self.player.bullets:
+            if projectile.destroyed:
+                self.explosions(projectile)
+                projectile.kill()
 
     def draw(self) -> None:
         super().draw()

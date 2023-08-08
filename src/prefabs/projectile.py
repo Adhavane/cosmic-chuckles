@@ -46,9 +46,6 @@ class Projectile(ABC, pygame.sprite.Sprite):
         if self.lifetime <= 0:
             self.destroy()
 
-        if self.destroyed:
-            self.kill()
-
         self.constraints()
 
     def constraints(self) -> None:

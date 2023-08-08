@@ -95,8 +95,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
         if self.bullet_damage is not None:
             self.shoot()
 
-        if self.health <= 0 or self.destroyed:
-            self.kill()
+        if self.health <= 0:
+            self.destroy()
 
     def shoot(self) -> None:
         if self.can_shoot:
