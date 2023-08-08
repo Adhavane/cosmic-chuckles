@@ -8,10 +8,10 @@ from PIL import Image, ImageDraw
 
 def extract_color_palette(image: str) -> Tuple[List[Tuple[int, int, int]], List[int]]:
     """Extracts color palettes from an image."""
-    img = Image.open(image)
-    colors = img.getcolors(maxcolors=256)
-    palette = [color for (_, color) in colors]
-    weights = [count for (count, _) in colors]
+    img: Image.Image = Image.open(image)
+    colors: List[Tuple[int, int, int]] = img.getcolors(maxcolors=256)
+    palette: List[Tuple[int, int, int]] = [color for (_, color) in colors]
+    weights: List[int] = [count for (count, _) in colors]
     return palette, weights
 
 class Settings:
@@ -157,26 +157,10 @@ class Settings:
         self.PARTICLE_LIFETIME_MIN = 1
         self.PARTICLE_LIFETIME_MAX = 30
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         # Player settings
         self.PLAYER_IMG = "assets/sprites/pixel_art/player.png"
-        self.PLAYER_HEIGHT = 32 * 4
-        self.PLAYER_HEALTH = 100
+        self.PLAYER_HEIGHT = 64 * self.SCALE_FACTOR
+        self.PLAYER_HEALTH = 10000
         self.PLAYER_REGEN = 1
         self.PLAYER_BULLET_DAMAGE = 10
         self.PLAYER_BULLET_SPEED = 4
@@ -186,17 +170,17 @@ class Settings:
 
         # Bullet settings
         self.BULLET_PLAYER_IMG = "assets/sprites/pixel_art/bullet_player.png"
-        self.BULLET_PLAYER_HEIGHT = 32 * 2
+        self.BULLET_PLAYER_HEIGHT = 32 * self.SCALE_FACTOR
         
         self.BULLET_ENEMY_IMG = "assets/sprites/pixel_art/bullet_enemy.png"
-        self.BULLET_ENEMY_HEIGHT = 32 * 2
+        self.BULLET_ENEMY_HEIGHT = 32 * self.SCALE_FACTOR
 
         # Enemy settings
         self.ENEMY_TIME_MIN = 1000
         self.ENEMY_TIME_MAX = 2000
 
         self.ENEMY_PURPLE_IMG = "assets/sprites/pixel_art/enemy_purple.png"
-        self.ENEMY_PURPLE_HEIGHT = 36 * 4
+        self.ENEMY_PURPLE_HEIGHT = 72 * self.SCALE_FACTOR
         self.ENEMY_PURPLE_HEALTH = 10
         self.ENEMY_PURPLE_BODY_DAMAGE = 10
         self.ENEMY_PURPLE_BULLET_DAMAGE = None
@@ -209,7 +193,7 @@ class Settings:
         self.ENEMY_PURPLE_SCORE = 10
         
         self.ENEMY_RED_IMG = "assets/sprites/pixel_art/enemy_red.png"
-        self.ENEMY_RED_HEIGHT = 48 * 4
+        self.ENEMY_RED_HEIGHT = 96 * self.SCALE_FACTOR
         self.ENEMY_RED_HEALTH = 20
         self.ENEMY_RED_BODY_DAMAGE = 10
         self.ENEMY_RED_BULLET_DAMAGE = 5
@@ -222,7 +206,7 @@ class Settings:
         self.ENEMY_RED_SCORE = 10
         
         self.ENEMY_GREEN_IMG = "assets/sprites/pixel_art/enemy_green.png"
-        self.ENEMY_GREEN_HEIGHT = 52 * 4
+        self.ENEMY_GREEN_HEIGHT = 104 * self.SCALE_FACTOR
         self.ENEMY_GREEN_HEALTH = 50
         self.ENEMY_GREEN_BODY_DAMAGE = 50
         self.ENEMY_GREEN_BULLET_DAMAGE = None
@@ -234,8 +218,11 @@ class Settings:
         self.ENEMY_GREEN_MOVEMENT_PATTERN = "move_target"
         self.ENEMY_GREEN_SCORE = 10
 
+        self.ENEMY_GREEN_BABY_AMOUNT = 6
+        self.ENEMY_GREEN_BABY_SPAWN_RADIUS = 100 * self.SCALE_FACTOR
+
         self.ENEMY_GREEN_BABY_IMG = "assets/sprites/pixel_art/enemy_green_baby.png"
-        self.ENEMY_GREEN_BABY_HEIGHT = 18 * 4
+        self.ENEMY_GREEN_BABY_HEIGHT = 36 * self.SCALE_FACTOR
         self.ENEMY_GREEN_BABY_HEALTH = 5
         self.ENEMY_GREEN_BABY_BODY_DAMAGE = 5
         self.ENEMY_GREEN_BABY_BULLET_DAMAGE = None
@@ -248,7 +235,7 @@ class Settings:
         self.ENEMY_GREEN_BABY_SCORE = 5
 
         self.ENEMY_YELLOW_IMG = "assets/sprites/pixel_art/enemy_yellow.png"
-        self.ENEMY_YELLOW_HEIGHT = 38 * 4
+        self.ENEMY_YELLOW_HEIGHT = 76 * self.SCALE_FACTOR
         self.ENEMY_YELLOW_HEALTH = 10
         self.ENEMY_YELLOW_BODY_DAMAGE = 10
         self.ENEMY_YELLOW_BULLET_DAMAGE = None
@@ -259,10 +246,6 @@ class Settings:
         self.ENEMY_YELLOW_MOVEMENT_COOLDOWN = 30
         self.ENEMY_YELLOW_MOVEMENT_PATTERN = "move_target"
         self.ENEMY_YELLOW_SCORE = 20
-
-
-
-
 
         self.GAMEOVER_IMG = "assets/sprites/pixel_art/game_over.png"
         self.GAMEOVER_IMG_HEIGHT = 220 * self.SCALE_FACTOR
