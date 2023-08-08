@@ -8,7 +8,7 @@ from src.settings import Settings
 settings = Settings()
 
 from src.scenes.state import State
-from src.gui.caption import Caption
+from src.ui.label import Label
 
 class GameOverState(State):
     def __init__(self, game, score: int) -> None:
@@ -25,13 +25,13 @@ class GameOverState(State):
         self.gameover_rect.x = int(settings.SCREEN_WIDTH / 2 - self.gameover_rect.width / 2)
         self.gameover_rect.y = settings.GAMEOVER_Y
 
-        self.score: Caption = Caption(str(score), settings.SCORE_FONT, settings.SCORE_SIZE,
+        self.score: Label = Label(str(score), settings.SCORE_FONT, settings.SCORE_SIZE,
                                       True, settings.WHITE,
                                       0, 0)
         self.score.rect.x = int(settings.SCREEN_WIDTH / 2 - self.score.rect.width / 2)
         self.score.rect.y = settings.GAMEOVER_CAPTION_Y
 
-        self.press: Caption = Caption("PRESS ENTER TO PLAY AGAIN", settings.SCORE_FONT, settings.SCORE_SIZE,
+        self.press: Label = Label("PRESS ENTER TO PLAY AGAIN", settings.SCORE_FONT, settings.SCORE_SIZE,
                                         True, settings.WHITE,
                                         0, 0)
         self.press.rect.x = int(settings.SCREEN_WIDTH / 2 - self.press.rect.width / 2)

@@ -13,7 +13,7 @@ settings = Settings()
 
 from src.prefabs.background import Background
 from src.prefabs.cloud import Cloud
-from src.gui.fps import FPS
+from src.ui.fps import FPS
 
 class State(ABC):
     def __init__(self, game: Game) -> None:
@@ -44,7 +44,7 @@ class State(ABC):
     def update(self) -> None:
         self.background.update()
         
-        self.spawn_clouds()
+        # self.spawn_clouds()
         self.clouds.update()
 
         self.fps.update(self.game.clock.get_fps())

@@ -7,7 +7,7 @@ import pygame
 from src.settings import Settings
 settings = Settings()
 
-from src.gui.caption import Caption, CaptionList
+from src.ui.label import Label, LabelList
 
 class Health:
     def __init__(self, health: int) -> None:
@@ -22,20 +22,20 @@ class Health:
         self.heart_rect.x = int(settings.SCREEN_WIDTH / 2 - self.heart_rect.width / 2)
         self.heart_rect.y = settings.HEART_Y
 
-        health_left: Caption = Caption(" <", settings.HEALTH_FONT, settings.HEALTH_SIZE,
+        health_left: Label = Label(" <", settings.HEALTH_FONT, settings.HEALTH_SIZE,
                                        True, settings.WHITE,
                                        self.heart_rect.x + self.heart_rect.width,
                                        settings.HEALTH_Y)
-        health_counter: Caption = Caption(str(health), settings.HEALTH_FONT, settings.HEALTH_SIZE,
+        health_counter: Label = Label(str(health), settings.HEALTH_FONT, settings.HEALTH_SIZE,
                                           True, settings.GREEN,
                                           health_left.rect.x + health_left.rect.width,
                                           settings.HEALTH_Y)
-        health_right: Caption = Caption(">", settings.HEALTH_FONT, settings.HEALTH_SIZE,
+        health_right: Label = Label(">", settings.HEALTH_FONT, settings.HEALTH_SIZE,
                                         True, settings.WHITE,
                                         health_counter.rect.x + health_counter.rect.width,
                                         settings.HEALTH_Y)
         
-        self.health: CaptionList = CaptionList([health_left, health_counter, health_right])
+        self.health: LabelList = LabelList([health_left, health_counter, health_right])
 
     def update(self, health: int) -> None:
         self.health[1].text = str(health)

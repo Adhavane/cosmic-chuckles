@@ -11,10 +11,10 @@ from src.settings import Settings
 settings = Settings()
 
 from src.scenes.state import State
-from src.scenes.gameover import GameOverState
+from src.scenes.game_over import GameOverState
 
-from src.gui.score import Score
-from src.gui.health import Health
+from src.ui.statistics import Score
+from src.ui.statistics import Health
 
 from src.prefabs.player import Player
 from src.prefabs.enemy import Enemy, EnemyPurple, EnemyRed, EnemyGreen, EnemyYellow

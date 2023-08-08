@@ -10,7 +10,7 @@ from src.settings import Settings
 settings = Settings()
 
 from src.scenes.state import State
-from src.gui.button import Button, ButtonPlay, ButtonQuit
+from src.ui.button import Button, ButtonPlay, ButtonQuit
 
 class MenuState(State):
     def __init__(self, game: Game) -> None:

@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 
-"""caption.py: Caption class and subclasses."""
+"""label.py: Label class and subclasses."""
 
 import pygame
-from typing import Dict, List, Tuple
-from abc import ABC, abstractmethod
+from typing import Tuple
 
 from src.settings import Settings
 settings = Settings()
 
-class Caption(pygame.sprite.Sprite):
+class Label(pygame.sprite.Sprite):
     def __init__(self,
                  text: str,
                  font: str | None,
                  size: int,
                  antialias: bool,
                  color: Tuple[int, int, int],
+                 opacity: int,
                  x: int, y: int) -> None:
         super().__init__()
 
@@ -25,8 +25,10 @@ class Caption(pygame.sprite.Sprite):
         
         self.antialias: bool = antialias
         self.color: Tuple[int, int, int] = color
+        self.opacity: int = opacity
 
         self.text_render: pygame.Surface = self.font.render(self.text, self.antialias, self.color)
+        self.text_render.set_alpha(self.opacity)
         self.rect: pygame.Rect = self.text_render.get_rect()
         
         self.x: int = x
@@ -34,24 +36,8 @@ class Caption(pygame.sprite.Sprite):
 
     def update(self) -> None:
         self.text_render = self.font.render(self.text, self.antialias, self.color)
+        self.text_render.set_alpha(self.opacity)
         self.rect = self.text_render.get_rect()
 
     def draw(self, screen: pygame.Surface) -> None:
         screen.blit(self.text_render, (self.x, self.y))
-
-class CaptionList(ABC, List[Caption]):
-    def __init__(self, captions: List[Caption]) -> None:
-        super().__init__(captions)
-        
-    def append(self, caption: Caption) -> None:
-        super().append(caption)
-
-    def update(self, *_: Tuple, **__: Dict) -> None:
-        self[0].update()
-        for i in range(1, len(self)):
-            self[i].x = self[i - 1].x + self[i - 1].rect.width
-            self[i].update()
-
-    def draw(self, screen: pygame.Surface) -> None:
-        for caption in self:
-            caption.draw(screen)

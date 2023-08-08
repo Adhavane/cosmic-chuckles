@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import pygame
 import sys
+import time
 
 from src.settings import Settings
 settings = Settings()
@@ -28,6 +29,9 @@ class Game:
 
     def run(self) -> None:
         while True:
+            settings.DELTA_TIME = (time.time() - settings.LAST_TIME) * settings.FPS
+            settings.LAST_TIME = time.time()
+
             self.events()
             self.update()
             self.draw()
