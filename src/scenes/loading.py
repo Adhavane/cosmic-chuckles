@@ -60,7 +60,7 @@ class LoadingState(State):
 
         self.animations()
 
-        self.end_time_ms: int = round(time.time() * 1000)
+        self.end_time_ms = round(time.time() * 1000)
         if self.end_time_ms - self.start_time_ms >= self.execution_time_ms:
             self.game.change_state(self.next_state(self.game, *self.next_state_args, **self.next_state_kwargs))
     

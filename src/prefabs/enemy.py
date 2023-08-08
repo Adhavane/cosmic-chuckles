@@ -2,6 +2,8 @@
 
 """enemy.py: Enemy class and subclasses."""
 
+from __future__ import annotations
+
 import pygame
 from abc import ABC, abstractmethod
 from typing import Optional, Callable, List, Tuple
@@ -74,8 +76,6 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.movement_pattern: Callable[[Player], None] = getattr(self, movement_pattern)
 
         self.angle: float = random.uniform(0, 360)
-        self.rect_x_float: float
-        self.rect_y_float: float
         self.score: int = score
 
         self.can_shoot: bool = True
@@ -145,6 +145,9 @@ class Enemy(ABC, pygame.sprite.Sprite):
     
     def destroy(self) -> None:
         self.destroyed = True
+    
+    def spawn(self) -> List[Enemy]:
+        return []
 
     def draw(self, display) -> None:
         self.bullets.draw(display)
@@ -194,6 +197,30 @@ class EnemyGreen(Enemy):
                          settings.ENEMY_GREEN_MOVEMENT_COOLDOWN,
                          settings.ENEMY_GREEN_MOVEMENT_PATTERN,
                          settings.ENEMY_GREEN_SCORE)
+        
+    def spawn(self) -> List[Enemy]:
+        enemies: List[Enemy] = []
+        for _ in range(settings.ENEMY_GREEN_BABY_AMOUNT):
+            new_enemy: Enemy = EnemyGreenBaby()
+            new_enemy.rect_x_float = self.rect.centerx + random.randint(-settings.ENEMY_GREEN_BABY_SPAWN_RADIUS, settings.ENEMY_GREEN_BABY_SPAWN_RADIUS)
+            new_enemy.rect_y_float = self.rect.centery + random.randint(-settings.ENEMY_GREEN_BABY_SPAWN_RADIUS, settings.ENEMY_GREEN_BABY_SPAWN_RADIUS)
+            enemies.append(new_enemy)
+        return enemies
+
+class EnemyGreenBaby(Enemy):
+    def __init__(self) -> None:
+        super().__init__(settings.ENEMY_GREEN_BABY_IMG,
+                         settings.ENEMY_GREEN_BABY_HEIGHT,
+                         settings.ENEMY_GREEN_BABY_HEALTH,
+                         settings.ENEMY_GREEN_BABY_BODY_DAMAGE,
+                         settings.ENEMY_GREEN_BABY_BULLET_DAMAGE,
+                         settings.ENEMY_GREEN_BABY_BULLET_SPEED,
+                         settings.ENEMY_GREEN_BABY_BULLET_LIFETIME,
+                         settings.ENEMY_GREEN_BABY_RELOAD_TIME,
+                         settings.ENEMY_GREEN_BABY_MOVEMENT_SPEED,
+                         settings.ENEMY_GREEN_BABY_MOVEMENT_COOLDOWN,
+                         settings.ENEMY_GREEN_BABY_MOVEMENT_PATTERN,
+                         settings.ENEMY_GREEN_BABY_SCORE)
         
 class EnemyYellow(Enemy):
     def __init__(self) -> None:

@@ -123,7 +123,7 @@ class PlayState(Scene):
                         bullet.destroy()
                         bullet_.destroy()
 
-    def explosions(self, sprite: pygame.sprite.Sprite) -> None:
+    def explosions(self, sprite: Player | Enemy | Projectile) -> None:
         for _ in range(settings.PARTICLE_AMOUNT):
             self.particles.add(Particle(sprite.colors,
                                         sprite.rect.centerx,
@@ -133,6 +133,7 @@ class PlayState(Scene):
         for enemy in self.enemies:
             if enemy.destroyed:
                 self.explosions(enemy)
+                self.enemies.add(enemy.spawn())
                 enemy.kill()
 
             for projectile in enemy.bullets:
