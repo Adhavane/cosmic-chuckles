@@ -4,11 +4,11 @@
 
 import pygame
 from abc import ABC, abstractmethod
-from typing import Optional, Callable
+from typing import Optional, Callable, List, Tuple
 import random
 import math
 
-from src.settings import Settings
+from src.settings import Settings, extract_color_palette
 settings = Settings()
 
 from src.prefabs.player import Player
@@ -59,6 +59,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
 
         self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
 
+        self.colors: Tuple[List[Tuple[int, int, int]], List[int]] = extract_color_palette(image)
+
         self.health: int = health
         self.body_damage: int = body_damage
         self.bullet_damage: Optional[int] = bullet_damage
@@ -81,6 +83,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.shoot_cooldown = self.reload_time
         self.bullets: pygame.sprite.Group[BulletEnemy] = pygame.sprite.Group()
 
+        self.destroyed: bool = False
+
     def update(self, player: Player) -> None:
         current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer > self.movement_cooldown:
@@ -91,7 +95,7 @@ class Enemy(ABC, pygame.sprite.Sprite):
         if self.bullet_damage is not None:
             self.shoot()
 
-        if self.health <= 0:
+        if self.health <= 0 or self.destroyed:
             self.kill()
 
     def shoot(self) -> None:
@@ -138,6 +142,9 @@ class Enemy(ABC, pygame.sprite.Sprite):
             self.kill()
         if self.rect.y + self.rect.height < 0:
             self.kill()
+    
+    def destroy(self) -> None:
+        self.destroyed = True
 
     def draw(self, display) -> None:
         self.bullets.draw(display)

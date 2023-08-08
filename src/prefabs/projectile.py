@@ -36,25 +36,33 @@ class Projectile(ABC, pygame.sprite.Sprite):
         self.damage: int = damage
         self.lifetime: int = lifetime
 
+        self.destroyed: bool = False
+
     def update(self) -> None:
         self.rect.x -= round(math.sin(math.radians(self.angle)) * self.speed * Settings.DELTA_TIME)
         self.rect.y -= round(math.cos(math.radians(self.angle)) * self.speed * Settings.DELTA_TIME)
 
         self.lifetime -= 1
         if self.lifetime <= 0:
+            self.destroy()
+
+        if self.destroyed:
             self.kill()
 
         self.constraints()
 
     def constraints(self) -> None:
-        if self.rect.x < 0:
+        if self.rect.x + self.rect.width < 0:
             self.kill()
-        if self.rect.x > settings.SCREEN_WIDTH - self.rect.width:
+        if self.rect.x > settings.SCREEN_WIDTH:
             self.kill()
-        if self.rect.y < 0:
+        if self.rect.y + self.rect.height < 0:
             self.kill()
-        if self.rect.y > settings.SCREEN_HEIGHT - self.rect.height:
+        if self.rect.y > settings.SCREEN_HEIGHT:
             self.kill()
+
+    def destroy(self) -> None:
+        self.destroyed = True
 
     def draw(self, display) -> None:
         display.blit(self.image, self.rect)       

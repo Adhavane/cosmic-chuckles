@@ -145,7 +145,7 @@ class Settings:
 
         # Particle settings
         self.PARTICLE_IMG = "assets/sprites/pixel_art/particle.png"
-        self.PARTICLE_COUNT = 20
+        self.PARTICLE_AMOUNT = 20
         self.PARTICLE_HEIGHT_MIN = 1 * self.SCALE_FACTOR
         self.PARTICLE_HEIGHT_MAX = 6 * self.SCALE_FACTOR
         self.PARTICLE_ANGLE_MIN = 0

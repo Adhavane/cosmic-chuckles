@@ -24,3 +24,7 @@ class Particle(Projectile):
                          angle, damage, speed, lifetime)
 
         self.image.fill(color)
+
+    def destroy(self) -> None:
+        super().destroy()
+        self.kill()
