@@ -91,5 +91,5 @@ class Background(pygame.sprite.Sprite):
         self.moving_cooldown = random.randint(settings.BG_TIME_MIN, settings.BG_TIME_MAX)
         self.moving_direction = random.uniform(settings.BG_ANGLE_MIN, settings.BG_ANGLE_MAX)
 
-    def draw(self, screen) -> None:
-        screen.blit(self.image, self.rect)
+    def draw(self, display) -> None:
+        display.blit(self.image, self.rect)

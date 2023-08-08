@@ -45,8 +45,8 @@ class Projectile(ABC, pygame.sprite.Sprite):
         if self.rect.x > settings.SCREEN_WIDTH:
             self.kill()
 
-    def draw(self, screen) -> None:
-        screen.blit(self.image, self.rect)       
+    def draw(self, display) -> None:
+        display.blit(self.image, self.rect)       
 
 class BulletPlayer(Projectile):
     def __init__(self, x: int, y: int,

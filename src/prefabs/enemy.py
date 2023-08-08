@@ -139,9 +139,9 @@ class Enemy(ABC, pygame.sprite.Sprite):
         if self.rect.y + self.rect.height < 0:
             self.kill()
 
-    def draw(self, screen) -> None:
-        self.bullets.draw(screen)
-        screen.blit(self.image, self.rect)
+    def draw(self, display) -> None:
+        self.bullets.draw(display)
+        display.blit(self.image, self.rect)
 
 class EnemyPurple(Enemy):
     def __init__(self) -> None:

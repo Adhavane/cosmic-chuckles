@@ -52,6 +52,6 @@ class GameOverState(State):
     def draw(self) -> None:
         super().draw()
 
-        self.game.screen.blit(self.gameover, self.gameover_rect)
-        self.score.draw(self.game.screen)
-        self.press.draw(self.game.screen)
+        self.game.display.blit(self.gameover, self.gameover_rect)
+        self.score.draw(self.game.display)
+        self.press.draw(self.game.display)

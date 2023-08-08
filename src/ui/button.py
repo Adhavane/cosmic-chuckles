@@ -69,8 +69,8 @@ class Button(ABC, pygame.sprite.Sprite):
         if self.state == "selected" and pygame.key.get_pressed()[pygame.K_RETURN]:
             self.event(*self.event_args, **self.event_kwargs)
 
-    def draw(self, screen) -> None:
-        screen.blit(self.image, self.rect)
+    def draw(self, display) -> None:
+        display.blit(self.image, self.rect)
 
 class ButtonPlay(Button):
     def __init__(self, game: Game) -> None:

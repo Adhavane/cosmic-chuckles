@@ -44,18 +44,18 @@ class State(ABC):
     def update(self) -> None:
         self.background.update()
         
-        # self.spawn_clouds()
+        self.spawn_clouds()
         self.clouds.update()
 
         self.fps.update(self.game.clock.get_fps())
 
     def draw(self) -> None:
-        self.game.screen.fill(settings.BLACK)
+        self.game.display.fill(settings.BLACK)
 
-        self.background.draw(self.game.screen)
+        self.background.draw(self.game.display)
         for cloud in self.clouds:
-            cloud.draw(self.game.screen)
+            cloud.draw(self.game.display)
 
-        self.fps.draw(self.game.screen)
+        self.fps.draw(self.game.display)
 
 from src.game import Game

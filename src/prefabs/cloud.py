@@ -39,5 +39,5 @@ class Cloud(pygame.sprite.Sprite):
             if self.rect.left > settings.SCREEN_WIDTH:
                 self.kill()
 
-    def draw(self, screen) -> None:
-        screen.blit(self.image, self.rect)
+    def draw(self, display) -> None:
+        display.blit(self.image, self.rect)

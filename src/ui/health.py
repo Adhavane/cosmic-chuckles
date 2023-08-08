@@ -41,6 +41,6 @@ class Health:
         self.health[1].text = str(health)
         self.health.update()
 
-    def draw(self, screen: pygame.Surface) -> None:
-        screen.blit(self.heart, self.heart_rect)
-        self.health.draw(screen)
+    def draw(self, display: pygame.Surface) -> None:
+        display.blit(self.heart, self.heart_rect)
+        self.health.draw(display)

@@ -39,5 +39,5 @@ class Label(pygame.sprite.Sprite):
         self.text_render.set_alpha(self.opacity)
         self.rect = self.text_render.get_rect()
 
-    def draw(self, screen: pygame.Surface) -> None:
-        screen.blit(self.text_render, (self.x, self.y))
+    def draw(self, display: pygame.Surface) -> None:
+        display.blit(self.text_render, (self.x, self.y))

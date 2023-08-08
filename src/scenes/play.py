@@ -114,12 +114,12 @@ class PlayState(State):
     def draw(self) -> None:
         super().draw()
 
-        self.score.draw(self.game.screen)
-        self.health.draw(self.game.screen)
+        self.score.draw(self.game.display)
+        self.health.draw(self.game.display)
 
-        self.player.draw(self.game.screen)
+        self.player.draw(self.game.display)
         for enemy in self.enemies:
-            enemy.draw(self.game.screen)
+            enemy.draw(self.game.display)
 
         for particle in self.particles:
-            particle.draw(self.game.screen)
+            particle.draw(self.game.display)

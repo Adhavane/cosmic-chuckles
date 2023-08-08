@@ -112,6 +112,6 @@ class Player(pygame.sprite.Sprite):
             if current_time - self.shoot_timer >= self.shoot_cooldown:
                 self.can_shoot = True
 
-    def draw(self, screen) -> None:
-        self.bullets.draw(screen)
-        screen.blit(self.image, self.rect)
+    def draw(self, display) -> None:
+        self.bullets.draw(display)
+        display.blit(self.image, self.rect)

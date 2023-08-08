@@ -38,10 +38,10 @@ class Statistics(ABC):
         self.stat.text = str(stat)
         self.stat.update()
     
-    def draw(self, screen: pygame.Surface) -> None:
-        screen.blit(self.icon, self.icon_rect)
-        self.label.draw(screen)
-        self.stat.draw(screen)
+    def draw(self, display: pygame.Surface) -> None:
+        display.blit(self.icon, self.icon_rect)
+        self.label.draw(display)
+        self.stat.draw(display)
 
 class Score(Statistics):
     def __init__(self, score: int = 0) -> None:

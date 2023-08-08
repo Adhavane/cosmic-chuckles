@@ -82,9 +82,9 @@ class MenuState(State):
     def draw(self) -> None:
         super().draw()
 
-        self.game.screen.blit(self.title, self.title_rect)
-        self.game.screen.blit(self.credit, self.credit_rect)
+        self.game.display.blit(self.title, self.title_rect)
+        self.game.display.blit(self.credit, self.credit_rect)
         for button in self.buttons:
-            button.draw(self.game.screen)
+            button.draw(self.game.display)
 
 from src.game import Game

@@ -123,6 +123,14 @@ class Settings:
         self.HEALTH_X = 24 * self.SCALE_FACTOR
         self.HEALTH_Y = 71 * self.SCALE_FACTOR
 
+
+
+
+
+
+
+
+
         # Particle settings
         self.PARTICLE_IMG = "assets/sprites/pixel_art/particle.png"
         self.PARTICLE_HEIGHT = 2 * 2
@@ -135,7 +143,7 @@ class Settings:
         self.PLAYER_BULLET_DAMAGE = 10
         self.PLAYER_BULLET_SPEED = 3
         self.PLAYER_BULLET_LIFETIME = 1000
-        self.PLAYER_RELOAD_TIME = 600
+        self.PLAYER_RELOAD_TIME = 10
         self.PLAYER_MOVEMENT_SPEED = 5
 
         # Bullet settings
