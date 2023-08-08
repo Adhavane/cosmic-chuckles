@@ -42,9 +42,13 @@ class Settings:
         self.TRANSLUCENT = 128
         self.TRANSPARENT = 0
 
-        self.LOADING_IMG = "assets/sprites/pixel_art/loading.png"
-        self.LOADING_IMG_HEIGHT = 20 * self.SCALE_FACTOR
-        self.LOADING_TIME_MS = 1000
+        self.LOADING_IMGS = ["assets/sprites/pixel_art/loading_0.png",
+                             "assets/sprites/pixel_art/loading_1.png",
+                             "assets/sprites/pixel_art/loading_2.png",
+                             "assets/sprites/pixel_art/loading_3.png"]
+        self.LOADING_IMG_HEIGHT = 34 * self.SCALE_FACTOR
+        self.LOADING_IMG_DELAY = 800
+        self.LOADING_TIME_MS = 3000
 
         # Background settings
         self.BG_IMG = "assets/sprites/pixel_art/background.png"
