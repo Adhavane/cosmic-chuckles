@@ -1,10 +1,11 @@
-
-# ![Cosmic Chuckles](docs/images/logo.png)
+# Cosmic Chuckles – 🚀🌌
 
 Welcome to the starry and wacky world of Cosmic Chuckles! 🛸💫
 
-<img src="docs/images/title_screen_screenshot.png" alt="Title Screen Screenshot" width="600"/>
-<img src="docs/images/gameplay_screenshot.png" alt="Gameplay Screenshot" width="600"/>
+<span>
+    <img src="docs/images/title_screen_screenshot.png" alt="Title Screen Screenshot" width="600"/>
+    <img src="docs/images/gameplay_screenshot.png" alt="Gameplay Screenshot" width="600"/>
+</span>
 
 ## 📜 Table of Contents
 
