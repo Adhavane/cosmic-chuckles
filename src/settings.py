@@ -92,7 +92,7 @@ class Settings:
         # Credit settings
         self.CREDIT_IMG = "assets/sprites/pixel_art/credit.png"
         self.CREDIT_Y = 288 * self.SCALE_FACTOR
-        self.CREDIT_HEIGHT = 8 * self.SCALE_FACTOR
+        self.CREDIT_HEIGHT = 9 * self.SCALE_FACTOR
 
         self.FPS_X = 613 * self.SCALE_FACTOR
         self.FPS_Y = 488 * self.SCALE_FACTOR
@@ -113,7 +113,7 @@ class Settings:
         # Quit button settings
         self.QUIT_IMGS = {"selected": "assets/sprites/pixel_art/quit_selected.png",
                           "unselected": "assets/sprites/pixel_art/quit_unselected.png"}
-        self.QUIT_Y = 379 * self.SCALE_FACTOR
+        self.QUIT_Y = 380 * self.SCALE_FACTOR
         self.QUIT_HEIGHT = 40 * self.SCALE_FACTOR
         self.QUIT_OPACITY = {"selected": 255,
                              "unselected": 64}
@@ -160,7 +160,7 @@ class Settings:
         # Player settings
         self.PLAYER_IMG = "assets/sprites/pixel_art/player.png"
         self.PLAYER_HEIGHT = 64 * self.SCALE_FACTOR
-        self.PLAYER_HEALTH = 10000
+        self.PLAYER_HEALTH = 100
         self.PLAYER_REGEN = 1
         self.PLAYER_BULLET_DAMAGE = 10
         self.PLAYER_BULLET_SPEED = 4
