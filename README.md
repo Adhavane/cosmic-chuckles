@@ -1,11 +1,14 @@
-# Cosmic Chuckles – 🚀🌌
+
+# ![Cosmic Chuckles](docs/images/logo.png)
 
 Welcome to the starry and wacky world of Cosmic Chuckles! 🛸💫
 
-table of contents
-## 📜
+<img src="docs/images/title_screen_screenshot.png" alt="Title Screen Screenshot" width="600"/>
+<img src="docs/images/gameplay_screenshot.png" alt="Gameplay Screenshot" width="600"/>
 
-- [
+## 📜 Table of Contents
+
+- [🌟 Game Overview](#-game-overview)
 - [📦 Dependencies](#-dependencies)
 - [📥 Installation](#-installation)
 - [🎮 How to play](#-how-to-play)
@@ -15,9 +18,9 @@ table of contents
 
 ## 🌟 Game Overview
 
-Cosmic Chuckles is a top-down shooter created with Python's Pygame 🐍 module, offering intergalactic laughter as you battle quirky enemies across the cosmos.
+Cosmic Chuckles is a top-down shooter created with Python's Pygame 🐍🎮 module, offering intergalactic laughter as you battle quirky enemies across the cosmos.
 
-This game should be able to run seamlessly on most major platforms. Enjoy! 🎮
+This game should be able to run seamlessly on most major platforms. Enjoy! 🚀🌌
 
 ## 📦 Dependencies
 
