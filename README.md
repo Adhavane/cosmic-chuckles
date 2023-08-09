@@ -2,16 +2,18 @@
 
 Welcome to the starry and wacky world of Cosmic Chuckles! 🛸💫
 
-- [Cosmic Chuckles – 🚀🌌](#cosmic-chuckles--)
-  - [📜 Description](#-description)
-  - [📦 Dependencies](#-dependencies)
-  - [📥 Installation](#-installation)
-  - [🎮 How to play](#-how-to-play)
-  - [🤝 Contributing](#-contributing)
-  - [🤖 Credits](#-credits)
-  - [📫 Contact](#-contact)
+table of contents
+## 📜
 
-## 📜 Description
+- [
+- [📦 Dependencies](#-dependencies)
+- [📥 Installation](#-installation)
+- [🎮 How to play](#-how-to-play)
+- [🤝 Contributing](#-contributing)
+- [🤖 Credits](#-credits)
+- [📫 Contact](#-contact)
+
+## 🌟 Game Overview
 
 Cosmic Chuckles is a top-down shooter created with Python's Pygame 🐍 module, offering intergalactic laughter as you battle quirky enemies across the cosmos.
 
@@ -42,7 +44,7 @@ This game should be able to run seamlessly on most major platforms. Enjoy! 🎮
 | <kbd>↓</kbd>     | Move backward |
 | <kbd>←</kbd>     | Move left     |
 | <kbd>→</kbd>     | Move right    |
-| 🖱️                | Aim           |
+| <kbd>🖱️</kbd>     | Aim           |
 | <kbd>Space</kbd> | Shoot         |
 | <kbd>Esc</kbd>   | Pause         |
 
@@ -60,4 +62,6 @@ Your cosmic journey through the stars owes its existence to these remarkable too
 
 ## 📫 Contact
 
-Feel free to reach out if you manage to decipher the secret intergalactic communication frequencies! We'd love to hear from you and explore the cosmic wonders of your thoughts and ideas.
+Have questions, feedback, or just want to share your best space-themed joke? Feel free to reach out if you manage to decipher the secret intergalactic communication frequencies!
+
+We'd love to hear from you and explore the cosmic wonders of your thoughts and ideas.
