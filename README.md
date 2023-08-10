@@ -3,8 +3,8 @@
 Welcome to the starry and wacky world of Cosmic Chuckles! 🛸💫
 
 <span>
-    <img src="docs/images/title_screen_screenshot.png" alt="Title Screen Screenshot" width="600"/>
-    <img src="docs/images/gameplay_screenshot.png" alt="Gameplay Screenshot" width="600"/>
+    <img src="docs/images/title_screen_screenshot.png" alt="Title Screen Screenshot" width="300"/>
+    <img src="docs/images/gameplay_screenshot.png" alt="Gameplay Screenshot" width="300"/>
 </span>
 
 ## 📜 Table of Contents
