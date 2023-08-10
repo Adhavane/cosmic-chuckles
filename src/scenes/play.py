@@ -74,8 +74,9 @@ class PlayState(Scene):
         self.score_counter += amount
 
     def collisions(self) -> None:
-        self.collisions_player_enemies()
-        self.collisions_player_bullets()
+        if not self.player.damaged:
+            self.collisions_player_enemies()
+            self.collisions_player_bullets()
         self.collisions_bullets_enemies()
         self.collisions_bullets_bullets()
         

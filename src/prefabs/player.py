@@ -129,10 +129,9 @@ class Player(pygame.sprite.Sprite):
                 self.damaged = False
 
     def take_damage(self, damage: int) -> None:
-        if not self.damaged:
-            self.health -= damage
-            self.damaged = True
-            self.damaged_timer = pygame.time.get_ticks()
+        self.health -= damage
+        self.damaged = True
+        self.damaged_timer = pygame.time.get_ticks()
 
     def tint(self, color: Tuple[int, int, int, Optional[int]]) -> None:
         self.image.fill(color, special_flags=pygame.BLEND_RGBA_MULT)
