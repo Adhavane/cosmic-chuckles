@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
                  bullet_lifetime: int = settings.PLAYER_BULLET_LIFETIME,
                  reload_time: int = settings.PLAYER_RELOAD_TIME,
                  movement_speed: int = settings.PLAYER_MOVEMENT_SPEED,
-                 damage_time: int = settings.PLAYER_DAMAGE_TIME) -> None:
+                 damaged_time: int = settings.PLAYER_DAMAGED_TIME) -> None:
         super().__init__()
 
         self.original_image: pygame.Surface = pygame.image.load(settings.PLAYER_IMG).convert_alpha()
@@ -44,7 +44,7 @@ class Player(pygame.sprite.Sprite):
         self.bullet_lifetime: int = bullet_lifetime
         self.reload_time: int = reload_time
         self.movement_speed: int = movement_speed
-        self.damage_time: int = damage_time
+        self.damaged_time: int = damaged_time
 
         self.angle: float
         self.rotate()
@@ -57,7 +57,7 @@ class Player(pygame.sprite.Sprite):
 
         self.damaged: bool = False
         self.damaged_timer: int = 0
-        self.damaged_cooldown: int = self.damage_time
+        self.damaged_cooldown: int = self.damaged_time
 
     def update(self) -> None:
         self.move()
