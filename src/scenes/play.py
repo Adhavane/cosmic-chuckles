@@ -59,7 +59,8 @@ class PlayState(Scene):
         self.destroyer()
 
         if self.player.health <= 0:
-            self.game.change_state(GameOverState(self.game, self.score_counter))
+            self.game.change_state(GameOverState(self.game,
+                                                 self.score_counter))
 
     def spawn_enemies(self) -> None:
         current_time: int = pygame.time.get_ticks()
@@ -107,7 +108,6 @@ class PlayState(Scene):
             for bullet, enemies in collisions_bullets_enemies.items():
                 for enemy in enemies:
                     enemy.take_damage(bullet.damage)
-                    enemy.health -= bullet.damage
                     self.score_counter += enemy.score
                     bullet.destroy()
 
