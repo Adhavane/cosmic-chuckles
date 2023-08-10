@@ -70,6 +70,9 @@ class PlayState(Scene):
             enemy = random.choice([EnemyPurple(), EnemyRed(), EnemyGreen(), EnemyYellow()])
             self.enemies.add(enemy)
 
+    def increase_score(self, amount: int) -> None:
+        self.score_counter += amount
+
     def collisions(self) -> None:
         self.collisions_player_enemies()
         self.collisions_player_bullets()
@@ -108,7 +111,7 @@ class PlayState(Scene):
             for bullet, enemies in collisions_bullets_enemies.items():
                 for enemy in enemies:
                     enemy.take_damage(bullet.damage)
-                    self.score_counter += enemy.score
+                    self.increase_score(enemy.score)
                     bullet.destroy()
 
     def collisions_bullets_bullets(self) -> None:
