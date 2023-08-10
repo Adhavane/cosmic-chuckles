@@ -106,6 +106,7 @@ class PlayState(Scene):
             # For each bullet, damage the first enemy it collides with
             for bullet, enemies in collisions_bullets_enemies.items():
                 for enemy in enemies:
+                    enemy.take_damage(bullet.damage)
                     enemy.health -= bullet.damage
                     self.score_counter += enemy.score
                     bullet.destroy()

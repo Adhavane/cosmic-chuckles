@@ -29,6 +29,7 @@ class Enemy(ABC, pygame.sprite.Sprite):
                  movement_speed: int,
                  movement_cooldown: int,
                  movement_pattern: str,
+                 damage_time: int,
                  score: int) -> None:
         from src.prefabs.projectile import BulletEnemy
 
@@ -83,20 +84,29 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.shoot_cooldown = self.reload_time
         self.bullets: pygame.sprite.Group[BulletEnemy] = pygame.sprite.Group()
 
+        self.damaged: bool = False
+        self.damage_timer: int = 0
+        self.damage_cooldown: int = damage_time
+
         self.destroyed: bool = False
 
     def update(self, player: Player) -> None:
-        current_time: int = pygame.time.get_ticks()
-        if current_time - self.moving_timer > self.movement_cooldown:
-            self.movement_pattern(player)
-            self.moving_timer = current_time
+        self.move(player)
         self.constraints()
 
         if self.bullet_damage is not None:
             self.shoot()
+        
+        self.damage()
 
         if self.health <= 0:
             self.destroy()
+
+    def move(self, player: Player) -> None:
+        current_time: int = pygame.time.get_ticks()
+        if current_time - self.moving_timer > self.movement_cooldown:
+            self.movement_pattern(player)
+            self.moving_timer = current_time
 
     def shoot(self) -> None:
         if self.can_shoot:
@@ -148,6 +158,21 @@ class Enemy(ABC, pygame.sprite.Sprite):
     
     def spawn(self) -> List[Enemy]:
         return []
+    
+    def damage(self) -> None:
+        if self.damaged:
+            self.tint(settings.RED)
+            current_time: int = pygame.time.get_ticks()
+            if current_time - self.damaged_timer >= self.damaged_cooldown:
+                self.damaged = False
+
+    def take_damage(self, damage: int) -> None:
+        self.health -= damage
+        self.damaged = True
+        self.damaged_timer = pygame.time.get_ticks()
+
+    def tint(self, color: Tuple[int, int, int, Optional[int]]) -> None:
+        self.image.fill(color, special_flags=pygame.BLEND_RGBA_MULT)
 
     def draw(self, display) -> None:
         self.bullets.draw(display)
