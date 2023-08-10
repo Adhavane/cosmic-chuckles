@@ -167,6 +167,7 @@ class Settings:
         self.PLAYER_BULLET_LIFETIME = 100
         self.PLAYER_RELOAD_TIME = 400
         self.PLAYER_MOVEMENT_SPEED = 5
+        self.PLAYER_DAMAGE_TIME = 150
 
         # Bullet settings
         self.BULLET_PLAYER_IMG = "assets/sprites/pixel_art/bullet_player.png"
