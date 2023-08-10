@@ -35,6 +35,7 @@ class Player(pygame.sprite.Sprite):
         self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
 
         self.health: int = health
+        self.max_health: int = health
         self.regen: int = regen
         self.bullet_damage: int = bullet_damage
         self.bullet_speed: int = bullet_speed
@@ -50,6 +51,10 @@ class Player(pygame.sprite.Sprite):
         self.shoot_timer: int = 0
         self.shoot_cooldown: int = self.reload_time
         self.bullets: pygame.sprite.Group[BulletPlayer] = pygame.sprite.Group()
+
+        self.damaged: bool = False
+        self.damaged_timer: int = 0
+        self.damaged_cooldown: int = 100
 
     def update(self) -> None:
         self.move()
@@ -111,6 +116,17 @@ class Player(pygame.sprite.Sprite):
             current_time: int = pygame.time.get_ticks()
             if current_time - self.shoot_timer >= self.shoot_cooldown:
                 self.can_shoot = True
+
+    def take_damage(self, damage: int) -> None:
+        self.health -= damage
+        self.damaged = True
+        self.tint()
+
+    def tint(self) -> None:
+        if self.damaged:
+            self.image.fill((255, 0, 0, 100), special_flags=pygame.BLEND_RGBA_MULT)
+            self.damaged_timer = pygame.time.get_ticks()
+            self.damaged = False
 
     def draw(self, display) -> None:
         self.bullets.draw(display)

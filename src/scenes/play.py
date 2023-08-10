@@ -82,7 +82,7 @@ class PlayState(Scene):
                                             pygame.sprite.collide_mask)
             
             for enemy in collisions_player_enemies:
-                self.player.health -= enemy.body_damage
+                self.player.take_damage(enemy.body_damage)
                 enemy.destroy()
     
     def collisions_player_bullets(self) -> None:
@@ -93,7 +93,7 @@ class PlayState(Scene):
                                                 pygame.sprite.collide_mask)
                 
                 for bullet in collisions_player_bullets:
-                    self.player.health -= bullet.damage
+                    self.player.take_damage(bullet.damage)
                     bullet.destroy()
 
     def collisions_bullets_enemies(self) -> None:
