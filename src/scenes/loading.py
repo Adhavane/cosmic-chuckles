@@ -5,8 +5,7 @@
 from __future__ import annotations
 
 import pygame
-from typing import Tuple, Dict, List
-import time
+from typing import List
 
 from src.settings import Settings
 settings = Settings()
@@ -14,7 +13,7 @@ settings = Settings()
 from src.scenes.state import State
 
 class LoadingState(State):
-    def __init__(self, game: Game, execution_time_ms: int) -> None:
+    def __init__(self, game: Game, execution_time: int) -> None:
         super().__init__(game)
 
         self.loading_images: List[str] = [pygame.image.load(image).convert_alpha() for image in settings.LOADING_IMGS]
@@ -33,9 +32,8 @@ class LoadingState(State):
         
         self.loading_timer: int = 0
 
-        self.start_time_ms: int = round(time.time() * 1000)
-        self.end_time_ms: int
-        self.execution_time_ms: int = execution_time_ms
+        self.start_time: int = pygame.time.get_ticks()
+        self.end_time: int = self.start_time + execution_time
 
     def events(self, _: pygame.event.Event) -> None:
         return super().events(_)
@@ -55,8 +53,8 @@ class LoadingState(State):
 
         self.animations()
 
-        self.end_time_ms = round(time.time() * 1000)
-        if self.end_time_ms - self.start_time_ms >= self.execution_time_ms:
+        current_time: int = pygame.time.get_ticks()
+        if current_time >= self.end_time:
             self.game.next_state()
     
     def draw(self) -> None:
