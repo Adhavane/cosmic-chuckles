@@ -50,6 +50,8 @@ class Settings:
         self.LOADING_IMG_DELAY = 800
         self.LOADING_TIME_MS = 3000
 
+        self.TRANSITION_TIME = 1000
+
         # Background settings
         self.BG_IMG = "assets/sprites/pixel_art/background.png"
         self.BG_WIDTH = 960 * self.SCALE_FACTOR

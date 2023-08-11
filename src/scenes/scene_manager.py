@@ -17,7 +17,7 @@ from src.scenes.state import State
 class SceneManager:
     def __init__(self, game: Game) -> None:
         self.game: Game = game
-        
+
         self.scene_queue: List[State] = []
 
     def is_empty(self) -> bool:
@@ -30,17 +30,5 @@ class SceneManager:
         if not self.is_empty():
             return self.scene_queue.pop(0)
         return None
-
-    def events(self, event: pygame.event.Event) -> None:
-        if not self.is_empty():
-            self.scene_queue[0].events(event)
-
-    def update(self) -> None:
-        if not self.is_empty():
-            self.scene_queue[0].update()
-
-    def draw(self) -> None:
-        if not self.is_empty():
-            self.scene_queue[0].draw()
 
 from src.game import Game

@@ -12,16 +12,11 @@ settings = Settings()
 from src.scenes.state import State
 
 class TransitionState(State):
-    def __init__(self, game: Game, execution_time: int,
-                 next_state: State, *next_state_args: tuple, **next_state_kwargs: dict) -> None:
+    def __init__(self, game: Game, execution_time: int) -> None:
         super().__init__(game)
 
         self.start_time: int = pygame.time.get_ticks()
         self.end_time: int = self.start_time + execution_time
-
-        self.next_state: State = next_state
-        self.next_state_args: tuple = next_state_args
-        self.next_state_kwargs: dict = next_state_kwargs
 
         self.circle_radius: int = 0
         self.circle_color: tuple = settings.BLACK
