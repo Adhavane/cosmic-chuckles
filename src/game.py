@@ -59,9 +59,9 @@ class Game:
         pygame.display.set_icon(pygame.image.load(settings.ICON))
 
         self.scene_manager: SceneManager = SceneManager(self)
-        self.scene_manager.enqueue(LoadingState(self, settings.LOADING_TIME_MS))
-        self.scene_manager.enqueue(TransitionState(self, settings.TRANSITION_TIME))
-        self.scene_manager.enqueue(MenuState(self))
+        self.scene_manager.push(MenuState(self))
+        self.scene_manager.push(TransitionState(self, settings.TRANSITION_TIME))
+        self.scene_manager.push(LoadingState(self, settings.LOADING_TIME_MS))
 
         self.state: State
         self.next_state()
@@ -70,7 +70,7 @@ class Game:
         from src.scenes.menu import MenuState
 
         if not self.scene_manager.is_empty():
-            self.state = self.scene_manager.dequeue()
+            self.state = self.scene_manager.pop()
         else:
             self.state = MenuState(self)
 

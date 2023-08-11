@@ -28,7 +28,7 @@ class SceneManager:
 
     def pop(self) -> Optional[State]:
         if not self.is_empty():
-            return self.scene_queue.pop()
+            return self.scene_stack.pop()
         return None
     
 from src.game import Game
