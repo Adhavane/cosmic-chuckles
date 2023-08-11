@@ -67,6 +67,7 @@ class LoadingState(State):
     def draw(self) -> None:
         super().draw()
 
+        self.game.display.fill(settings.BLACK)
         self.game.display.blit(self.loading, self.loading_rect)
     
 from src.game import Game

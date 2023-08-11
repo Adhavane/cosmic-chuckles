@@ -148,6 +148,8 @@ class PlayState(Scene):
 
     def draw(self) -> None:
         super().draw()
+        
+        self.game.display.fill(settings.BLACK)
 
         self.score.draw(self.game.display)
         self.health.draw(self.game.display)
