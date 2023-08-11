@@ -42,7 +42,8 @@ class GameOverState(Scene):
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                self.game.change_state(PlayState(self.game))
+                self.game.scene_manager.push(PlayState(self.game))
+                self.game.next_state()
 
     def update(self) -> None:
         super().update()
@@ -50,7 +51,6 @@ class GameOverState(Scene):
     def draw(self) -> None:
         super().draw()
 
-        self.game.display.fill(settings.BLACK)
         self.game.display.blit(self.gameover, self.gameover_rect)
         self.score.draw(self.game.display)
         self.press.draw(self.game.display)

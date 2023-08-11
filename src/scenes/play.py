@@ -59,7 +59,8 @@ class PlayState(Scene):
         self.destroyer()
 
         if self.player.health <= 0:
-            self.game.change_state(GameOverState(self.game, self.score_counter))
+            self.game.scene_manager.push(GameOverState(self.game, self.score_counter))
+            self.game.next_state()
 
     def spawn_enemies(self) -> None:
         current_time: int = pygame.time.get_ticks()
@@ -148,8 +149,6 @@ class PlayState(Scene):
 
     def draw(self) -> None:
         super().draw()
-        
-        self.game.display.fill(settings.BLACK)
 
         self.score.draw(self.game.display)
         self.health.draw(self.game.display)

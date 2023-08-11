@@ -82,7 +82,6 @@ class MenuState(Scene):
     def draw(self) -> None:
         super().draw()
 
-        self.game.display.fill(settings.BLACK)
         self.game.display.blit(self.title, self.title_rect)
         self.game.display.blit(self.credit, self.credit_rect)
         for button in self.buttons:
