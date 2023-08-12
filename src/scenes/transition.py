@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import pygame
+import time
 from typing import Tuple
 
 from src.settings import Settings
@@ -13,11 +14,11 @@ settings = Settings()
 from src.scenes.state import State
 
 class TransitionState(State):
-    def __init__(self, game: Game, execution_time: int) -> None:
+    def __init__(self, game: Game, execution_time_ms: int) -> None:
         super().__init__(game)
 
-        self.start_time: int = pygame.time.get_ticks()
-        self.end_time: int = self.start_time + execution_time
+        self.start_time_ms: int = round(time.time() * 1000)
+        self.end_time_ms: int = self.start_time_ms + execution_time_ms
 
         self.circle_radius: int = 5
         self.circle_color: Tuple = settings.RED
@@ -32,8 +33,8 @@ class TransitionState(State):
     def update(self) -> None:
         super().update()
 
-        current_time: int = pygame.time.get_ticks()
-        if current_time >= self.end_time:
+        current_time: int = round(time.time() * 1000)
+        if current_time >= self.end_time_ms:
             self.game.next_state()
 
         self.circle_radius += 30 * Settings.DELTA_TIME

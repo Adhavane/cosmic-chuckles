@@ -75,8 +75,10 @@ class Button(ABC, pygame.sprite.Sprite):
 class ButtonPlay(Button):
     def __init__(self, game: Game) -> None:
         from src.scenes.play import PlayState
+        from src.scenes.transition import TransitionState
 
         game.scene_manager.push(PlayState(game))
+        game.scene_manager.push(TransitionState(game, 10000))
 
         super().__init__(settings.PLAY_IMGS,
                          round(settings.SCREEN_WIDTH / 2),
