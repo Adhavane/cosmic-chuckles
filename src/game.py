@@ -59,6 +59,7 @@ class Game:
         pygame.display.set_icon(pygame.image.load(settings.ICON))
 
         self.scene_manager: SceneManager = SceneManager(self)
+        
         self.scene_manager.push(MenuState(self))
         self.scene_manager.push(TransitionState(self, settings.TRANSITION_TIME_MS))
         self.scene_manager.push(LoadingState(self, settings.LOADING_TIME))

@@ -61,7 +61,7 @@ class PlayState(Scene):
 
         if self.player.health <= 0:
             self.game.scene_manager.push(GameOverState(self.game, self.score_counter))
-            self.game.scene_manager.push(TransitionState(self.game, settings.TRANSITION_TIME))
+            self.game.scene_manager.push(TransitionState(self.game, settings.TRANSITION_TIME_MS))
             self.game.next_state()
 
     def spawn_enemies(self) -> None:
