@@ -12,7 +12,6 @@ settings = Settings()
 
 from src.scenes.state import Scene
 from src.scenes.game_over import GameOverState
-from src.scenes.transition import TransitionState
 
 from src.ui.statistics import Score
 from src.ui.statistics import Health
