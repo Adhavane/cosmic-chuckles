@@ -21,7 +21,7 @@ class TransitionState(State):
 
         self.execution_time: int = execution_time
 
-        self.grid_size = 128  # Size of the grid
+        self.grid_size = 32  # Size of the grid
         self.square_size = math.ceil(settings.SCREEN_WIDTH / self.grid_size)  # Size of each square
         
         self.colors = []  # List to store random colors for each square
@@ -29,7 +29,7 @@ class TransitionState(State):
         for _ in range(self.grid_size):
             row_colors = []
             for _ in range(self.grid_size):
-                color = [255, 255, 255, 0]
+                color = [255, 0, 0, 0]
                 row_colors.append(color)
             self.colors.append(row_colors)
         
@@ -82,4 +82,3 @@ class TransitionState(State):
         for square in self.squares:
             if square[0].get_alpha() > 0:
                 self.game.display.blit(square[0], square[1])
-        
