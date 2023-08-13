@@ -34,6 +34,7 @@ class TransitionState(State):
             self.colors.append(row_colors)
         
         self.squares = []  # List to store the squares
+        self.squares_unfilled = []  # List to store the unfilled squares
         for y in range(self.grid_size):
             for x in range(self.grid_size):
                 square = pygame.Surface((self.square_size, self.square_size))
@@ -43,8 +44,9 @@ class TransitionState(State):
                 square_rect.x = x * self.square_size
                 square_rect.y = y * self.square_size
                 self.squares.append((square, square_rect))
+                self.squares_unfilled.append((square, square_rect))
 
-        self.fill_rate = round(self.grid_size * self.grid_size / self.execution_time)
+        self.fill_rate = round(self.grid_size * self.grid_size / self.execution_time * settings.FPS)
 
     def events(self, _: pygame.event.Event) -> None:
         return super().events(_)
@@ -53,27 +55,31 @@ class TransitionState(State):
         super().update()
 
         # Fill the grid with random squares
-        filled = self.fill_rate
-        while filled > 0:
-            # Choose a random square
-            y = random.randint(0, self.grid_size - 1)
-            x = random.randint(0, self.grid_size - 1)
-            # If the square is already filled, skip it
-            if self.colors[y][x][3] == 255:
-                continue
+        for _ in range(self.fill_rate):
+            if len(self.squares_unfilled) > 0:
+                square = self.squares_unfilled.pop(random.randrange(len(self.squares_unfilled)))
+                y_index = square[1].y // self.square_size
+                x_index = square[1].x // self.square_size
+                self.colors[y_index][x_index][3] = 255
+                square[0].fill(self.colors[y_index][x_index])
+                square[0].set_alpha(self.colors[y_index][x_index][3])
 
-            # Set the alpha to 255
-            self.colors[y][x][3] = 255
-            # Update the square
-            self.squares[y * self.grid_size + x][0].fill(self.colors[y][x])
-            self.squares[y * self.grid_size + x][0].set_alpha(self.colors[y][x][3])
+        # Check if the grid is filled
+        if self.check_done():
+            self.game.next_state()
 
-            filled -= 1
+    def check_done(self) -> bool:
+        for y in range(self.grid_size):
+            for x in range(self.grid_size):
+                if self.colors[y][x][3] == 0:
+                    return False
+        return True
 
     def draw(self) -> None:
         super().draw()
 
         # Draw the squares
         for square in self.squares:
-            self.game.display.blit(square[0], square[1])
+            if square[0].get_alpha() > 0:
+                self.game.display.blit(square[0], square[1])
         
