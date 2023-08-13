@@ -29,7 +29,7 @@ class TransitionState(State):
         for _ in range(self.grid_size):
             row_colors = []
             for _ in range(self.grid_size):
-                row_colors.append(settings.BLACK)
+                row_colors.append(list(settings.BLACK).append(0))
             self.colors.append(row_colors)
 
         self.squares = []  # List to store the squares
@@ -57,10 +57,10 @@ class TransitionState(State):
         self.script()
 
     def fade_in(self) -> None:
-        self.fade(255)
+        self.fade(0)
 
     def fade_out(self) -> None:
-        self.fade(0)
+        self.fade(255)
 
     def fade(self, opacity: int) -> None:
         # Fill the grid with random squares
