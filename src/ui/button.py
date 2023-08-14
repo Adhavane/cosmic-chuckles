@@ -78,7 +78,6 @@ class ButtonPlay(Button):
         from src.scenes.transition import TransitionState
 
         game.scene_manager.push(PlayState(game))
-        game.scene_manager.push(TransitionState(game, settings.TRANSITION_TIME))
 
         super().__init__(settings.PLAY_IMGS,
                          round(settings.SCREEN_WIDTH / 2),
