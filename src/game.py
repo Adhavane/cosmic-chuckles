@@ -25,7 +25,10 @@ def surface_to_texture(ctx: moderngl.Context, surface: pygame.Surface) -> modern
         
 class Game:
     def __init__(self) -> None:
+        from src.scenes.scene_manager import SceneManager
+
         from src.scenes.loading import LoadingState
+        from src.scenes.transition import TransitionStateIn, TransitionStateOut
         from src.scenes.menu import MenuState
 
         pygame.init()
@@ -55,10 +58,31 @@ class Game:
         pygame.display.set_caption(settings.TITLE)
         pygame.display.set_icon(pygame.image.load(settings.ICON))
 
-        self.state: State = LoadingState(self, settings.LOADING_TIME_MS, MenuState)
+        self.scene_manager: SceneManager = SceneManager(self)
 
-    def change_state(self, state: State) -> None:
-        self.state = state
+        self.scene_manager.push(MenuState(self))
+        self.scene_manager.push(TransitionStateOut(self, settings.TRANSITION_TIME, self.get_next_state(),))
+        self.scene_manager.push(TransitionStateIn(self, settings.TRANSITION_TIME))
+        self.scene_manager.push(LoadingState(self, settings.LOADING_TIME))
+
+        self.state: State
+        self.next_state()
+    
+    def next_state(self) -> None:
+        from src.scenes.menu import MenuState
+
+        if not self.scene_manager.is_empty():
+            self.state = self.scene_manager.pop()
+        else:
+            self.state = MenuState(self)
+    
+    def get_next_state(self) -> State:
+        from src.scenes.menu import MenuState
+
+        if not self.scene_manager.is_empty():
+            return self.scene_manager.scene_stack[-1]
+        else:
+            return MenuState(self)
 
     def run(self) -> None:
         while True:

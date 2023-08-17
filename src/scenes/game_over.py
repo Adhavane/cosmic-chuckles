@@ -42,7 +42,8 @@ class GameOverState(Scene):
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                self.game.change_state(PlayState(self.game))
+                self.game.scene_manager.push(PlayState(self.game))
+                self.game.next_state()
 
     def update(self) -> None:
         super().update()

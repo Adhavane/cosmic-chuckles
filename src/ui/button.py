@@ -74,14 +74,17 @@ class Button(ABC, pygame.sprite.Sprite):
 
 class ButtonPlay(Button):
     def __init__(self, game: Game) -> None:
-        from src.scenes.play import PlayState        
+        from src.scenes.play import PlayState
+        from src.scenes.transition import TransitionState
+
+        game.scene_manager.push(PlayState(game))
 
         super().__init__(settings.PLAY_IMGS,
                          round(settings.SCREEN_WIDTH / 2),
                          settings.PLAY_Y,
                          settings.PLAY_HEIGHT,
                          settings.PLAY_OPACITY,
-                         game.change_state, PlayState(game))
+                         game.next_state)
 
 class ButtonQuit(Button):
     def __init__(self, game: Game) -> None:

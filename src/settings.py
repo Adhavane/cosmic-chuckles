@@ -48,7 +48,9 @@ class Settings:
                              "assets/sprites/pixel_art/loading_3.png"]
         self.LOADING_IMG_HEIGHT = 34 * self.SCALE_FACTOR
         self.LOADING_IMG_DELAY = 800
-        self.LOADING_TIME_MS = 3000
+        self.LOADING_TIME = 3000
+
+        self.TRANSITION_TIME = 1000
 
         # Background settings
         self.BG_IMG = "assets/sprites/pixel_art/background.png"
