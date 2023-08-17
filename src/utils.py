@@ -2,26 +2,16 @@
 
 """utils.py: Utility functions."""
 
-from constants import LAST_TIME, DELTA_TIME, SCALE_FACTOR
-
 import time
 import moderngl
 import pygame
 from typing import List, Tuple
 from PIL import Image, ImageDraw
 
-def get_delta_time() -> float:
-    """Returns the time between two frames."""
-    global LAST_TIME
-    global DELTA_TIME
-    current_time: float = time.time()
-    DELTA_TIME = current_time - LAST_TIME
-    LAST_TIME = current_time
-    return DELTA_TIME
+from constants import SCALE_FACTOR
 
 def scale_to_resolution(size: int) -> int:
     """Scales a size to the current resolution."""
-    global SCALE_FACTOR
     return round(size * SCALE_FACTOR)
 
 def surface_to_texture(ctx: moderngl.Context, surface: pygame.Surface) -> moderngl.Texture:

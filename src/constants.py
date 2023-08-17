@@ -3,6 +3,7 @@
 """settings.py: Settings for the game."""
 
 import time
+import pygame
 
 LAST_TIME = time.time()
 DELTA_TIME = 0
@@ -11,14 +12,12 @@ DELTA_TIME = 0
 SCALE_FACTOR = 2
 SCREEN_WIDTH = 690 * SCALE_FACTOR
 SCREEN_HEIGHT = 512 * SCALE_FACTOR
+SCREEN_FLAGS = pygame.DOUBLEBUF | pygame.OPENGL
 
 FPS = 60
 
 class Settings:
     def __init__(self) -> None:
-
-        self.TITLE = "Cosmic Chuckles - Python/Pygame"
-        self.ICON = "assets/images/icon.png"
 
         # Colors
         self.WHITE = (255, 255, 255)
