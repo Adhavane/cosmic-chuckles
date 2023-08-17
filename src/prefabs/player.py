@@ -52,10 +52,18 @@ class Player(pygame.sprite.Sprite):
         self.bullets: pygame.sprite.Group[BulletPlayer] = pygame.sprite.Group()
 
     def update(self) -> None:
+        self.regenerate()
         self.move()
         self.rotate()
         self.constraints()
         self.shoot()
+
+    def regenerate(self) -> None:
+        # Regenerate health
+        if self.health < settings.PLAYER_HEALTH:
+            self.health += round(self.regen * Settings.DELTA_TIME)
+            if self.health > settings.PLAYER_HEALTH:
+                self.health = settings.PLAYER_HEALTH
 
     def move(self) -> None:
         keys = pygame.key.get_pressed()
