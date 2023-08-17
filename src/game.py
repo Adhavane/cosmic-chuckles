@@ -14,11 +14,12 @@ import numpy as np
 
 import paths
 from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_FLAGS, \
+    SCREEN_WIDTH, SCREEN_HEIGHT, \
     FPS, DELTA_TIME, LAST_TIME
 from utils import surface_to_texture
 
 class Game:
+    FLAGS: int = pygame.DOUBLEBUF | pygame.OPENGL
     TITLE: str = "Cosmic Chuckles - Python/Pygame"
     ICON: str = paths.IMAGES + "/icon.png"
 
@@ -33,7 +34,7 @@ class Game:
         from src.scenes.menu import MenuState
 
         pygame.init()
-        self.screen: pygame.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), SCREEN_FLAGS)
+        self.screen: pygame.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), Game.FLAGS)
         self.display: pygame.Surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.ctx: moderngl.Context = moderngl.create_context()
 

@@ -14,6 +14,11 @@ def scale_to_resolution(size: int) -> int:
     """Scales a size to the current resolution."""
     return round(size * SCALE_FACTOR)
 
+def get_height(image: str) -> int:
+    """Gets the height of an image."""
+    img: Image.Image = Image.open(image)
+    return img.height
+
 def surface_to_texture(ctx: moderngl.Context, surface: pygame.Surface) -> moderngl.Texture:
     """Converts a pygame.Surface to a moderngl.Texture."""
     texture: moderngl.Texture = ctx.texture(surface.get_size(), 4)

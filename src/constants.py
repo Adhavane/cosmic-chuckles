@@ -12,25 +12,21 @@ DELTA_TIME = 0
 SCALE_FACTOR = 2
 SCREEN_WIDTH = 690 * SCALE_FACTOR
 SCREEN_HEIGHT = 512 * SCALE_FACTOR
-SCREEN_FLAGS = pygame.DOUBLEBUF | pygame.OPENGL
 
 FPS = 60
 
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0 , 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+
+OPAQUE = 255
+TRANSLUCENT = 128
+TRANSPARENT = 0
+
 class Settings:
     def __init__(self) -> None:
-
-        # Colors
-        self.WHITE = (255, 255, 255)
-        self.BLACK = (0, 0, 0)
-        self.RED = (255, 0, 0)
-        self.GREEN = (0, 255, 0)
-        self.BLUE = (0, 0, 255)
-
-        # Opacity
-        self.OPAQUE = 255
-        self.TRANSLUCENT = 128
-        self.TRANSPARENT = 0
-
         self.LOADING_IMGS = ["assets/sprites/loading_0.png",
                              "assets/sprites/loading_1.png",
                              "assets/sprites/loading_2.png",
@@ -143,78 +139,6 @@ class Settings:
         self.ENEMY_TIME_MIN = 1000
         self.ENEMY_TIME_MAX = 2000
 
-        self.ENEMY_PURPLE_IMG = "assets/sprites/enemy_purple.png"
-        self.ENEMY_PURPLE_HEIGHT = 72 * self.SCALE_FACTOR
-        self.ENEMY_PURPLE_HEALTH = 10
-        self.ENEMY_PURPLE_BODY_DAMAGE = 10
-        self.ENEMY_PURPLE_BULLET_DAMAGE = None
-        self.ENEMY_PURPLE_BULLET_SPEED = None
-        self.ENEMY_PURPLE_BULLET_LIFETIME = None
-        self.ENEMY_PURPLE_RELOAD_TIME = None
-        self.ENEMY_PURPLE_MOVEMENT_SPEED = 1
-        self.ENEMY_PURPLE_MOVEMENT_COOLDOWN = 30
-        self.ENEMY_PURPLE_MOVEMENT_PATTERN = "move_random"
-        self.ENEMY_PURPLE_DAMAGED_TIME = 150
-        self.ENEMY_PURPLE_SCORE = 10
-        
-        self.ENEMY_RED_IMG = "assets/sprites/enemy_red.png"
-        self.ENEMY_RED_HEIGHT = 96 * self.SCALE_FACTOR
-        self.ENEMY_RED_HEALTH = 20
-        self.ENEMY_RED_BODY_DAMAGE = 10
-        self.ENEMY_RED_BULLET_DAMAGE = 5
-        self.ENEMY_RED_BULLET_SPEED = 1
-        self.ENEMY_RED_BULLET_LIFETIME = 600
-        self.ENEMY_RED_RELOAD_TIME = 3000
-        self.ENEMY_RED_MOVEMENT_SPEED = 1
-        self.ENEMY_RED_MOVEMENT_COOLDOWN = 30
-        self.ENEMY_RED_MOVEMENT_PATTERN = "move_target"
-        self.ENEMY_RED_DAMAGED_TIME = 150
-        self.ENEMY_RED_SCORE = 10
-        
-        self.ENEMY_GREEN_IMG = "assets/sprites/enemy_green.png"
-        self.ENEMY_GREEN_HEIGHT = 104 * self.SCALE_FACTOR
-        self.ENEMY_GREEN_HEALTH = 50
-        self.ENEMY_GREEN_BODY_DAMAGE = 50
-        self.ENEMY_GREEN_BULLET_DAMAGE = None
-        self.ENEMY_GREEN_BULLET_SPEED = None
-        self.ENEMY_GREEN_BULLET_LIFETIME = None
-        self.ENEMY_GREEN_RELOAD_TIME = None
-        self.ENEMY_GREEN_MOVEMENT_SPEED = 1
-        self.ENEMY_GREEN_MOVEMENT_COOLDOWN = 120
-        self.ENEMY_GREEN_MOVEMENT_PATTERN = "move_target"
-        self.ENEMY_GREEN_DAMAGED_TIME = 150
-        self.ENEMY_GREEN_SCORE = 10
-
-        self.ENEMY_GREEN_BABY_AMOUNT = 6
-        self.ENEMY_GREEN_BABY_SPAWN_RADIUS = 100 * self.SCALE_FACTOR
-
-        self.ENEMY_GREEN_BABY_IMG = "assets/sprites/enemy_green_baby.png"
-        self.ENEMY_GREEN_BABY_HEIGHT = 36 * self.SCALE_FACTOR
-        self.ENEMY_GREEN_BABY_HEALTH = 5
-        self.ENEMY_GREEN_BABY_BODY_DAMAGE = 5
-        self.ENEMY_GREEN_BABY_BULLET_DAMAGE = None
-        self.ENEMY_GREEN_BABY_BULLET_SPEED = None
-        self.ENEMY_GREEN_BABY_BULLET_LIFETIME = None
-        self.ENEMY_GREEN_BABY_RELOAD_TIME = None
-        self.ENEMY_GREEN_BABY_MOVEMENT_SPEED = 1
-        self.ENEMY_GREEN_BABY_MOVEMENT_COOLDOWN = 120
-        self.ENEMY_GREEN_BABY_MOVEMENT_PATTERN = "move_random"
-        self.ENEMY_GREEN_BABY_DAMAGED_TIME = 150
-        self.ENEMY_GREEN_BABY_SCORE = 5
-
-        self.ENEMY_YELLOW_IMG = "assets/sprites/enemy_yellow.png"
-        self.ENEMY_YELLOW_HEIGHT = 76 * self.SCALE_FACTOR
-        self.ENEMY_YELLOW_HEALTH = 10
-        self.ENEMY_YELLOW_BODY_DAMAGE = 10
-        self.ENEMY_YELLOW_BULLET_DAMAGE = None
-        self.ENEMY_YELLOW_BULLET_SPEED = None
-        self.ENEMY_YELLOW_BULLET_LIFETIME = None
-        self.ENEMY_YELLOW_RELOAD_TIME = None
-        self.ENEMY_YELLOW_MOVEMENT_SPEED = 5
-        self.ENEMY_YELLOW_MOVEMENT_COOLDOWN = 30
-        self.ENEMY_YELLOW_MOVEMENT_PATTERN = "move_target"
-        self.ENEMY_YELLOW_DAMAGED_TIME = 150
-        self.ENEMY_YELLOW_SCORE = 20
 
         self.GAMEOVER_IMG = "assets/sprites/game_over.png"
         self.GAMEOVER_IMG_HEIGHT = 220 * self.SCALE_FACTOR

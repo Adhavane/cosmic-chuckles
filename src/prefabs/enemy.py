@@ -10,8 +10,11 @@ from typing import Optional, Callable, List, Tuple
 import random
 import math
 
-from constants import Settings, extract_color_palette
-settings = Settings()
+import paths
+from constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, \
+    DELTA_TIME, RED
+from utils import extract_color_palette, get_height, scale_to_resolution
 
 from src.prefabs.player import Player
 from src.prefabs.projectile import BulletEnemy
@@ -47,17 +50,17 @@ class Enemy(ABC, pygame.sprite.Sprite):
         # Spawn enemy off screen
         area: str = random.choice(["top", "bottom", "left", "right"])
         if area == "top":
-            self.rect.x = random.randint(0, settings.SCREEN_WIDTH)
+            self.rect.x = random.randint(0, SCREEN_WIDTH)
             self.rect.y = -self.rect.height + 1
         elif area == "bottom":
-            self.rect.x = random.randint(0, settings.SCREEN_WIDTH)
-            self.rect.y = settings.SCREEN_HEIGHT - 1
+            self.rect.x = random.randint(0, SCREEN_WIDTH)
+            self.rect.y = SCREEN_HEIGHT - 1
         elif area == "left":
             self.rect.x = -self.rect.width + 1
-            self.rect.y = random.randint(0, settings.SCREEN_HEIGHT)
+            self.rect.y = random.randint(0, SCREEN_HEIGHT)
         elif area == "right":
-            self.rect.x = settings.SCREEN_WIDTH - 1
-            self.rect.y = random.randint(0, settings.SCREEN_HEIGHT)
+            self.rect.x = SCREEN_WIDTH - 1
+            self.rect.y = random.randint(0, SCREEN_HEIGHT)
         self.rect_x_float: float = float(self.rect.x)
         self.rect_y_float: float = float(self.rect.y)
 
@@ -134,8 +137,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
                 self.can_shoot = True
 
     def move_random(self, _: Player) -> None:
-        self.rect_x_float += math.sin(math.radians(self.angle)) * self.movement_speed * Settings.DELTA_TIME
-        self.rect_y_float += math.cos(math.radians(self.angle)) * self.movement_speed * Settings.DELTA_TIME
+        self.rect_x_float += math.sin(math.radians(self.angle)) * self.movement_speed * DELTA_TIME
+        self.rect_y_float += math.cos(math.radians(self.angle)) * self.movement_speed * DELTA_TIME
         self.rect.x = round(self.rect_x_float)
         self.rect.y = round(self.rect_y_float)
 
@@ -143,18 +146,18 @@ class Enemy(ABC, pygame.sprite.Sprite):
         rel_x: int = self.rect.centerx - player.rect.centerx
         rel_y: int = self.rect.centery - player.rect.centery
         self.angle = (180 / math.pi) * math.atan2(rel_x, rel_y)
-        self.rect_x_float -= math.sin(math.radians(self.angle)) * self.movement_speed * Settings.DELTA_TIME
-        self.rect_y_float -= math.cos(math.radians(self.angle)) * self.movement_speed * Settings.DELTA_TIME
+        self.rect_x_float -= math.sin(math.radians(self.angle)) * self.movement_speed * DELTA_TIME
+        self.rect_y_float -= math.cos(math.radians(self.angle)) * self.movement_speed * DELTA_TIME
         self.rect.x = round(self.rect_x_float)
         self.rect.y = round(self.rect_y_float)
 
     def constraints(self) -> None:
         # Kill enemy if goes off screen
-        if self.rect.x - self.rect.width > settings.SCREEN_WIDTH:
+        if self.rect.x - self.rect.width > SCREEN_WIDTH:
             self.kill()
         if self.rect.x + self.rect.width < 0:
             self.kill()
-        if self.rect.y - self.rect.height > settings.SCREEN_HEIGHT:
+        if self.rect.y - self.rect.height > SCREEN_HEIGHT:
             self.kill()
         if self.rect.y + self.rect.height < 0:
             self.kill()
@@ -167,7 +170,7 @@ class Enemy(ABC, pygame.sprite.Sprite):
     
     def damage(self) -> None:
         if self.damaged:
-            self.tint(settings.RED)
+            self.tint(RED)
             current_time: int = pygame.time.get_ticks()
             if current_time - self.damaged_timer >= self.damaged_cooldown:
                 self.damaged = False
@@ -186,89 +189,92 @@ class Enemy(ABC, pygame.sprite.Sprite):
 
 class EnemyPurple(Enemy):
     def __init__(self) -> None:
-        super().__init__(settings.ENEMY_PURPLE_IMG,
-                         settings.ENEMY_PURPLE_HEIGHT,
-                         settings.ENEMY_PURPLE_HEALTH,
-                         settings.ENEMY_PURPLE_BODY_DAMAGE,
-                         settings.ENEMY_PURPLE_BULLET_DAMAGE,
-                         settings.ENEMY_PURPLE_BULLET_SPEED,
-                         settings.ENEMY_PURPLE_BULLET_LIFETIME,
-                         settings.ENEMY_PURPLE_RELOAD_TIME,
-                         settings.ENEMY_PURPLE_MOVEMENT_SPEED,
-                         settings.ENEMY_PURPLE_MOVEMENT_COOLDOWN,
-                         settings.ENEMY_PURPLE_MOVEMENT_PATTERN,
-                         settings.ENEMY_PURPLE_DAMAGED_TIME,
-                         settings.ENEMY_PURPLE_SCORE)
+        super().__init__(image=paths.SPRITES + "/enemy_purple.png",
+                         height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_purple.png"))
+                         health=10,
+                         body_damage=10,
+                         bullet_damage=None,
+                         bullet_speed=None,
+                         bullet_lifetime=None,
+                         reload_time=None,
+                         movement_speed=1,
+                         movement_cooldown=30,
+                         movement_pattern="move_random",
+                         damaged_time=150,
+                         score=10)
 
 class EnemyRed(Enemy):
     def __init__(self) -> None:
-        super().__init__(settings.ENEMY_RED_IMG,
-                         settings.ENEMY_RED_HEIGHT,
-                         settings.ENEMY_RED_HEALTH,
-                         settings.ENEMY_RED_BODY_DAMAGE,
-                         settings.ENEMY_RED_BULLET_DAMAGE,
-                         settings.ENEMY_RED_BULLET_SPEED,
-                         settings.ENEMY_RED_BULLET_LIFETIME,
-                         settings.ENEMY_RED_RELOAD_TIME,
-                         settings.ENEMY_RED_MOVEMENT_SPEED,
-                         settings.ENEMY_RED_MOVEMENT_COOLDOWN,
-                         settings.ENEMY_RED_MOVEMENT_PATTERN,
-                         settings.ENEMY_RED_DAMAGED_TIME,
-                         settings.ENEMY_RED_SCORE)
+        super().__init__(image=paths.SPRITES + "/enemy_red.png",
+                         height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_red.png"))
+                         health=20,
+                         body_damage=10,
+                         bullet_damage=5,
+                         bullet_speed=1,
+                         bullet_lifetime=600,
+                         reload_time=3000,
+                         movement_speed=1,
+                         movement_cooldown=30,
+                         movement_pattern="move_target",
+                         damaged_time=150,
+                         score=10)
         
 class EnemyGreen(Enemy):
+    BABY_AMOUNT: int = 6
+    BABY_SPAWN_RADIUS: int = scale_to_resolution(100)
+
     def __init__(self) -> None:
-        super().__init__(settings.ENEMY_GREEN_IMG,
-                         settings.ENEMY_GREEN_HEIGHT,
-                         settings.ENEMY_GREEN_HEALTH,
-                         settings.ENEMY_GREEN_BODY_DAMAGE,
-                         settings.ENEMY_GREEN_BULLET_DAMAGE,
-                         settings.ENEMY_GREEN_BULLET_SPEED,
-                         settings.ENEMY_GREEN_BULLET_LIFETIME,
-                         settings.ENEMY_GREEN_RELOAD_TIME,
-                         settings.ENEMY_GREEN_MOVEMENT_SPEED,
-                         settings.ENEMY_GREEN_MOVEMENT_COOLDOWN,
-                         settings.ENEMY_GREEN_MOVEMENT_PATTERN,
-                         settings.ENEMY_GREEN_DAMAGED_TIME,
-                         settings.ENEMY_GREEN_SCORE)
+        super().__init__(image=paths.SPRITES + "/enemy_green.png",
+                         height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_green.png"))
+                         health=50,
+                         body_damage=50,
+                         bullet_damage=None,
+                         bullet_speed=None,
+                         bullet_lifetime=None,
+                         reload_time=None,
+                         movement_speed=1,
+                         movement_cooldown=120,
+                         movement_pattern="move_target",
+                         damaged_time=150,
+                         score=10)
         
     def spawn(self) -> List[Enemy]:
         enemies: List[Enemy] = []
-        for _ in range(settings.ENEMY_GREEN_BABY_AMOUNT):
+        for _ in range(EnemyGreen.BABY_AMOUNT):
             new_enemy: Enemy = EnemyGreenBaby()
-            new_enemy.rect_x_float = self.rect.centerx + random.randint(-settings.ENEMY_GREEN_BABY_SPAWN_RADIUS, settings.ENEMY_GREEN_BABY_SPAWN_RADIUS)
-            new_enemy.rect_y_float = self.rect.centery + random.randint(-settings.ENEMY_GREEN_BABY_SPAWN_RADIUS, settings.ENEMY_GREEN_BABY_SPAWN_RADIUS)
+            new_enemy.rect_x_float = self.rect.centerx + random.randint(-EnemyGreen.BABY_SPAWN_RADIUS, EnemyGreen.BABY_SPAWN_RADIUS)
+            new_enemy.rect_y_float = self.rect.centery + random.randint(-EnemyGreen.BABY_SPAWN_RADIUS, EnemyGreen.BABY_SPAWN_RADIUS)
             enemies.append(new_enemy)
         return enemies
 
 class EnemyGreenBaby(Enemy):
     def __init__(self) -> None:
-        super().__init__(settings.ENEMY_GREEN_BABY_IMG,
-                         settings.ENEMY_GREEN_BABY_HEIGHT,
-                         settings.ENEMY_GREEN_BABY_HEALTH,
-                         settings.ENEMY_GREEN_BABY_BODY_DAMAGE,
-                         settings.ENEMY_GREEN_BABY_BULLET_DAMAGE,
-                         settings.ENEMY_GREEN_BABY_BULLET_SPEED,
-                         settings.ENEMY_GREEN_BABY_BULLET_LIFETIME,
-                         settings.ENEMY_GREEN_BABY_RELOAD_TIME,
-                         settings.ENEMY_GREEN_BABY_MOVEMENT_SPEED,
-                         settings.ENEMY_GREEN_BABY_MOVEMENT_COOLDOWN,
-                         settings.ENEMY_GREEN_BABY_MOVEMENT_PATTERN,
-                         settings.ENEMY_GREEN_BABY_DAMAGED_TIME,
-                         settings.ENEMY_GREEN_BABY_SCORE)
+        super().__init__(image=paths.SPRITES + "/enemy_green_baby.png",
+                         height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_green_baby.png"))
+                         health=5,
+                         body_damage=5,
+                         bullet_damage=None,
+                         bullet_speed=None,
+                         bullet_lifetime=None,
+                         reload_time=None,
+                         movement_speed=1,
+                         movement_cooldown=120,
+                         movement_pattern="move_random",
+                         damaged_time=150,
+                         score=5)
         
 class EnemyYellow(Enemy):
     def __init__(self) -> None:
-        super().__init__(settings.ENEMY_YELLOW_IMG,
-                         settings.ENEMY_YELLOW_HEIGHT,
-                         settings.ENEMY_YELLOW_HEALTH,
-                         settings.ENEMY_YELLOW_BODY_DAMAGE,
-                         settings.ENEMY_YELLOW_BULLET_DAMAGE,
-                         settings.ENEMY_YELLOW_BULLET_SPEED,
-                         settings.ENEMY_YELLOW_BULLET_LIFETIME,
-                         settings.ENEMY_YELLOW_RELOAD_TIME,
-                         settings.ENEMY_YELLOW_MOVEMENT_SPEED,
-                         settings.ENEMY_YELLOW_MOVEMENT_COOLDOWN,
-                         settings.ENEMY_YELLOW_MOVEMENT_PATTERN,
-                         settings.ENEMY_YELLOW_DAMAGED_TIME,
-                         settings.ENEMY_YELLOW_SCORE)
+        super().__init__(image=paths.SPRITES + "/enemy_yellow.png",
+                            height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_yellow.png")),
+                            health=10,
+                            body_damage=10,
+                            bullet_damage=None,
+                            bullet_speed=None,
+                            bullet_lifetime=None,
+                            reload_time=None,
+                            movement_speed=5,
+                            movement_cooldown=30,
+                            movement_pattern="move_target",
+                            damaged_time=150,
+                            score=20)
