@@ -51,11 +51,25 @@ class Player(pygame.sprite.Sprite):
         self.shoot_cooldown: int = self.reload_time
         self.bullets: pygame.sprite.Group[BulletPlayer] = pygame.sprite.Group()
 
+        # Set up regen
+        self.regen_timer: int = 0
+        self.regen_cooldown: int = 6000
+        self.regen_amount: int = 1
+
     def update(self) -> None:
+        self.regenerate()
         self.move()
         self.rotate()
         self.constraints()
         self.shoot()
+
+    def regenerate(self) -> None:
+        # Regenerate health
+        if self.health < settings.PLAYER_HEALTH:
+            current_time: int = pygame.time.get_ticks()
+            if current_time - self.regen_timer >= self.regen_cooldown:
+                self.health += self.regen_amount
+                self.regen_timer = pygame.time.get_ticks()
 
     def move(self) -> None:
         keys = pygame.key.get_pressed()
