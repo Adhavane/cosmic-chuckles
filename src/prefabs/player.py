@@ -4,6 +4,7 @@
 
 import pygame
 import math
+from typing import Tuple, Optional
 
 from src.settings import Settings
 settings = Settings()
@@ -18,7 +19,8 @@ class Player(pygame.sprite.Sprite):
                  bullet_speed: int = settings.PLAYER_BULLET_SPEED,
                  bullet_lifetime: int = settings.PLAYER_BULLET_LIFETIME,
                  reload_time: int = settings.PLAYER_RELOAD_TIME,
-                 movement_speed: int = settings.PLAYER_MOVEMENT_SPEED) -> None:
+                 movement_speed: int = settings.PLAYER_MOVEMENT_SPEED,
+                 damaged_time: int = settings.PLAYER_DAMAGED_TIME) -> None:
         super().__init__()
 
         self.original_image: pygame.Surface = pygame.image.load(settings.PLAYER_IMG).convert_alpha()
@@ -35,12 +37,14 @@ class Player(pygame.sprite.Sprite):
         self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
 
         self.health: int = health
+        self.max_health: int = health
         self.regen: int = regen
         self.bullet_damage: int = bullet_damage
         self.bullet_speed: int = bullet_speed
         self.bullet_lifetime: int = bullet_lifetime
         self.reload_time: int = reload_time
         self.movement_speed: int = movement_speed
+        self.damaged_time: int = damaged_time
 
         self.angle: float
         self.rotate()
@@ -55,6 +59,10 @@ class Player(pygame.sprite.Sprite):
         self.regen_timer: int = 0
         self.regen_cooldown: int = 6000
         self.regen_amount: int = 1
+        
+        self.damaged: bool = False
+        self.damaged_timer: int = 0
+        self.damaged_cooldown: int = self.damaged_time
 
     def update(self) -> None:
         self.regenerate()
@@ -62,6 +70,7 @@ class Player(pygame.sprite.Sprite):
         self.rotate()
         self.constraints()
         self.shoot()
+        self.damage()
 
     def regenerate(self) -> None:
         # Regenerate health
@@ -125,6 +134,21 @@ class Player(pygame.sprite.Sprite):
             current_time: int = pygame.time.get_ticks()
             if current_time - self.shoot_timer >= self.shoot_cooldown:
                 self.can_shoot = True
+
+    def damage(self) -> None:
+        if self.damaged:
+            self.tint(settings.RED)
+            current_time: int = pygame.time.get_ticks()
+            if current_time - self.damaged_timer >= self.damaged_cooldown:
+                self.damaged = False
+
+    def take_damage(self, damage: int) -> None:
+        self.health -= damage
+        self.damaged = True
+        self.damaged_timer = pygame.time.get_ticks()
+
+    def tint(self, color: Tuple[int, int, int, Optional[int]]) -> None:
+        self.image.fill(color, special_flags=pygame.BLEND_RGBA_MULT)
 
     def draw(self, display) -> None:
         self.bullets.draw(display)

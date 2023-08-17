@@ -167,6 +167,7 @@ class Settings:
         self.PLAYER_BULLET_LIFETIME = 100
         self.PLAYER_RELOAD_TIME = 400
         self.PLAYER_MOVEMENT_SPEED = 5
+        self.PLAYER_DAMAGED_TIME = 150
 
         # Bullet settings
         self.BULLET_PLAYER_IMG = "assets/sprites/pixel_art/bullet_player.png"
@@ -190,6 +191,7 @@ class Settings:
         self.ENEMY_PURPLE_MOVEMENT_SPEED = 1
         self.ENEMY_PURPLE_MOVEMENT_COOLDOWN = 30
         self.ENEMY_PURPLE_MOVEMENT_PATTERN = "move_random"
+        self.ENEMY_PURPLE_DAMAGED_TIME = 150
         self.ENEMY_PURPLE_SCORE = 10
         
         self.ENEMY_RED_IMG = "assets/sprites/pixel_art/enemy_red.png"
@@ -203,6 +205,7 @@ class Settings:
         self.ENEMY_RED_MOVEMENT_SPEED = 1
         self.ENEMY_RED_MOVEMENT_COOLDOWN = 30
         self.ENEMY_RED_MOVEMENT_PATTERN = "move_target"
+        self.ENEMY_RED_DAMAGED_TIME = 150
         self.ENEMY_RED_SCORE = 10
         
         self.ENEMY_GREEN_IMG = "assets/sprites/pixel_art/enemy_green.png"
@@ -216,6 +219,7 @@ class Settings:
         self.ENEMY_GREEN_MOVEMENT_SPEED = 1
         self.ENEMY_GREEN_MOVEMENT_COOLDOWN = 120
         self.ENEMY_GREEN_MOVEMENT_PATTERN = "move_target"
+        self.ENEMY_GREEN_DAMAGED_TIME = 150
         self.ENEMY_GREEN_SCORE = 10
 
         self.ENEMY_GREEN_BABY_AMOUNT = 6
@@ -232,6 +236,7 @@ class Settings:
         self.ENEMY_GREEN_BABY_MOVEMENT_SPEED = 1
         self.ENEMY_GREEN_BABY_MOVEMENT_COOLDOWN = 120
         self.ENEMY_GREEN_BABY_MOVEMENT_PATTERN = "move_random"
+        self.ENEMY_GREEN_BABY_DAMAGED_TIME = 150
         self.ENEMY_GREEN_BABY_SCORE = 5
 
         self.ENEMY_YELLOW_IMG = "assets/sprites/pixel_art/enemy_yellow.png"
@@ -245,6 +250,7 @@ class Settings:
         self.ENEMY_YELLOW_MOVEMENT_SPEED = 5
         self.ENEMY_YELLOW_MOVEMENT_COOLDOWN = 30
         self.ENEMY_YELLOW_MOVEMENT_PATTERN = "move_target"
+        self.ENEMY_YELLOW_DAMAGED_TIME = 150
         self.ENEMY_YELLOW_SCORE = 20
 
         self.GAMEOVER_IMG = "assets/sprites/pixel_art/game_over.png"

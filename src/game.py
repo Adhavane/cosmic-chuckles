@@ -88,7 +88,6 @@ class Game:
         self.render_object.render(mode=moderngl.TRIANGLE_FAN)
         
         pygame.display.flip()
-
         frame_texture.release()
 
         self.clock.tick(settings.FPS)

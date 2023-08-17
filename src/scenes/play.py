@@ -59,7 +59,8 @@ class PlayState(Scene):
         self.destroyer()
 
         if self.player.health <= 0:
-            self.game.change_state(GameOverState(self.game, self.score_counter))
+            self.game.change_state(GameOverState(self.game,
+                                                 self.score_counter))
 
     def spawn_enemies(self) -> None:
         current_time: int = pygame.time.get_ticks()
@@ -69,9 +70,13 @@ class PlayState(Scene):
             enemy = random.choice([EnemyPurple(), EnemyRed(), EnemyGreen(), EnemyYellow()])
             self.enemies.add(enemy)
 
+    def increase_score(self, amount: int) -> None:
+        self.score_counter += amount
+
     def collisions(self) -> None:
-        self.collisions_player_enemies()
-        self.collisions_player_bullets()
+        if not self.player.damaged:
+            self.collisions_player_enemies()
+            self.collisions_player_bullets()
         self.collisions_bullets_enemies()
         self.collisions_bullets_bullets()
         
@@ -82,7 +87,7 @@ class PlayState(Scene):
                                             pygame.sprite.collide_mask)
             
             for enemy in collisions_player_enemies:
-                self.player.health -= enemy.body_damage
+                self.player.take_damage(enemy.body_damage)
                 enemy.destroy()
     
     def collisions_player_bullets(self) -> None:
@@ -93,7 +98,7 @@ class PlayState(Scene):
                                                 pygame.sprite.collide_mask)
                 
                 for bullet in collisions_player_bullets:
-                    self.player.health -= bullet.damage
+                    self.player.take_damage(bullet.damage)
                     bullet.destroy()
 
     def collisions_bullets_enemies(self) -> None:
@@ -106,8 +111,8 @@ class PlayState(Scene):
             # For each bullet, damage the first enemy it collides with
             for bullet, enemies in collisions_bullets_enemies.items():
                 for enemy in enemies:
-                    enemy.health -= bullet.damage
-                    self.score_counter += enemy.score
+                    enemy.take_damage(bullet.damage)
+                    self.increase_score(enemy.score)
                     bullet.destroy()
 
     def collisions_bullets_bullets(self) -> None:

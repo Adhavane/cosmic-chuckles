@@ -29,17 +29,19 @@ class Enemy(ABC, pygame.sprite.Sprite):
                  movement_speed: int,
                  movement_cooldown: int,
                  movement_pattern: str,
+                 damaged_time: int,
                  score: int) -> None:
         from src.prefabs.projectile import BulletEnemy
 
         ABC.__init__(self)
         pygame.sprite.Sprite.__init__(self)
 
-        self.image: pygame.Surface = pygame.image.load(image).convert_alpha()
+        self.original_image: pygame.Surface = pygame.image.load(image).convert_alpha()
 
-        scale: float = height / self.image.get_height()
-        width: int = round(self.image.get_width() * scale)
-        self.image = pygame.transform.scale(self.image, (width, height))
+        scale: float = height / self.original_image.get_height()
+        width: int = round(self.original_image.get_width() * scale)
+        self.original_image = pygame.transform.scale(self.original_image, (width, height))
+        self.image: pygame.Surface = self.original_image.copy()
 
         self.rect: pygame.Rect = self.image.get_rect()
         # Spawn enemy off screen
@@ -83,20 +85,34 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.shoot_cooldown = self.reload_time
         self.bullets: pygame.sprite.Group[BulletEnemy] = pygame.sprite.Group()
 
+        self.damaged: bool = False
+        self.damaged_timer: int = 0
+        self.damaged_cooldown: int = damaged_time
+
         self.destroyed: bool = False
 
     def update(self, player: Player) -> None:
+        self.render()
+        self.move(player)
+        self.constraints()
+
+        if self.bullet_damage:
+            self.shoot()
+
+        self.damage()
+
+        if self.health <= 0:
+            self.destroy()
+
+    def render(self) -> None:
+        self.image = self.original_image.copy()
+        self.rect = self.image.get_rect(center=self.rect.center)
+
+    def move(self, player: Player) -> None:
         current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer > self.movement_cooldown:
             self.movement_pattern(player)
             self.moving_timer = current_time
-        self.constraints()
-
-        if self.bullet_damage is not None:
-            self.shoot()
-
-        if self.health <= 0:
-            self.destroy()
 
     def shoot(self) -> None:
         if self.can_shoot:
@@ -148,6 +164,21 @@ class Enemy(ABC, pygame.sprite.Sprite):
     
     def spawn(self) -> List[Enemy]:
         return []
+    
+    def damage(self) -> None:
+        if self.damaged:
+            self.tint(settings.RED)
+            current_time: int = pygame.time.get_ticks()
+            if current_time - self.damaged_timer >= self.damaged_cooldown:
+                self.damaged = False
+
+    def take_damage(self, damage: int) -> None:
+        self.health -= damage
+        self.damaged = True
+        self.damaged_timer = pygame.time.get_ticks()
+
+    def tint(self, color: Tuple[int, int, int, Optional[int]]) -> None:
+        self.image.fill(color, special_flags=pygame.BLEND_RGBA_MULT)
 
     def draw(self, display) -> None:
         self.bullets.draw(display)
@@ -166,6 +197,7 @@ class EnemyPurple(Enemy):
                          settings.ENEMY_PURPLE_MOVEMENT_SPEED,
                          settings.ENEMY_PURPLE_MOVEMENT_COOLDOWN,
                          settings.ENEMY_PURPLE_MOVEMENT_PATTERN,
+                         settings.ENEMY_PURPLE_DAMAGED_TIME,
                          settings.ENEMY_PURPLE_SCORE)
 
 class EnemyRed(Enemy):
@@ -181,6 +213,7 @@ class EnemyRed(Enemy):
                          settings.ENEMY_RED_MOVEMENT_SPEED,
                          settings.ENEMY_RED_MOVEMENT_COOLDOWN,
                          settings.ENEMY_RED_MOVEMENT_PATTERN,
+                         settings.ENEMY_RED_DAMAGED_TIME,
                          settings.ENEMY_RED_SCORE)
         
 class EnemyGreen(Enemy):
@@ -196,6 +229,7 @@ class EnemyGreen(Enemy):
                          settings.ENEMY_GREEN_MOVEMENT_SPEED,
                          settings.ENEMY_GREEN_MOVEMENT_COOLDOWN,
                          settings.ENEMY_GREEN_MOVEMENT_PATTERN,
+                         settings.ENEMY_GREEN_DAMAGED_TIME,
                          settings.ENEMY_GREEN_SCORE)
         
     def spawn(self) -> List[Enemy]:
@@ -220,6 +254,7 @@ class EnemyGreenBaby(Enemy):
                          settings.ENEMY_GREEN_BABY_MOVEMENT_SPEED,
                          settings.ENEMY_GREEN_BABY_MOVEMENT_COOLDOWN,
                          settings.ENEMY_GREEN_BABY_MOVEMENT_PATTERN,
+                         settings.ENEMY_GREEN_BABY_DAMAGED_TIME,
                          settings.ENEMY_GREEN_BABY_SCORE)
         
 class EnemyYellow(Enemy):
@@ -235,4 +270,5 @@ class EnemyYellow(Enemy):
                          settings.ENEMY_YELLOW_MOVEMENT_SPEED,
                          settings.ENEMY_YELLOW_MOVEMENT_COOLDOWN,
                          settings.ENEMY_YELLOW_MOVEMENT_PATTERN,
+                         settings.ENEMY_YELLOW_DAMAGED_TIME,
                          settings.ENEMY_YELLOW_SCORE)
