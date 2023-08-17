@@ -60,22 +60,6 @@ class Settings:
         self.FPS_SIZE = round(13.5 * self.SCALE_FACTOR)
         self.FPS_COLOR = (255, 255, 255)
         self.FPS_OPACITY = 64
-
-        # Start button settings
-        self.PLAY_IMGS = {"selected": "assets/sprites/play_selected.png",
-                          "unselected": "assets/sprites/play_unselected.png"}
-        self.PLAY_Y = 326 * self.SCALE_FACTOR
-        self.PLAY_HEIGHT = 36 * self.SCALE_FACTOR
-        self.PLAY_OPACITY = {"selected": 255,
-                             "unselected": 64}
-
-        # Quit button settings
-        self.QUIT_IMGS = {"selected": "assets/sprites/quit_selected.png",
-                          "unselected": "assets/sprites/quit_unselected.png"}
-        self.QUIT_Y = 380 * self.SCALE_FACTOR
-        self.QUIT_HEIGHT = 40 * self.SCALE_FACTOR
-        self.QUIT_OPACITY = {"selected": 255,
-                             "unselected": 64}
         
         # Statistics settings
         self.STATISTICS_LABEL_FONT = "assets/fonts/awesome.ttf"
