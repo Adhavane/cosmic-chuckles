@@ -7,6 +7,14 @@ import time
 LAST_TIME = time.time()
 DELTA_TIME = 0
 
+SCALE_FACTOR = 2
+SCREEN_WIDTH = 690 * SCALE_FACTOR
+SCREEN_HEIGHT = 512 * SCALE_FACTOR
+
+FPS = 60
+
+
+
 class Settings:
     def __init__(self) -> None:
         # Screen settings for format 4:3
