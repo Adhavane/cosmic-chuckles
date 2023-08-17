@@ -10,7 +10,7 @@ from typing import Optional, Callable, List, Tuple
 import random
 import math
 
-from src.settings import Settings, extract_color_palette
+from constants import Settings, extract_color_palette
 settings = Settings()
 
 from src.prefabs.player import Player

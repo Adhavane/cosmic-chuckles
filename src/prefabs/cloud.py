@@ -5,7 +5,7 @@
 import pygame
 import random
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 class Cloud(pygame.sprite.Sprite):

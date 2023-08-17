@@ -5,7 +5,7 @@
 import pygame
 from typing import Tuple
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 class Label(pygame.sprite.Sprite):

@@ -5,7 +5,7 @@
 import random
 from typing import List, Tuple
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 from src.prefabs.projectile import Projectile

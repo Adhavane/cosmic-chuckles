@@ -5,7 +5,7 @@
 import pygame
 from abc import ABC, abstractmethod
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 from src.ui.label import Label

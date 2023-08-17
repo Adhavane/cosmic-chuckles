@@ -8,7 +8,7 @@ import pygame
 from abc import ABC, abstractmethod
 from typing import Callable, Dict, Tuple
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 class Button(ABC, pygame.sprite.Sprite):

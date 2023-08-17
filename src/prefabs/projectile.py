@@ -8,7 +8,7 @@ import math
 from PIL import Image, ImageDraw
 from typing import List, Tuple
 
-from src.settings import Settings, extract_color_palette
+from constants import Settings, extract_color_palette
 settings = Settings()
 
 class Projectile(ABC, pygame.sprite.Sprite):

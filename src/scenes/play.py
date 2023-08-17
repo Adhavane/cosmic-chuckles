@@ -7,7 +7,7 @@ import random
 
 from typing import Dict, List, Sequence
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 from src.scenes.state import Scene

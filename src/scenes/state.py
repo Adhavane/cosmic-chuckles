@@ -8,7 +8,7 @@ import pygame
 import random
 from abc import ABC, abstractmethod
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 from src.prefabs.background import Background

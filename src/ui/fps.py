@@ -2,7 +2,7 @@
 
 """fps.py: FPS class."""
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 from src.ui.label import Label

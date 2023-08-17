@@ -4,7 +4,7 @@
 
 import pygame
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 from src.ui.statistics import Statistics

@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import pygame
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 from src.scenes.state import Scene

@@ -6,7 +6,7 @@ import pygame
 import math
 from typing import Tuple, Optional
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 from src.prefabs.projectile import BulletPlayer

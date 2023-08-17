@@ -3,21 +3,11 @@
 """settings.py: Settings for the game."""
 
 import time
-from typing import List, Tuple
-from PIL import Image, ImageDraw
 
-def extract_color_palette(image: str) -> Tuple[List[Tuple[int, int, int]], List[int]]:
-    """Extracts color palettes from an image."""
-    img: Image.Image = Image.open(image)
-    colors: List[Tuple[int, int, int]] = img.getcolors(maxcolors=256)
-    palette: List[Tuple[int, int, int]] = [color for (_, color) in colors]
-    weights: List[int] = [count for (count, _) in colors]
-    return palette, weights
+LAST_TIME = time.time()
+DELTA_TIME = 0
 
 class Settings:
-    LAST_TIME = time.time()
-    DELTA_TIME = 0
-    
     def __init__(self) -> None:
         # Screen settings for format 4:3
         self.SCALE_FACTOR = 2

@@ -9,7 +9,7 @@ from typing import Optional
 import random
 import math
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 from src.scenes.state import State

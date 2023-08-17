@@ -12,7 +12,7 @@ import time
 import moderngl
 import numpy as np
 
-from src.settings import Settings
+from constants import Settings
 settings = Settings()
 
 def surface_to_texture(ctx: moderngl.Context, surface: pygame.Surface) -> moderngl.Texture:
