@@ -30,7 +30,7 @@ class State(ABC):
 
     @abstractmethod
     def draw(self) -> None:
-        self.game.display.fill(settings.BLACK)
+        pass
 
 class Scene(State):
     def __init__(self, game: Game) -> None:
@@ -67,6 +67,8 @@ class Scene(State):
 
     def draw(self) -> None:
         super().draw()
+        
+        self.game.display.fill(settings.BLACK)
 
         self.background.draw(self.game.display)
         for cloud in self.clouds:
