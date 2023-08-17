@@ -2,7 +2,7 @@
 
 """utils.py: Utility functions."""
 
-from constants import LAST_TIME, DELTA_TIME
+from constants import LAST_TIME, DELTA_TIME, SCALE_FACTOR
 
 import time
 from typing import List, Tuple
@@ -16,6 +16,11 @@ def get_delta_time() -> float:
     DELTA_TIME = current_time - LAST_TIME
     LAST_TIME = current_time
     return DELTA_TIME
+
+def scale_to_resolution(size: int) -> int:
+    """Scales a size to the current resolution."""
+    global SCALE_FACTOR
+    return round(size * SCALE_FACTOR)
 
 def extract_color_palette(image: str) -> Tuple[List[Tuple[int, int, int]], List[int]]:
     """Extracts color palettes from an image."""

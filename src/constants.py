@@ -13,8 +13,6 @@ SCREEN_HEIGHT = 512 * SCALE_FACTOR
 
 FPS = 60
 
-
-
 class Settings:
     def __init__(self) -> None:
         # Screen settings for format 4:3
@@ -50,21 +48,8 @@ class Settings:
 
         self.TRANSITION_TIME = 1000
 
-        # Background settings
-        self.BG_IMG = "assets/sprites/background.png"
-        self.BG_WIDTH = 960 * self.SCALE_FACTOR
-        self.BG_HEIGHT = 640 * self.SCALE_FACTOR
 
-        # x pixels per T frames
-        self.BG_SPEED_KEYS = 2
-        self.BG_SPEED_RANDOM = 1
-        self.BG_DELTA_KEYS = 10
-        self.BG_DELTA_RANDOM = 30
 
-        self.BG_TIME_MIN = 5000
-        self.BG_TIME_MAX = 10000
-        self.BG_ANGLE_MIN = 0
-        self.BG_ANGLE_MAX = 360
 
         # Cloud settings
         self.CLOUD_IMGS = ["assets/sprites/cloud_0.png",
