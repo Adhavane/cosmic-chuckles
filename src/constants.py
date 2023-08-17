@@ -7,6 +7,7 @@ import time
 LAST_TIME = time.time()
 DELTA_TIME = 0
 
+# Screen settings for format 4:3
 SCALE_FACTOR = 2
 SCREEN_WIDTH = 690 * SCALE_FACTOR
 SCREEN_HEIGHT = 512 * SCALE_FACTOR
@@ -15,13 +16,6 @@ FPS = 60
 
 class Settings:
     def __init__(self) -> None:
-        # Screen settings for format 4:3
-        self.SCALE_FACTOR = 2
-
-        self.SCREEN_WIDTH = 690 * self.SCALE_FACTOR
-        self.SCREEN_HEIGHT = 512 * self.SCALE_FACTOR
-
-        self.FPS = 60
 
         self.TITLE = "Cosmic Chuckles - Python/Pygame"
         self.ICON = "assets/images/icon.png"
@@ -51,23 +45,8 @@ class Settings:
 
 
 
-        # Cloud settings
-        self.CLOUD_IMGS = ["assets/sprites/cloud_0.png",
-                           "assets/sprites/cloud_1.png",
-                           "assets/sprites/cloud_2.png",
-                           "assets/sprites/cloud_3.png",
-                           "assets/sprites/cloud_4.png",
-                           "assets/sprites/cloud_5.png"]
         self.CLOUD_INIT = 5
-        self.CLOUD_HEIGHT_MIN = 50
-        self.CLOUD_HEIGHT_MAX = 400
-        self.CLOUD_SPEED_MIN = 1
-        self.CLOUD_SPEED_MAX = 3
-        self.CLOUD_DELTA = 30
-        self.CLOUD_OPACITY_MIN = 8
-        self.CLOUD_OPACITY_MAX = 64
-        self.CLOUD_TIME_MIN = 1000
-        self.CLOUD_TIME_MAX = 2000
+        
 
         # Title settings
         self.TITLE_IMG = "assets/sprites/title.png"

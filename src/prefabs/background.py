@@ -6,14 +6,14 @@ import pygame
 import random
 import math
 
+import paths
 from constants import \
     SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
-import paths as PATHS
 from utils import scale_to_resolution
 
 class Background(pygame.sprite.Sprite):
     # Background settings
-    IMG: str = PATHS.IMAGES + "/background.png"
+    IMG: str = paths.IMAGES + "/background.png"
     WIDTH: int = scale_to_resolution(960)
     HEIGHT: int = scale_to_resolution(640)
 
