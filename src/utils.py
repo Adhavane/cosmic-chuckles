@@ -5,6 +5,8 @@
 from constants import LAST_TIME, DELTA_TIME, SCALE_FACTOR
 
 import time
+import moderngl
+import pygame
 from typing import List, Tuple
 from PIL import Image, ImageDraw
 
@@ -21,6 +23,14 @@ def scale_to_resolution(size: int) -> int:
     """Scales a size to the current resolution."""
     global SCALE_FACTOR
     return round(size * SCALE_FACTOR)
+
+def surface_to_texture(ctx: moderngl.Context, surface: pygame.Surface) -> moderngl.Texture:
+    """Converts a pygame.Surface to a moderngl.Texture."""
+    texture: moderngl.Texture = ctx.texture(surface.get_size(), 4)
+    texture.filter = moderngl.NEAREST, moderngl.NEAREST
+    texture.swizzle = 'BGRA'
+    texture.write(surface.get_view('1'))
+    return texture
 
 def extract_color_palette(image: str) -> Tuple[List[Tuple[int, int, int]], List[int]]:
     """Extracts color palettes from an image."""

@@ -15,14 +15,8 @@ import numpy as np
 from constants import Settings
 settings = Settings()
 
-def surface_to_texture(ctx: moderngl.Context, surface: pygame.Surface) -> moderngl.Texture:
-    """Converts a pygame.Surface to a moderngl.Texture."""
-    texture: moderngl.Texture = ctx.texture(surface.get_size(), 4)
-    texture.filter = moderngl.NEAREST, moderngl.NEAREST
-    texture.swizzle = 'BGRA'
-    texture.write(surface.get_view('1'))
-    return texture
-        
+from utils import surface_to_texture
+
 class Game:
     def __init__(self) -> None:
         from src.scenes.scene_manager import SceneManager
