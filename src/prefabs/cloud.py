@@ -9,7 +9,6 @@ from typing import List
 import paths
 from constants import \
     SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
-from utils import scale_to_resolution
 
 class Cloud(pygame.sprite.Sprite):
     IMG_COUNT: int = 6
