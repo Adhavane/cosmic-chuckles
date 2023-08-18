@@ -59,18 +59,6 @@ class Settings:
         self.HEALTH_X = 24 * self.SCALE_FACTOR
         self.HEALTH_Y = 71 * self.SCALE_FACTOR
 
-        # Player settings
-        self.PLAYER_IMG = "assets/sprites/player.png"
-        self.PLAYER_HEIGHT = 64 * self.SCALE_FACTOR
-        self.PLAYER_HEALTH = 100
-        self.PLAYER_REGEN = 1
-        self.PLAYER_BULLET_DAMAGE = 10
-        self.PLAYER_BULLET_SPEED = 4
-        self.PLAYER_BULLET_LIFETIME = 100
-        self.PLAYER_RELOAD_TIME = 400
-        self.PLAYER_MOVEMENT_SPEED = 5
-        self.PLAYER_DAMAGED_TIME = 150
-
         # Bullet settings
         self.BULLET_PLAYER_IMG = "assets/sprites/bullet_player.png"
         self.BULLET_PLAYER_HEIGHT = 32 * self.SCALE_FACTOR

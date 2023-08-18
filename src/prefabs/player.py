@@ -6,33 +6,47 @@ import pygame
 import math
 from typing import Tuple, Optional
 
-from constants import Settings
-settings = Settings()
+import paths
+from constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME, RED
+from utils import scale_to_resolution
 
 from src.prefabs.projectile import BulletPlayer
 
 class Player(pygame.sprite.Sprite):
+    IMG: str = paths.IMAGES + "/player.png"
+    HEIGHT: int = scale_to_resolution(64)
+    
+    HEALTH: int = 100
+    REGEN: int = 1
+    BULLET_DAMAGE: int = 10
+    BULLET_SPEED: int = 4
+    BULLET_LIFETIME: int = 100
+    RELOAD_TIME: int = 400
+    MOVEMENT_SPEED: int = 5
+    DAMAGED_TIME: int = 1000
+
     def __init__(self,
-                 health: int = settings.PLAYER_HEALTH,
-                 regen: int = settings.PLAYER_REGEN,
-                 bullet_damage: int = settings.PLAYER_BULLET_DAMAGE,
-                 bullet_speed: int = settings.PLAYER_BULLET_SPEED,
-                 bullet_lifetime: int = settings.PLAYER_BULLET_LIFETIME,
-                 reload_time: int = settings.PLAYER_RELOAD_TIME,
-                 movement_speed: int = settings.PLAYER_MOVEMENT_SPEED,
-                 damaged_time: int = settings.PLAYER_DAMAGED_TIME) -> None:
+                 health: int = Player.HEALTH,
+                 regen: int = Player.REGEN,
+                 bullet_damage: int = Player.BULLET_DAMAGE,
+                 bullet_speed: int = Player.BULLET_SPEED,
+                 bullet_lifetime: int = Player.BULLET_LIFETIME,
+                 reload_time: int = Player.RELOAD_TIME,
+                 movement_speed: int = Player.MOVEMENT_SPEED,
+                 damaged_time: int = Player.DAMAGED_TIME) -> None:
         super().__init__()
 
-        self.original_image: pygame.Surface = pygame.image.load(settings.PLAYER_IMG).convert_alpha()
+        self.original_image: pygame.Surface = pygame.image.load(Player.IMG).convert_alpha()
         
-        scale: float = settings.PLAYER_HEIGHT / self.original_image.get_height()
+        scale: float = Player.HEIGHT / self.original_image.get_height()
         width: int = round(self.original_image.get_width() * scale)
         height: int = round(self.original_image.get_height() * scale)
         self.original_image = pygame.transform.scale(self.original_image, (width, height))
         self.image: pygame.Surface = self.original_image.copy()
 
         self.rect: pygame.Rect = self.image.get_rect()
-        self.rect.center = (round(settings.SCREEN_WIDTH / 2), round(settings.SCREEN_HEIGHT / 2))
+        self.rect.center = (round(SCREEN_WIDTH / 2), round(SCREEN_HEIGHT / 2))
 
         self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
 
@@ -74,7 +88,7 @@ class Player(pygame.sprite.Sprite):
 
     def regenerate(self) -> None:
         # Regenerate health
-        if self.health < settings.PLAYER_HEALTH:
+        if self.health < Player.HEALTH:
             current_time: int = pygame.time.get_ticks()
             if current_time - self.regen_timer >= self.regen_cooldown:
                 self.health += self.regen_amount
@@ -83,13 +97,13 @@ class Player(pygame.sprite.Sprite):
     def move(self) -> None:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            self.rect.y -= round(self.movement_speed * Settings.DELTA_TIME)
+            self.rect.y -= round(self.movement_speed * DELTA_TIME)
         if keys[pygame.K_DOWN]:
-            self.rect.y += round(self.movement_speed * Settings.DELTA_TIME)
+            self.rect.y += round(self.movement_speed * DELTA_TIME)
         if keys[pygame.K_LEFT]:
-            self.rect.x -= round(self.movement_speed * Settings.DELTA_TIME)
+            self.rect.x -= round(self.movement_speed * DELTA_TIME)
         if keys[pygame.K_RIGHT]:
-            self.rect.x += round(self.movement_speed * Settings.DELTA_TIME)
+            self.rect.x += round(self.movement_speed * DELTA_TIME)
 
     def rotate(self) -> None:
         mouse_x: int = pygame.mouse.get_pos()[0]
@@ -104,12 +118,12 @@ class Player(pygame.sprite.Sprite):
         # Keep player on screen
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.right > settings.SCREEN_WIDTH:
-            self.rect.right = settings.SCREEN_WIDTH
+        if self.rect.right > SCREEN_WIDTH:
+            self.rect.right = SCREEN_WIDTH
         if self.rect.top < 0:
             self.rect.top = 0
-        if self.rect.bottom > settings.SCREEN_HEIGHT:
-            self.rect.bottom = settings.SCREEN_HEIGHT
+        if self.rect.bottom > SCREEN_HEIGHT:
+            self.rect.bottom = SCREEN_HEIGHT
 
     def shoot(self) -> None:
         if self.can_shoot:
@@ -137,7 +151,7 @@ class Player(pygame.sprite.Sprite):
 
     def damage(self) -> None:
         if self.damaged:
-            self.tint(settings.RED)
+            self.tint(RED)
             current_time: int = pygame.time.get_ticks()
             if current_time - self.damaged_timer >= self.damaged_cooldown:
                 self.damaged = False
