@@ -7,8 +7,10 @@ import random
 
 from typing import Dict, List, Sequence
 
-from constants import Settings
-settings = Settings()
+import paths
+from constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
+from utils import scale_to_resolution
 
 from src.scenes.state import Scene
 from src.scenes.game_over import GameOverState
@@ -23,6 +25,9 @@ from src.prefabs.projectile import Projectile
 from src.prefabs.particle import Particle
 
 class PlayState(Scene):
+    ENEMY_TIME_MIN: int = 1000
+    ENEMY_TIME_MAX: int = 2000
+    
     def __init__(self, game) -> None:
         super().__init__(game)
 
@@ -35,7 +40,7 @@ class PlayState(Scene):
 
         self.can_spawn: bool = True
         self.enemy_timer: int = 0
-        self.enemy_cooldown: int = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
+        self.enemy_cooldown: int = random.randint(PlayState.ENEMY_TIME_MIN, PlayState.ENEMY_TIME_MAX)
         self.enemies: pygame.sprite.Group[Enemy] = pygame.sprite.Group()
 
         self.particles: pygame.sprite.Group[Particle] = pygame.sprite.Group()

@@ -8,8 +8,10 @@ import math
 from PIL import Image, ImageDraw
 from typing import List, Tuple
 
-from constants import Settings, extract_color_palette
-settings = Settings()
+import paths
+from constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
+from utils import extract_color_palette, scale_to_resolution
 
 class Projectile(ABC, pygame.sprite.Sprite):
     def __init__(self, image: str,
@@ -39,8 +41,8 @@ class Projectile(ABC, pygame.sprite.Sprite):
         self.destroyed: bool = False
 
     def update(self) -> None:
-        self.rect.x -= round(math.sin(math.radians(self.angle)) * self.speed * Settings.DELTA_TIME)
-        self.rect.y -= round(math.cos(math.radians(self.angle)) * self.speed * Settings.DELTA_TIME)
+        self.rect.x -= round(math.sin(math.radians(self.angle)) * self.speed * DELTA_TIME)
+        self.rect.y -= round(math.cos(math.radians(self.angle)) * self.speed * DELTA_TIME)
 
         self.lifetime -= 1
         if self.lifetime <= 0:
@@ -51,11 +53,11 @@ class Projectile(ABC, pygame.sprite.Sprite):
     def constraints(self) -> None:
         if self.rect.x + self.rect.width < 0:
             self.kill()
-        if self.rect.x > settings.SCREEN_WIDTH:
+        if self.rect.x > SCREEN_WIDTH:
             self.kill()
         if self.rect.y + self.rect.height < 0:
             self.kill()
-        if self.rect.y > settings.SCREEN_HEIGHT:
+        if self.rect.y > SCREEN_HEIGHT:
             self.kill()
 
     def destroy(self) -> None:
@@ -65,17 +67,27 @@ class Projectile(ABC, pygame.sprite.Sprite):
         display.blit(self.image, self.rect)       
 
 class BulletPlayer(Projectile):
+    IMG: str = paths.SPRITES + "bullet_player.png"
+    HEIGHT: int = scale_to_resolution(32)
+
     def __init__(self, x: int, y: int,
                  angle: float, damage: int,
                  speed: int, lifetime: int) -> None:
-        super().__init__(settings.BULLET_PLAYER_IMG,
-                         x, y, settings.BULLET_PLAYER_HEIGHT,
-                         angle, damage, speed, lifetime)
+        super().__init__(image=BulletPlayer.IMG,
+                         x=x, y=y,
+                         height=BulletPlayer.HEIGHT,
+                         angle=angle, damage=damage,
+                         speed=speed, lifetime=lifetime)
 
 class BulletEnemy(Projectile):
+    IMG: str = paths.SPRITES + "bullet_enemy.png"
+    HEIGHT: int = scale_to_resolution(32)
+
     def __init__(self, x: int, y: int,
                  angle: float, damage: int,
                  speed: int, lifetime: int) -> None:
-        super().__init__(settings.BULLET_ENEMY_IMG,
-                         x, y, settings.BULLET_ENEMY_HEIGHT,
-                         angle, damage, speed, lifetime)
+        super().__init__(image=BulletEnemy.IMG,
+                         x=x, y=y,
+                         height=BulletEnemy.HEIGHT,
+                         angle=angle, damage=damage,
+                         speed=speed, lifetime=lifetime)
