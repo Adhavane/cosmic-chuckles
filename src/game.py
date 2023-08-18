@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+import os
 import pygame
 import sys
 import time
@@ -12,18 +13,19 @@ import time
 import moderngl
 import numpy as np
 
-from src.settings import Settings
-settings = Settings()
+import src.paths as paths
+from src.constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, FPS, TIMER
+from src.utils import surface_to_texture
 
-def surface_to_texture(ctx: moderngl.Context, surface: pygame.Surface) -> moderngl.Texture:
-    """Converts a pygame.Surface to a moderngl.Texture."""
-    texture: moderngl.Texture = ctx.texture(surface.get_size(), 4)
-    texture.filter = moderngl.NEAREST, moderngl.NEAREST
-    texture.swizzle = 'BGRA'
-    texture.write(surface.get_view('1'))
-    return texture
-        
 class Game:
+    FLAGS: int = pygame.DOUBLEBUF | pygame.OPENGL
+    TITLE: str = "Cosmic Chuckles - Python/Pygame"
+    ICON: str = os.path.join(paths.IMAGES, "icon.png")
+
+    VERT_SHADER: str = os.path.join(paths.SHADERS, "vert_shader.vert")
+    FRAG_SHADER: str = os.path.join(paths.SHADERS, "frag_shader.frag")
+
     def __init__(self) -> None:
         from src.scenes.scene_manager import SceneManager
 
@@ -32,9 +34,8 @@ class Game:
         from src.scenes.menu import MenuState
 
         pygame.init()
-        self.screen: pygame.Surface = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT),
-                                                              pygame.DOUBLEBUF | pygame.OPENGL)
-        self.display: pygame.Surface = pygame.Surface((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
+        self.screen: pygame.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), Game.FLAGS)
+        self.display: pygame.Surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.ctx: moderngl.Context = moderngl.create_context()
 
         self.vbo: moderngl.Buffer = self.ctx.buffer(np.array([
@@ -45,8 +46,8 @@ class Game:
             -1.0,  1.0, 0.0, 0.0    # topleft
             ], dtype='f4'))
         
-        self.vert_shader: str = open('src/shaders/vert_shader.vert', 'r').read()
-        self.frag_shader: str = open('src/shaders/frag_shader.frag', 'r').read()
+        self.vert_shader: str = open(Game.VERT_SHADER, 'r').read()
+        self.frag_shader: str = open(Game.FRAG_SHADER, 'r').read()
 
         self.program: moderngl.Program = self.ctx.program(vertex_shader=self.vert_shader,
                                                           fragment_shader=self.frag_shader)
@@ -55,15 +56,15 @@ class Game:
 
         self.clock: pygame.time.Clock = pygame.time.Clock()
 
-        pygame.display.set_caption(settings.TITLE)
-        pygame.display.set_icon(pygame.image.load(settings.ICON))
+        pygame.display.set_caption(Game.TITLE)
+        pygame.display.set_icon(pygame.image.load(Game.ICON))
 
         self.scene_manager: SceneManager = SceneManager(self)
 
         self.scene_manager.push(MenuState(self))
-        self.scene_manager.push(TransitionStateOut(self, settings.TRANSITION_TIME, self.get_next_state(),))
-        self.scene_manager.push(TransitionStateIn(self, settings.TRANSITION_TIME))
-        self.scene_manager.push(LoadingState(self, settings.LOADING_TIME))
+        self.scene_manager.push(TransitionStateOut(self, self.get_next_state()))
+        self.scene_manager.push(TransitionStateIn(self))
+        self.scene_manager.push(LoadingState(self))
 
         self.state: State
         self.next_state()
@@ -86,8 +87,10 @@ class Game:
 
     def run(self) -> None:
         while True:
-            Settings.DELTA_TIME = (time.time() - Settings.LAST_TIME) * settings.FPS
-            Settings.LAST_TIME = time.time()
+            global TIMER
+
+            TIMER.DELTA_TIME = (time.time() - TIMER.LAST_TIME) * FPS
+            TIMER.LAST_TIME = time.time()
             
             self.events()
             self.update()
@@ -114,7 +117,7 @@ class Game:
         pygame.display.flip()
         frame_texture.release()
 
-        self.clock.tick(settings.FPS)
+        self.clock.tick(FPS)
 
     def draw(self) -> None:
         self.state.draw()

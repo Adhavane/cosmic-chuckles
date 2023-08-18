@@ -4,12 +4,14 @@
 
 from __future__ import annotations
 
+import os
 import pygame
 from abc import ABC, abstractmethod
 from typing import Callable, Dict, Tuple
 
-from src.settings import Settings
-settings = Settings()
+import src.paths as paths
+from src.constants import SCREEN_WIDTH
+from src.utils import scale_to_resolution
 
 class Button(ABC, pygame.sprite.Sprite):
     def __init__(self,
@@ -73,26 +75,40 @@ class Button(ABC, pygame.sprite.Sprite):
         display.blit(self.image, self.rect)
 
 class ButtonPlay(Button):
+    IMGS: Dict[str, str] = {"selected": f"{os.path.join(paths.SPRITES, 'play_selected.png')}",
+                            "unselected": f"{os.path.join(paths.SPRITES, 'play_unselected.png')}"}
+    Y: int = scale_to_resolution(326)
+    HEIGHT: int = scale_to_resolution(36)
+    OPACITY: Dict[str, int] = {"selected": 255,
+                               "unselected": 64}
+    
     def __init__(self, game: Game) -> None:
         from src.scenes.play import PlayState
         from src.scenes.transition import TransitionState
 
         game.scene_manager.push(PlayState(game))
 
-        super().__init__(settings.PLAY_IMGS,
-                         round(settings.SCREEN_WIDTH / 2),
-                         settings.PLAY_Y,
-                         settings.PLAY_HEIGHT,
-                         settings.PLAY_OPACITY,
+        super().__init__(ButtonPlay.IMGS,
+                         round(SCREEN_WIDTH / 2),
+                         ButtonPlay.Y,
+                         ButtonPlay.HEIGHT,
+                         ButtonPlay.OPACITY,
                          game.next_state)
 
 class ButtonQuit(Button):
+    IMGS: Dict[str, str] = {"selected": f"{os.path.join(paths.SPRITES, 'quit_selected.png')}",
+                            "unselected": f"{os.path.join(paths.SPRITES, 'quit_unselected.png')}"}
+    Y: int = scale_to_resolution(380)
+    HEIGHT: int = scale_to_resolution(36)
+    OPACITY: Dict[str, int] = {"selected": 255,
+                               "unselected": 64}
+    
     def __init__(self, game: Game) -> None:
-        super().__init__(settings.QUIT_IMGS,
-                         round(settings.SCREEN_WIDTH / 2),
-                         settings.QUIT_Y,
-                         settings.QUIT_HEIGHT,
-                         settings.QUIT_OPACITY,
+        super().__init__(ButtonQuit.IMGS,
+                         round(SCREEN_WIDTH / 2),
+                         ButtonQuit.Y,
+                         ButtonQuit.HEIGHT,
+                         ButtonQuit.OPACITY,
                          game.quit)
         
 from src.game import Game

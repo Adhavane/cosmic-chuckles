@@ -9,27 +9,30 @@ from typing import Optional
 import random
 import math
 
-from src.settings import Settings
-settings = Settings()
+from src.constants import \
+    SCREEN_WIDTH, FPS, BLACK, OPAQUE, TRANSPARENT
 
 from src.scenes.state import State
 from src.game import Game
 
 class TransitionState(State):
+    TIME: int = 1000
+
     def __init__(self, game: Game,
-                 execution_time: int,
                  opacity: int,
                  next_state: Optional[State],
-                 previous_state: Optional[State]) -> None:
+                 previous_state: Optional[State],
+                 execution_time: Optional[int] = None) -> None:
         super().__init__(game)
 
         self.previous_state: State = previous_state
         self.next_state: State = next_state
 
-        self.execution_time: int = execution_time
+        if execution_time is None:
+            self.execution_time: int = TransitionState.TIME
 
         self.grid_size = 32  # Size of the grid
-        self.square_size = math.ceil(settings.SCREEN_WIDTH / self.grid_size)  # Size of each square
+        self.square_size = math.ceil(SCREEN_WIDTH / self.grid_size)  # Size of each square
         
         self.opacity: int = opacity  # Opacity of the squares
 
@@ -37,7 +40,7 @@ class TransitionState(State):
         for _ in range(self.grid_size):
             row_colors = []
             for _ in range(self.grid_size):
-                row_colors.append(list(settings.BLACK) + [abs(self.opacity - 255)])
+                row_colors.append(list(BLACK) + [abs(self.opacity - 255)])
             self.colors.append(row_colors)
 
         self.squares = []  # List to store the squares
@@ -53,7 +56,7 @@ class TransitionState(State):
                 self.squares.append((square, square_rect))
                 self.squares_unfilled.append((square, square_rect))
 
-        self.fill_rate = round(self.grid_size * self.grid_size / self.execution_time * settings.FPS)
+        self.fill_rate = round(self.grid_size * self.grid_size / self.execution_time * FPS)
 
     def events(self, _: pygame.event.Event) -> None:
         return super().events(_)
@@ -94,18 +97,25 @@ class TransitionState(State):
                 self.game.display.blit(square[0], square[1])
 
 class TransitionStateIn(TransitionState):
-    def __init__(self, game: Game,
-                 execution_time: int) -> None:
-        super().__init__(game, execution_time, 255, None, None)
+    def __init__(self, game: Game, execution_time: Optional[int] = None) -> None:
+        super().__init__(game=game,
+                         opacity=OPAQUE,
+                         next_state=None,
+                         previous_state=None,
+                         execution_time=execution_time)
 
     def draw(self) -> None:
         super().draw()
 
 class TransitionStateOut(TransitionState):
     def __init__(self, game: Game,
-                 execution_time: int,
-                 next_state: State) -> None:
-        super().__init__(game, execution_time, 0, next_state, None)
+                 next_state: State,
+                 execution_time: Optional[int] = None) -> None:
+        super().__init__(game=game,
+                         opacity=TRANSPARENT,
+                         next_state=next_state,
+                         previous_state=None,
+                         execution_time=execution_time)
     
     def draw(self) -> None:
         if self.game.get_next_state() is not None:

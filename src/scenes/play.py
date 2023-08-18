@@ -7,9 +7,6 @@ import random
 
 from typing import Dict, List, Sequence
 
-from src.settings import Settings
-settings = Settings()
-
 from src.scenes.state import Scene
 from src.scenes.game_over import GameOverState
 from src.scenes.transition import TransitionStateOut
@@ -23,6 +20,11 @@ from src.prefabs.projectile import Projectile
 from src.prefabs.particle import Particle
 
 class PlayState(Scene):
+    ENEMY_TIME_MIN: int = 1000
+    ENEMY_TIME_MAX: int = 2000
+
+    PARTICLE_AMOUNT: int = 20
+
     def __init__(self, game) -> None:
         super().__init__(game)
 
@@ -35,7 +37,7 @@ class PlayState(Scene):
 
         self.can_spawn: bool = True
         self.enemy_timer: int = 0
-        self.enemy_cooldown: int = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
+        self.enemy_cooldown: int = random.randint(PlayState.ENEMY_TIME_MIN, PlayState.ENEMY_TIME_MAX)
         self.enemies: pygame.sprite.Group[Enemy] = pygame.sprite.Group()
 
         self.particles: pygame.sprite.Group[Particle] = pygame.sprite.Group()
@@ -61,14 +63,14 @@ class PlayState(Scene):
 
         if self.player.health <= 0:
             self.game.scene_manager.push(GameOverState(self.game, self.score_counter))
-            self.game.scene_manager.push(TransitionStateOut(self.game, settings.TRANSITION_TIME, self.game.get_next_state()))
+            self.game.scene_manager.push(TransitionStateOut(self.game, self.game.get_next_state()))
             self.game.next_state()
 
     def spawn_enemies(self) -> None:
         current_time: int = pygame.time.get_ticks()
         if current_time - self.enemy_timer > self.enemy_cooldown:
             self.enemy_timer = current_time
-            self.enemy_cooldown = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
+            self.enemy_cooldown = random.randint(PlayState.ENEMY_TIME_MIN, PlayState.ENEMY_TIME_MAX)
             enemy = random.choice([EnemyPurple(), EnemyRed(), EnemyGreen(), EnemyYellow()])
             self.enemies.add(enemy)
 
@@ -131,7 +133,7 @@ class PlayState(Scene):
                         bullet_.destroy()
 
     def explosions(self, sprite: Player | Enemy | Projectile) -> None:
-        for _ in range(settings.PARTICLE_AMOUNT):
+        for _ in range(PlayState.PARTICLE_AMOUNT):
             self.particles.add(Particle(sprite.colors,
                                         sprite.rect.centerx,
                                         sprite.rect.centery))
