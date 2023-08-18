@@ -20,7 +20,7 @@ class Statistics(ABC):
 
     STAT_FONT: str = os.path.join(paths.FONTS, "Pixel Gosub.otf")
     STAT_SIZE: int = scale_to_resolution(27.01)
-    STAT_X_OFFSET: int = scale_to_resolution(8)
+    STAT_X_OFFSET: int = scale_to_resolution(10)
     STAT_Y_OFFSET: int = scale_to_resolution(-16)
 
     def __init__(self, icon: str, icon_height: int,

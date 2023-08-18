@@ -9,7 +9,7 @@ from typing import Tuple, Optional
 
 import src.paths as paths
 from src.constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, TIMER, RED
+    SCREEN_WIDTH, SCREEN_HEIGHT, TIMER, WHITE
 from src.utils import scale_to_resolution
 
 from src.prefabs.projectile import BulletPlayer
@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
     BULLET_LIFETIME: int = 100
     RELOAD_TIME: int = 400
     MOVEMENT_SPEED: int = 5
-    DAMAGED_TIME: int = 1000
+    DAMAGED_TIME: int = 150
 
     def __init__(self) -> None:
         super().__init__()
@@ -50,7 +50,6 @@ class Player(pygame.sprite.Sprite):
         self.bullet_speed: int = Player.BULLET_SPEED
         self.bullet_lifetime: int = Player.BULLET_LIFETIME
         self.movement_speed: int = Player.MOVEMENT_SPEED
-        self.damaged_time: int = Player.DAMAGED_TIME
 
         self.angle: float
         self.rotate()
@@ -68,7 +67,7 @@ class Player(pygame.sprite.Sprite):
         
         self.damaged: bool = False
         self.damaged_timer: int = 0
-        self.damaged_cooldown: int = self.damaged_time
+        self.damaged_cooldown: int = Player.DAMAGED_TIME
 
     def update(self) -> None:
         self.regenerate()
@@ -143,7 +142,7 @@ class Player(pygame.sprite.Sprite):
 
     def damage(self) -> None:
         if self.damaged:
-            self.tint(RED)
+            self.tint(WHITE)
             current_time: int = pygame.time.get_ticks()
             if current_time - self.damaged_timer >= self.damaged_cooldown:
                 self.damaged = False
@@ -154,7 +153,7 @@ class Player(pygame.sprite.Sprite):
         self.damaged_timer = pygame.time.get_ticks()
 
     def tint(self, color: Tuple[int, int, int, Optional[int]]) -> None:
-        self.image.fill(color, special_flags=pygame.BLEND_RGBA_MULT)
+        self.image.fill(color, special_flags=pygame.BLEND_ADD)
 
     def draw(self, display) -> None:
         self.bullets.draw(display)

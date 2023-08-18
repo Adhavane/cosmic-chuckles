@@ -13,7 +13,7 @@ import math
 
 import src.paths as paths
 from src.constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, TIMER, RED
+    SCREEN_WIDTH, SCREEN_HEIGHT, TIMER, WHITE
 from src.utils import extract_color_palette, scale_to_resolution
 
 from src.prefabs.player import Player
@@ -70,10 +70,10 @@ class Enemy(ABC, pygame.sprite.Sprite):
 
         self.health: int = health
         self.body_damage: int = body_damage
+
         self.bullet_damage: Optional[int] = bullet_damage
         self.bullet_speed: Optional[int] = bullet_speed
         self.bullet_lifetime: Optional[int] = bullet_lifetime
-        self.reload_time: Optional[int] = reload_time
 
         self.moving_timer: int = 0
         self.movement_cooldown: int = movement_cooldown
@@ -85,7 +85,7 @@ class Enemy(ABC, pygame.sprite.Sprite):
 
         self.can_shoot: bool = True
         self.shoot_timer: int = 0
-        self.shoot_cooldown = self.reload_time
+        self.shoot_cooldown: Optional[int] = reload_time
         self.bullets: pygame.sprite.Group[BulletEnemy] = pygame.sprite.Group()
 
         self.damaged: bool = False
@@ -170,7 +170,7 @@ class Enemy(ABC, pygame.sprite.Sprite):
     
     def damage(self) -> None:
         if self.damaged:
-            self.tint(RED)
+            self.tint(WHITE)
             current_time: int = pygame.time.get_ticks()
             if current_time - self.damaged_timer >= self.damaged_cooldown:
                 self.damaged = False
@@ -181,7 +181,7 @@ class Enemy(ABC, pygame.sprite.Sprite):
         self.damaged_timer = pygame.time.get_ticks()
 
     def tint(self, color: Tuple[int, int, int, Optional[int]]) -> None:
-        self.image.fill(color, special_flags=pygame.BLEND_RGBA_MULT)
+        self.image.fill(color, special_flags=pygame.BLEND_ADD)
 
     def draw(self, display) -> None:
         self.bullets.draw(display)
