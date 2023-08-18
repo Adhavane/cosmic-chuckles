@@ -41,7 +41,8 @@ class Statistics(ABC):
                                   antialias=True,
                                   color=WHITE,
                                   opacity=OPAQUE,
-                                  x=0, y=0)
+                                  x=x + self.icon_rect.width + Statistics.LABEL_X_OFFSET,
+                                  y=y + Statistics.LABEL_Y_OFFSET)
 
         self.stat: Label = Label(text=str(stat),
                                  font=Statistics.STAT_FONT,
