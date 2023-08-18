@@ -18,7 +18,8 @@ class Player(pygame.sprite.Sprite):
     HEIGHT: int = scale_to_resolution(64)
     
     HEALTH: int = 100
-    REGEN: int = 1
+    REGEN_TIME: int = 1000
+    REGEN_AMOUNT: int = 1
     BULLET_DAMAGE: int = 10
     BULLET_SPEED: int = 4
     BULLET_LIFETIME: int = 100
@@ -26,15 +27,7 @@ class Player(pygame.sprite.Sprite):
     MOVEMENT_SPEED: int = 5
     DAMAGED_TIME: int = 1000
 
-    def __init__(self,
-                 health: int = Player.HEALTH,
-                 regen: int = Player.REGEN,
-                 bullet_damage: int = Player.BULLET_DAMAGE,
-                 bullet_speed: int = Player.BULLET_SPEED,
-                 bullet_lifetime: int = Player.BULLET_LIFETIME,
-                 reload_time: int = Player.RELOAD_TIME,
-                 movement_speed: int = Player.MOVEMENT_SPEED,
-                 damaged_time: int = Player.DAMAGED_TIME) -> None:
+    def __init__(self) -> None:
         super().__init__()
 
         self.original_image: pygame.Surface = pygame.image.load(Player.IMG).convert_alpha()
@@ -50,15 +43,13 @@ class Player(pygame.sprite.Sprite):
 
         self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
 
-        self.health: int = health
-        self.max_health: int = health
-        self.regen: int = regen
-        self.bullet_damage: int = bullet_damage
-        self.bullet_speed: int = bullet_speed
-        self.bullet_lifetime: int = bullet_lifetime
-        self.reload_time: int = reload_time
-        self.movement_speed: int = movement_speed
-        self.damaged_time: int = damaged_time
+        self.health: int = Player.HEALTH
+        self.max_health: int = Player.HEALTH
+        self.bullet_damage: int = Player.BULLET_DAMAGE
+        self.bullet_speed: int = Player.BULLET_SPEED
+        self.bullet_lifetime: int = Player.BULLET_LIFETIME
+        self.movement_speed: int = Player.MOVEMENT_SPEED
+        self.damaged_time: int = Player.DAMAGED_TIME
 
         self.angle: float
         self.rotate()
@@ -66,13 +57,13 @@ class Player(pygame.sprite.Sprite):
         # Set up shooting
         self.can_shoot: bool = True
         self.shoot_timer: int = 0
-        self.shoot_cooldown: int = self.reload_time
+        self.shoot_cooldown: int = Player.RELOAD_TIME
         self.bullets: pygame.sprite.Group[BulletPlayer] = pygame.sprite.Group()
 
         # Set up regen
         self.regen_timer: int = 0
-        self.regen_cooldown: int = 6000
-        self.regen_amount: int = 1
+        self.regen_cooldown: int = Player.REGEN_TIME
+        self.regen_amount: int = Player.REGEN_AMOUNT
         
         self.damaged: bool = False
         self.damaged_timer: int = 0
@@ -88,7 +79,7 @@ class Player(pygame.sprite.Sprite):
 
     def regenerate(self) -> None:
         # Regenerate health
-        if self.health < Player.HEALTH:
+        if self.health < self.max_health:
             current_time: int = pygame.time.get_ticks()
             if current_time - self.regen_timer >= self.regen_cooldown:
                 self.health += self.regen_amount
