@@ -4,22 +4,30 @@
 
 import pygame
 
-from constants import Settings
-settings = Settings()
+import paths
+from constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
+from utils import scale_to_resolution
 
 from src.ui.label import Label, LabelList
 
 class Health:
+    HEART_IMG: str = paths.IMAGES + "/heart.png"
+    HEART_HEIGHT: int = scale_to_resolution(30)
+
+    HEALTH_X: int = scale_to_resolution(24)
+    HEALTH_Y: int = scale_to_resolution(71)
+
     def __init__(self, health: int) -> None:
-        self.heart: pygame.Surface = pygame.image.load(settings.HEART_IMG).convert_alpha()
+        self.heart: pygame.Surface = pygame.image.load(Health.HEART_IMG).convert_alpha()
         
-        scale: float = settings.HEART_HEIGHT / self.heart.get_height()
+        scale: float = Health.HEART_HEIGHT / self.heart.get_height()
         width: int = round(self.heart.get_width() * scale)
         height: int = round(self.heart.get_height() * scale)
         self.heart = pygame.transform.scale(self.heart, (width, height))
 
         self.heart_rect: pygame.Rect = self.heart.get_rect()
-        self.heart_rect.x = round(settings.SCREEN_WIDTH / 2 - self.heart_rect.width / 2)
+        self.heart_rect.x = round(SCREEN_WIDTH / 2 - self.heart_rect.width / 2)
         self.heart_rect.y = settings.HEART_Y
 
         health_left: Label = Label(" <", settings.HEALTH_FONT, settings.HEALTH_SIZE,
