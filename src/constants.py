@@ -69,17 +69,3 @@ class Settings:
         # Enemy settings
         self.ENEMY_TIME_MIN = 1000
         self.ENEMY_TIME_MAX = 2000
-
-
-        self.GAMEOVER_IMG = "assets/sprites/game_over.png"
-        self.GAMEOVER_IMG_HEIGHT = 220 * self.SCALE_FACTOR
-        self.GAMEOVER_IMG_Y = 71 * self.SCALE_FACTOR
-
-        self.GAMEOVER_SCORE_FONT = "assets/fonts/Pixel Gosub.otf"
-        self.GAMEOVER_SCORE_SIZE = round(43.21 * self.SCALE_FACTOR)
-        self.GAMEOVER_SCORE_Y_PADDING = -18 * self.SCALE_FACTOR
-        self.GAMEOVER_SCORE_Y = 339 * self.SCALE_FACTOR
-
-        self.GAMEOVER_PRESS_FONT = "assets/fonts/Pixel Gosub.otf"
-        self.GAMEOVER_PRESS_SIZE = round(14.40 * self.SCALE_FACTOR)
-        self.GAMEOVER_PRESS_Y = 466 * self.SCALE_FACTOR
