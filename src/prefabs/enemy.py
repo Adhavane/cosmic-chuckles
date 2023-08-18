@@ -4,17 +4,17 @@
 
 from __future__ import annotations
 
+import os
 import pygame
 from abc import ABC, abstractmethod
 from typing import Optional, Callable, List, Tuple
 import random
 import math
 
-import paths
-from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, \
-    DELTA_TIME, RED
-from utils import extract_color_palette, get_height, scale_to_resolution
+import src.paths as paths
+from src.constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, TIMER, RED
+from src.utils import extract_color_palette, scale_to_resolution
 
 from src.prefabs.player import Player
 from src.prefabs.projectile import BulletEnemy
@@ -137,8 +137,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
                 self.can_shoot = True
 
     def move_random(self, _: Player) -> None:
-        self.rect_x_float += math.sin(math.radians(self.angle)) * self.movement_speed * DELTA_TIME
-        self.rect_y_float += math.cos(math.radians(self.angle)) * self.movement_speed * DELTA_TIME
+        self.rect_x_float += math.sin(math.radians(self.angle)) * self.movement_speed * TIMER.DELTA_TIME
+        self.rect_y_float += math.cos(math.radians(self.angle)) * self.movement_speed * TIMER.DELTA_TIME
         self.rect.x = round(self.rect_x_float)
         self.rect.y = round(self.rect_y_float)
 
@@ -146,8 +146,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
         rel_x: int = self.rect.centerx - player.rect.centerx
         rel_y: int = self.rect.centery - player.rect.centery
         self.angle = (180 / math.pi) * math.atan2(rel_x, rel_y)
-        self.rect_x_float -= math.sin(math.radians(self.angle)) * self.movement_speed * DELTA_TIME
-        self.rect_y_float -= math.cos(math.radians(self.angle)) * self.movement_speed * DELTA_TIME
+        self.rect_x_float -= math.sin(math.radians(self.angle)) * self.movement_speed * TIMER.DELTA_TIME
+        self.rect_y_float -= math.cos(math.radians(self.angle)) * self.movement_speed * TIMER.DELTA_TIME
         self.rect.x = round(self.rect_x_float)
         self.rect.y = round(self.rect_y_float)
 
@@ -189,8 +189,8 @@ class Enemy(ABC, pygame.sprite.Sprite):
 
 class EnemyPurple(Enemy):
     def __init__(self) -> None:
-        super().__init__(image=paths.SPRITES + "/enemy_purple.png",
-                         height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_purple.png"))
+        super().__init__(image=os.path.join(paths.SPRITES, "enemy_purple.png"),
+                         height=scale_to_resolution(72),
                          health=10,
                          body_damage=10,
                          bullet_damage=None,
@@ -205,8 +205,8 @@ class EnemyPurple(Enemy):
 
 class EnemyRed(Enemy):
     def __init__(self) -> None:
-        super().__init__(image=paths.SPRITES + "/enemy_red.png",
-                         height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_red.png"))
+        super().__init__(image=os.path.join(paths.SPRITES, "enemy_red.png"),
+                         height=scale_to_resolution(96),
                          health=20,
                          body_damage=10,
                          bullet_damage=5,
@@ -224,8 +224,8 @@ class EnemyGreen(Enemy):
     BABY_SPAWN_RADIUS: int = scale_to_resolution(100)
 
     def __init__(self) -> None:
-        super().__init__(image=paths.SPRITES + "/enemy_green.png",
-                         height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_green.png"))
+        super().__init__(image=os.path.join(paths.SPRITES, "enemy_green.png"),
+                         height=scale_to_resolution(104),
                          health=50,
                          body_damage=50,
                          bullet_damage=None,
@@ -249,8 +249,8 @@ class EnemyGreen(Enemy):
 
 class EnemyGreenBaby(Enemy):
     def __init__(self) -> None:
-        super().__init__(image=paths.SPRITES + "/enemy_green_baby.png",
-                         height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_green_baby.png"))
+        super().__init__(image=os.path.join(paths.SPRITES, "enemy_green_baby.png"),
+                         height=scale_to_resolution(36),
                          health=5,
                          body_damage=5,
                          bullet_damage=None,
@@ -265,8 +265,8 @@ class EnemyGreenBaby(Enemy):
         
 class EnemyYellow(Enemy):
     def __init__(self) -> None:
-        super().__init__(image=paths.SPRITES + "/enemy_yellow.png",
-                            height=scale_to_resolution(get_height(paths.SPRITES + "/enemy_yellow.png")),
+        super().__init__(image=os.path.join(paths.SPRITES, "enemy_yellow.png"),
+                            height=scale_to_resolution(76),
                             health=10,
                             body_damage=10,
                             bullet_damage=None,

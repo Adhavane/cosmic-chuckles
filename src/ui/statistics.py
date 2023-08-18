@@ -2,22 +2,23 @@
 
 """statistics.py: Statistics class."""
 
+import os
 import pygame
 from abc import ABC, abstractmethod
 
-import paths
-from constants import WHITE, GREEN, OPAQUE
-from utils import scale_to_resolution
+import src.paths as paths
+from src.constants import WHITE, GREEN, OPAQUE
+from src.utils import scale_to_resolution
 
 from src.ui.label import Label
 
 class Statistics(ABC):
-    LABEL_FONT: str = paths.FONTS + "/awesome.ttf"
+    LABEL_FONT: str = os.path.join(paths.FONTS, "awesome.ttf")
     LABEL_SIZE: int = scale_to_resolution(16.22)
     LABEL_X_OFFSET: int = scale_to_resolution(10)
     LABEL_Y_OFFSET: int = scale_to_resolution(-6)
 
-    STAT_FONT: str = paths.FONTS + "/Pixel Gosub.otf"
+    STAT_FONT: str = os.path.join(paths.FONTS, "Pixel Gosub.otf")
     STAT_SIZE: int = scale_to_resolution(27.01)
     STAT_X_OFFSET: int = scale_to_resolution(8)
     STAT_Y_OFFSET: int = scale_to_resolution(-16)
@@ -62,7 +63,7 @@ class Statistics(ABC):
         self.stat.draw(display)
 
 class Score(Statistics):
-    COIN_IMG: str = paths.IMAGES + "/coin.png"
+    COIN_IMG: str = os.path.join(paths.SPRITES, "coin.png")
     COIN_HEIGHT: int = scale_to_resolution(33)
 
     SCORE_X: int = scale_to_resolution(24)
@@ -76,7 +77,7 @@ class Score(Statistics):
                          x=Score.SCORE_X, y=Score.SCORE_Y)
         
 class Health(Statistics):
-    HEART_IMG: str = paths.IMAGES + "/heart.png"
+    HEART_IMG: str = os.path.join(paths.SPRITES, "heart.png")
     HEART_HEIGHT: int = scale_to_resolution(30)
 
     HEALTH_X: int = scale_to_resolution(24)

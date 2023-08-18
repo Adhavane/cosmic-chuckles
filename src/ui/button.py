@@ -4,13 +4,14 @@
 
 from __future__ import annotations
 
+import os
 import pygame
 from abc import ABC, abstractmethod
 from typing import Callable, Dict, Tuple
 
-import paths
-from constants import SCREEN_WIDTH
-from utils import scale_to_resolution
+import src.paths as paths
+from src.constants import SCREEN_WIDTH
+from src.utils import scale_to_resolution
 
 class Button(ABC, pygame.sprite.Sprite):
     def __init__(self,
@@ -74,8 +75,8 @@ class Button(ABC, pygame.sprite.Sprite):
         display.blit(self.image, self.rect)
 
 class ButtonPlay(Button):
-    IMGS: Dict[str, str] = {"selected": f"{paths.SPRITES}/play_selected.png",
-                            "unselected": f"{paths.SPRITES}/play_unselected.png"}
+    IMGS: Dict[str, str] = {"selected": f"{os.path.join(paths.SPRITES, 'play_selected.png')}",
+                            "unselected": f"{os.path.join(paths.SPRITES, 'play_unselected.png')}"}
     Y: int = scale_to_resolution(326)
     HEIGHT: int = scale_to_resolution(36)
     OPACITY: Dict[str, int] = {"selected": 255,
@@ -95,8 +96,8 @@ class ButtonPlay(Button):
                          game.next_state)
 
 class ButtonQuit(Button):
-    IMGS: Dict[str, str] = {"selected": f"{paths.SPRITES}/quit_selected.png",
-                            "unselected": f"{paths.SPRITES}/quit_unselected.png"}
+    IMGS: Dict[str, str] = {"selected": f"{os.path.join(paths.SPRITES, 'quit_selected.png')}",
+                            "unselected": f"{os.path.join(paths.SPRITES, 'quit_unselected.png')}"}
     Y: int = scale_to_resolution(380)
     HEIGHT: int = scale_to_resolution(36)
     OPACITY: Dict[str, int] = {"selected": 255,

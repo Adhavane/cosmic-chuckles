@@ -8,7 +8,7 @@ import pygame
 from typing import List, Tuple
 from PIL import Image, ImageDraw
 
-from constants import SCALE_FACTOR
+from src.constants import SCALE_FACTOR
 
 def scale_to_resolution(size: int | float) -> int:
     """Scales a size to the current resolution."""

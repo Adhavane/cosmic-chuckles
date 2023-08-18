@@ -4,11 +4,7 @@
 
 from __future__ import annotations
 
-import pygame
 from typing import List, Optional
-
-from constants import Settings
-settings = Settings()
 
 from src.scenes.state import State
 

@@ -2,21 +2,18 @@
 
 """particle.py: Particle class and subclasses."""
 
+import os
 import random
 from typing import List, Tuple
 
-import paths
-from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
-from utils import scale_to_resolution
+import src.paths as paths
+from src.utils import scale_to_resolution
 
 from src.prefabs.projectile import Projectile
 
 class Particle(Projectile):
-    IMG: str = paths.IMAGES + "/particle.png"
+    IMG: str = os.path.join(paths.SPRITES, "particle.png")
    
-    AMOUNT: int = 20
-    
     HEIGHT_MIN: int = scale_to_resolution(1)
     HEIGHT_MAX: int = scale_to_resolution(5)
     

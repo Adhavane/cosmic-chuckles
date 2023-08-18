@@ -3,10 +3,12 @@
 """settings.py: Settings for the game."""
 
 import time
-import pygame
 
-LAST_TIME = time.time()
-DELTA_TIME = 0
+class Timer:
+    LAST_TIME = time.time()
+    DELTA_TIME = 0
+
+TIMER = Timer()
 
 # Screen settings for format 4:3
 SCALE_FACTOR = 2
@@ -26,21 +28,3 @@ SEMI_OPAQUE = 192
 TRANSLUCENT = 128
 SEMI_TRANSLUCENT = 64
 TRANSPARENT = 0
-
-class Settings:
-    def __init__(self) -> None:
-
-        self.TRANSITION_TIME = 1000
-
-        self.CLOUD_INIT = 5
-
-        # Bullet settings
-        self.BULLET_PLAYER_IMG = "assets/sprites/bullet_player.png"
-        self.BULLET_PLAYER_HEIGHT = 32 * self.SCALE_FACTOR
-        
-        self.BULLET_ENEMY_IMG = "assets/sprites/bullet_enemy.png"
-        self.BULLET_ENEMY_HEIGHT = 32 * self.SCALE_FACTOR
-
-        # Enemy settings
-        self.ENEMY_TIME_MIN = 1000
-        self.ENEMY_TIME_MAX = 2000

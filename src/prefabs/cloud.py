@@ -2,17 +2,18 @@
 
 """cloud.py: Cloud class."""
 
+import os
 import pygame
 import random
 from typing import List
 
-import paths
-from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
+import src.paths as paths
+from src.constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, TIMER
 
 class Cloud(pygame.sprite.Sprite):
     IMG_COUNT: int = 6
-    IMGS: List[str] = [f"{paths.SPRITES}/cloud_{i}.png"
+    IMGS: List[str] = [f"{os.path.join(paths.SPRITES, 'cloud')}_{i}.png"
                        for i in range(IMG_COUNT)]
     
     HEIGHT_MIN: int = 50
@@ -25,9 +26,6 @@ class Cloud(pygame.sprite.Sprite):
     
     OPACITY_MIN: int = 8
     OPACITY_MAX: int = 64
-
-    TIME_MIN: int = 1000
-    TIME_MAX: int = 2000
 
     def __init__(self) -> None:
         super().__init__()
@@ -55,7 +53,7 @@ class Cloud(pygame.sprite.Sprite):
     def update(self) -> None:
         current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer > Cloud.DELTA:
-            self.rect.x += round(self.speed * DELTA_TIME)
+            self.rect.x += round(self.speed * TIMER.DELTA_TIME)
             if self.rect.left > SCREEN_WIDTH:
                 self.kill()
 

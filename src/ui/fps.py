@@ -2,11 +2,12 @@
 
 """fps.py: FPS class."""
 
+import os
 from typing import Tuple
 
-import paths
-from constants import WHITE, SEMI_TRANSLUCENT
-from utils import scale_to_resolution
+import src.paths as paths
+from src.constants import WHITE, SEMI_TRANSLUCENT
+from src.utils import scale_to_resolution
 
 from src.ui.label import Label
 
@@ -14,7 +15,7 @@ class FPS(Label):
     X: int = scale_to_resolution(613)
     Y: int = scale_to_resolution(488)
     Y_PADDING: int = -6
-    FONT: str = paths.FONTS + "/Pixel Gosub.otf"
+    FONT: str = os.path.join(paths.FONTS, "Pixel Gosub.otf")
     SIZE: int = scale_to_resolution(13.5)
     COLOR: Tuple[int, int, int] = WHITE
     OPACITY: int = SEMI_TRANSLUCENT

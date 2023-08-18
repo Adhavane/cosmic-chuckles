@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+import os
 import pygame
 import sys
 import time
@@ -12,19 +13,18 @@ import time
 import moderngl
 import numpy as np
 
-import paths
-from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, \
-    FPS, DELTA_TIME, LAST_TIME
-from utils import surface_to_texture
+import src.paths as paths
+from src.constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, FPS, TIMER
+from src.utils import surface_to_texture
 
 class Game:
     FLAGS: int = pygame.DOUBLEBUF | pygame.OPENGL
     TITLE: str = "Cosmic Chuckles - Python/Pygame"
-    ICON: str = paths.IMAGES + "/icon.png"
+    ICON: str = os.path.join(paths.IMAGES, "icon.png")
 
-    VERT_SHADER: str = paths.SHADERS + "/vert_shader.vert"
-    FRAG_SHADER: str = paths.SHADERS + "/frag_shader.frag"
+    VERT_SHADER: str = os.path.join(paths.SHADERS, "vert_shader.vert")
+    FRAG_SHADER: str = os.path.join(paths.SHADERS, "frag_shader.frag")
 
     def __init__(self) -> None:
         from src.scenes.scene_manager import SceneManager
@@ -62,9 +62,9 @@ class Game:
         self.scene_manager: SceneManager = SceneManager(self)
 
         self.scene_manager.push(MenuState(self))
-        self.scene_manager.push(TransitionStateOut(self, settings.TRANSITION_TIME, self.get_next_state()))
-        self.scene_manager.push(TransitionStateIn(self, settings.TRANSITION_TIME))
-        self.scene_manager.push(LoadingState(self, settings.LOADING_TIME))
+        self.scene_manager.push(TransitionStateOut(self, self.get_next_state()))
+        self.scene_manager.push(TransitionStateIn(self))
+        self.scene_manager.push(LoadingState(self))
 
         self.state: State
         self.next_state()
@@ -87,11 +87,10 @@ class Game:
 
     def run(self) -> None:
         while True:
-            global DELTA_TIME
-            global LAST_TIME
+            global TIMER
 
-            DELTA_TIME = (time.time() - LAST_TIME) * FPS
-            LAST_TIME = time.time()
+            TIMER.DELTA_TIME = (time.time() - TIMER.LAST_TIME) * FPS
+            TIMER.LAST_TIME = time.time()
             
             self.events()
             self.update()

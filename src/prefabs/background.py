@@ -2,18 +2,19 @@
 
 """background.py: Background class."""
 
+import os
 import pygame
 import random
 import math
 
-import paths
-from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
-from utils import scale_to_resolution
+import src.paths as paths
+from src.constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, TIMER
+from src.utils import scale_to_resolution
 
 class Background(pygame.sprite.Sprite):
     # Background settings
-    IMG: str = paths.IMAGES + "/background.png"
+    IMG: str = os.path.join(paths.SPRITES, "background.png")
     WIDTH: int = scale_to_resolution(960)
     HEIGHT: int = scale_to_resolution(640)
 
@@ -84,21 +85,21 @@ class Background(pygame.sprite.Sprite):
         if current_time - self.moving_timer_keys > Background.DELTA_KEYS:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
-                self.rect.y += round(Background.SPEED_KEYS * DELTA_TIME)
+                self.rect.y += round(Background.SPEED_KEYS * TIMER.DELTA_TIME)
             if keys[pygame.K_DOWN]:
-                self.rect.y -= round(Background.SPEED_KEYS * DELTA_TIME)
+                self.rect.y -= round(Background.SPEED_KEYS * TIMER.DELTA_TIME)
             if keys[pygame.K_LEFT]:
-                self.rect.x += round(Background.SPEED_KEYS * DELTA_TIME)
+                self.rect.x += round(Background.SPEED_KEYS * TIMER.DELTA_TIME)
             if keys[pygame.K_RIGHT]:
-                self.rect.x -= round(Background.SPEED_KEYS * DELTA_TIME)
+                self.rect.x -= round(Background.SPEED_KEYS * TIMER.DELTA_TIME)
             self.moving_timer_keys = pygame.time.get_ticks()
 
     def move_random(self) -> None:
         # Move background randomly
         current_time: int = pygame.time.get_ticks()
         if current_time - self.moving_timer_random > Background.DELTA_RANDOM:
-            self.rect.x += round(Background.SPEED_RANDOM * math.cos(math.radians(self.moving_direction)) * DELTA_TIME)
-            self.rect.y += round(Background.SPEED_RANDOM * math.sin(math.radians(self.moving_direction)) * DELTA_TIME)
+            self.rect.x += round(Background.SPEED_RANDOM * math.cos(math.radians(self.moving_direction)) * TIMER.DELTA_TIME)
+            self.rect.y += round(Background.SPEED_RANDOM * math.sin(math.radians(self.moving_direction)) * TIMER.DELTA_TIME)
             self.moving_timer_random = pygame.time.get_ticks()
 
         # Set up cooldown

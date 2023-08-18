@@ -4,25 +4,26 @@
 
 from __future__ import annotations
 
+import os
 import pygame
-from typing import List
+from typing import List, Optional
 
-import paths
-from constants import \
+import src.paths as paths
+from src.constants import \
     SCREEN_WIDTH, SCREEN_HEIGHT, BLACK
-from utils import scale_to_resolution
+from src.utils import scale_to_resolution
 
 from src.scenes.state import State
 
 class LoadingState(State):
     IMG_COUNT: int = 4
-    IMGS: List[str] = [f"{paths.SPRITES}/loading_{i}.png"
+    IMGS: List[str] = [f"{os.path.join(paths.SPRITES, 'loading')}_{i}.png"
                        for i in range(IMG_COUNT)]
-    IMG_HEIGHT: int = scale_to_resolution(64)
+    IMG_HEIGHT: int = scale_to_resolution(34)
     IMG_DELAY: int = 800
     TIME: int = 3000
 
-    def __init__(self, game: Game, execution_time: int) -> None:
+    def __init__(self, game: Game, execution_time: Optional[int] = None) -> None:
         super().__init__(game)
 
         self.loading_images: List[str] = [pygame.image.load(image).convert_alpha() for image in LoadingState.IMGS]
@@ -42,7 +43,11 @@ class LoadingState(State):
         self.loading_timer: int = 0
 
         self.start_time: int = pygame.time.get_ticks()
-        self.end_time: int = self.start_time + execution_time
+        if execution_time is None:
+            self.execution_time: int = LoadingState.TIME
+        else:
+            self.execution_time: int = execution_time
+        self.end_time: int = self.start_time + self.execution_time
 
     def events(self, _: pygame.event.Event) -> None:
         return super().events(_)

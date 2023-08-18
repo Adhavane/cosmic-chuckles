@@ -7,11 +7,6 @@ import random
 
 from typing import Dict, List, Sequence
 
-import paths
-from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
-from utils import scale_to_resolution
-
 from src.scenes.state import Scene
 from src.scenes.game_over import GameOverState
 from src.scenes.transition import TransitionStateOut
@@ -27,7 +22,9 @@ from src.prefabs.particle import Particle
 class PlayState(Scene):
     ENEMY_TIME_MIN: int = 1000
     ENEMY_TIME_MAX: int = 2000
-    
+
+    PARTICLE_AMOUNT: int = 20
+
     def __init__(self, game) -> None:
         super().__init__(game)
 
@@ -66,14 +63,14 @@ class PlayState(Scene):
 
         if self.player.health <= 0:
             self.game.scene_manager.push(GameOverState(self.game, self.score_counter))
-            self.game.scene_manager.push(TransitionStateOut(self.game, settings.TRANSITION_TIME, self.game.get_next_state()))
+            self.game.scene_manager.push(TransitionStateOut(self.game, self.game.get_next_state()))
             self.game.next_state()
 
     def spawn_enemies(self) -> None:
         current_time: int = pygame.time.get_ticks()
         if current_time - self.enemy_timer > self.enemy_cooldown:
             self.enemy_timer = current_time
-            self.enemy_cooldown = random.randint(settings.ENEMY_TIME_MIN, settings.ENEMY_TIME_MAX)
+            self.enemy_cooldown = random.randint(PlayState.ENEMY_TIME_MIN, PlayState.ENEMY_TIME_MAX)
             enemy = random.choice([EnemyPurple(), EnemyRed(), EnemyGreen(), EnemyYellow()])
             self.enemies.add(enemy)
 
@@ -136,7 +133,7 @@ class PlayState(Scene):
                         bullet_.destroy()
 
     def explosions(self, sprite: Player | Enemy | Projectile) -> None:
-        for _ in range(settings.PARTICLE_AMOUNT):
+        for _ in range(PlayState.PARTICLE_AMOUNT):
             self.particles.add(Particle(sprite.colors,
                                         sprite.rect.centerx,
                                         sprite.rect.centery))

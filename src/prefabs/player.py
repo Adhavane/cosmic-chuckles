@@ -2,19 +2,20 @@
 
 """player.py: Player class."""
 
+import os
 import pygame
 import math
 from typing import Tuple, Optional
 
-import paths
-from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME, RED
-from utils import scale_to_resolution
+import src.paths as paths
+from src.constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, TIMER, RED
+from src.utils import scale_to_resolution
 
 from src.prefabs.projectile import BulletPlayer
 
 class Player(pygame.sprite.Sprite):
-    IMG: str = paths.IMAGES + "/player.png"
+    IMG: str = os.path.join(paths.SPRITES, "player.png")
     HEIGHT: int = scale_to_resolution(64)
     
     HEALTH: int = 100
@@ -88,13 +89,13 @@ class Player(pygame.sprite.Sprite):
     def move(self) -> None:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            self.rect.y -= round(self.movement_speed * DELTA_TIME)
+            self.rect.y -= round(self.movement_speed * TIMER.DELTA_TIME)
         if keys[pygame.K_DOWN]:
-            self.rect.y += round(self.movement_speed * DELTA_TIME)
+            self.rect.y += round(self.movement_speed * TIMER.DELTA_TIME)
         if keys[pygame.K_LEFT]:
-            self.rect.x -= round(self.movement_speed * DELTA_TIME)
+            self.rect.x -= round(self.movement_speed * TIMER.DELTA_TIME)
         if keys[pygame.K_RIGHT]:
-            self.rect.x += round(self.movement_speed * DELTA_TIME)
+            self.rect.x += round(self.movement_speed * TIMER.DELTA_TIME)
 
     def rotate(self) -> None:
         mouse_x: int = pygame.mouse.get_pos()[0]

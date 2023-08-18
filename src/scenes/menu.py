@@ -4,22 +4,22 @@
 
 from __future__ import annotations
 
+import os
 import pygame
 
-import paths
-from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
-from utils import scale_to_resolution
+import src.paths as paths
+from src.constants import SCREEN_WIDTH
+from src.utils import scale_to_resolution
 
 from src.scenes.state import Scene
 from src.ui.button import Button, ButtonPlay, ButtonQuit
 
 class MenuState(Scene):
-    TITLE_IMG: str = paths.SPRITES + "/title.png"
+    TITLE_IMG: str = os.path.join(paths.SPRITES, "title.png")
     TITLE_Y: int = scale_to_resolution(74)
     TITLE_HEIGHT: int = scale_to_resolution(210)
 
-    CREDIT_IMG: str = paths.SPRITES + "/credit.png"
+    CREDIT_IMG: str = os.path.join(paths.SPRITES, "credit.png")
     CREDIT_Y: int = scale_to_resolution(288)
     CREDIT_HEIGHT: int = scale_to_resolution(9)
 
