@@ -6,13 +6,23 @@ from __future__ import annotations
 
 import pygame
 
-from constants import Settings
-settings = Settings()
+import paths
+from constants import \
+    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
+from utils import scale_to_resolution
 
 from src.scenes.state import Scene
 from src.ui.button import Button, ButtonPlay, ButtonQuit
 
 class MenuState(Scene):
+    TITLE_IMG: str = paths.SPRITES + "/title.png"
+    TITLE_Y: int = scale_to_resolution(74)
+    TITLE_HEIGHT: int = scale_to_resolution(210)
+
+    CREDIT_IMG: str = paths.SPRITES + "/credit.png"
+    CREDIT_Y: int = scale_to_resolution(288)
+    CREDIT_HEIGHT: int = scale_to_resolution(9)
+
     def __init__(self, game: Game) -> None:
         super().__init__(game)
 
@@ -20,27 +30,27 @@ class MenuState(Scene):
         width: int
         height: int
 
-        self.title: pygame.Surface = pygame.image.load(settings.TITLE_IMG).convert_alpha()
+        self.title: pygame.Surface = pygame.image.load(MenuState.TITLE_IMG).convert_alpha()
         
-        scale = settings.TITLE_HEIGHT / self.title.get_height()
+        scale = MenuState.TITLE_HEIGHT / self.title.get_height()
         width = round(self.title.get_width() * scale)
         height = round(self.title.get_height() * scale)
         self.title = pygame.transform.scale(self.title, (width, height))
 
         self.title_rect: pygame.Rect = self.title.get_rect()
-        self.title_rect.x = round(settings.SCREEN_WIDTH / 2 - self.title_rect.width / 2)
-        self.title_rect.y = settings.TITLE_Y
+        self.title_rect.x = round(SCREEN_WIDTH / 2 - self.title_rect.width / 2)
+        self.title_rect.y = MenuState.TITLE_Y
 
-        self.credit: pygame.Surface = pygame.image.load(settings.CREDIT_IMG).convert_alpha()
+        self.credit: pygame.Surface = pygame.image.load(MenuState.CREDIT_IMG).convert_alpha()
 
-        scale = settings.CREDIT_HEIGHT / self.credit.get_height()
+        scale = MenuState.CREDIT_HEIGHT / self.credit.get_height()
         width = round(self.credit.get_width() * scale)
         height = round(self.credit.get_height() * scale)
         self.credit = pygame.transform.scale(self.credit, (width, height))
 
         self.credit_rect: pygame.Rect = self.credit.get_rect()
         self.credit_rect.x = self.title_rect.x + self.title_rect.width - self.credit_rect.width
-        self.credit_rect.y = settings.CREDIT_Y
+        self.credit_rect.y = MenuState.CREDIT_Y
 
         self.button_play: ButtonPlay = ButtonPlay(self.game)
         self.button_quit: ButtonQuit = ButtonQuit(self.game)

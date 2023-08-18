@@ -39,29 +39,7 @@ class Settings:
 
         self.TRANSITION_TIME = 1000
 
-
-
-
         self.CLOUD_INIT = 5
-        
-
-        # Title settings
-        self.TITLE_IMG = "assets/sprites/title.png"
-        self.TITLE_Y = 74 * self.SCALE_FACTOR
-        self.TITLE_HEIGHT = 210 * self.SCALE_FACTOR
-
-        # Credit settings
-        self.CREDIT_IMG = "assets/sprites/credit.png"
-        self.CREDIT_Y = 288 * self.SCALE_FACTOR
-        self.CREDIT_HEIGHT = 9 * self.SCALE_FACTOR
-
-        self.FPS_X = 613 * self.SCALE_FACTOR
-        self.FPS_Y = 488 * self.SCALE_FACTOR
-        self.FPS_Y_PADDING = -6
-        self.FPS_FONT = "assets/fonts/Pixel Gosub.otf"
-        self.FPS_SIZE = round(13.5 * self.SCALE_FACTOR)
-        self.FPS_COLOR = (255, 255, 255)
-        self.FPS_OPACITY = 64
         
         # Statistics settings
         self.STATISTICS_LABEL_FONT = "assets/fonts/awesome.ttf"
