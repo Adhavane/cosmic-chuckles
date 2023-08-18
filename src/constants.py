@@ -29,13 +29,6 @@ TRANSPARENT = 0
 
 class Settings:
     def __init__(self) -> None:
-        self.LOADING_IMGS = ["assets/sprites/loading_0.png",
-                             "assets/sprites/loading_1.png",
-                             "assets/sprites/loading_2.png",
-                             "assets/sprites/loading_3.png"]
-        self.LOADING_IMG_HEIGHT = 34 * self.SCALE_FACTOR
-        self.LOADING_IMG_DELAY = 800
-        self.LOADING_TIME = 3000
 
         self.TRANSITION_TIME = 1000
 
@@ -65,20 +58,6 @@ class Settings:
 
         self.HEALTH_X = 24 * self.SCALE_FACTOR
         self.HEALTH_Y = 71 * self.SCALE_FACTOR
-
-        # Particle settings
-        self.PARTICLE_IMG = "assets/sprites/particle.png"
-        self.PARTICLE_AMOUNT = 20
-        self.PARTICLE_HEIGHT_MIN = 1 * self.SCALE_FACTOR
-        self.PARTICLE_HEIGHT_MAX = 6 * self.SCALE_FACTOR
-        self.PARTICLE_ANGLE_MIN = 0
-        self.PARTICLE_ANGLE_MAX = 360
-        self.PARTICLE_DAMAGE_MIN = 0
-        self.PARTICLE_DAMAGE_MAX = 0
-        self.PARTICLE_SPEED_MIN = 1
-        self.PARTICLE_SPEED_MAX = 10
-        self.PARTICLE_LIFETIME_MIN = 1
-        self.PARTICLE_LIFETIME_MAX = 30
 
         # Player settings
         self.PLAYER_IMG = "assets/sprites/player.png"
