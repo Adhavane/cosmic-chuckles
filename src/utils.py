@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw
 
 from constants import SCALE_FACTOR
 
-def scale_to_resolution(size: int) -> int:
+def scale_to_resolution(size: int | float) -> int:
     """Scales a size to the current resolution."""
     return round(size * SCALE_FACTOR)
 

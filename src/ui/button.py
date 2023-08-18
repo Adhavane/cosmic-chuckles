@@ -9,8 +9,7 @@ from abc import ABC, abstractmethod
 from typing import Callable, Dict, Tuple
 
 import paths
-from constants import \
-    SCREEN_WIDTH, SCREEN_HEIGHT, DELTA_TIME
+from constants import SCREEN_WIDTH
 from utils import scale_to_resolution
 
 class Button(ABC, pygame.sprite.Sprite):
@@ -87,7 +86,7 @@ class ButtonPlay(Button):
         from src.scenes.transition import TransitionState
 
         game.scene_manager.push(PlayState(game))
-        
+
         super().__init__(ButtonPlay.IMGS,
                          round(SCREEN_WIDTH / 2),
                          ButtonPlay.Y,
