@@ -5,9 +5,6 @@
 import pygame
 from typing import Tuple
 
-from src.settings import Settings
-settings = Settings()
-
 class Label(pygame.sprite.Sprite):
     def __init__(self,
                  text: str,
